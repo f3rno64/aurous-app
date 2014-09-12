@@ -18,106 +18,36 @@ import org.json.JSONObject;
  *
  */
 public class Settings {
-	private static String avatarURL = "todo";
-	private static String userName = "Aurous User";
-	private static int volume = 50; // done
-	private static String profileURL = "todo";
-	private static boolean displayAlert = true;
-	private static boolean streamLowQuality = false;
-	private static String lastPlayList = ""; // done
-	private static boolean savePlayBack = false;
-
-	public static boolean isSavePlayBack() {
-		return savePlayBack;
-	}
-
-	public static void setSavePlayBack(final boolean savePlayBack) {
-		Settings.savePlayBack = savePlayBack;
+	public static String getAvatarURL() {
+		return avatarURL;
 	}
 
 	public static String getLastPlayList() {
 		return lastPlayList;
 	}
 
-	public static void setLastPlayList(final String lastPlayList) {
-		Settings.lastPlayList = lastPlayList;
+	public static String getProfileURL() {
+		return profileURL;
 	}
 
 	public static String getUserName() {
 		return userName;
 	}
 
-	public static void setUserName(final String userName) {
-		Settings.userName = userName;
-	}
-
-	public static String getProfileURL() {
-		return profileURL;
-	}
-
-	public static void setProfileURL(final String profileURL) {
-		Settings.profileURL = profileURL;
+	public static int getVolume() {
+		return volume;
 	}
 
 	public static boolean isDisplayAlert() {
 		return displayAlert;
 	}
 
-	public static void setDisplayAlert(final boolean displayAlert) {
-		Settings.displayAlert = displayAlert;
+	public static boolean isSavePlayBack() {
+		return savePlayBack;
 	}
 
 	public static boolean isStreamLowQuality() {
 		return streamLowQuality;
-	}
-
-	public static void setStreamLowQuality(final boolean streamLowQuality) {
-		Settings.streamLowQuality = streamLowQuality;
-	}
-
-	public static int getVolume() {
-		return volume;
-	}
-
-	public static void setVolume(final int volume) {
-		Settings.volume = volume;
-	}
-
-	public static String getAvatarURL() {
-		return avatarURL;
-	}
-
-	public static void setAvatarURL(final String avatarURL) {
-		Settings.avatarURL = avatarURL;
-	}
-
-	public static void saveSettings(final boolean reload) {
-		final JSONObject obj = new JSONObject();
-		obj.put("low_quality", isStreamLowQuality());
-		obj.put("volume", new Integer(getVolume()));
-		obj.put("display_alert", isDisplayAlert());
-		obj.put("avatar", new String(getAvatarURL()));
-		obj.put("profile_url", new String(getProfileURL()));
-		obj.put("username", new String(getUserName()));
-		obj.put("last_playlist", new String(getLastPlayList()));
-		obj.put("save_playback", isSavePlayBack());
-
-		try {
-
-			final FileWriter file = new FileWriter(
-					"data/settings/settings.json");
-			file.write(obj.toString());
-			file.flush();
-			file.close();
-
-		} catch (final IOException e) {
-			e.printStackTrace();
-		}
-
-		if (reload) {
-			loadSettings();
-		}
-
 	}
 
 	public static void loadSettings() {
@@ -176,4 +106,81 @@ public class Settings {
 		final byte[] encoded = Files.readAllBytes(Paths.get(path));
 		return new String(encoded, encoding);
 	}
+
+	public static void saveSettings(final boolean reload) {
+		final JSONObject obj = new JSONObject();
+		obj.put("low_quality", isStreamLowQuality());
+		obj.put("volume", new Integer(getVolume()));
+		obj.put("display_alert", isDisplayAlert());
+		obj.put("avatar", new String(getAvatarURL()));
+		obj.put("profile_url", new String(getProfileURL()));
+		obj.put("username", new String(getUserName()));
+		obj.put("last_playlist", new String(getLastPlayList()));
+		obj.put("save_playback", isSavePlayBack());
+
+		try {
+
+			final FileWriter file = new FileWriter(
+					"data/settings/settings.json");
+			file.write(obj.toString());
+			file.flush();
+			file.close();
+
+		} catch (final IOException e) {
+			e.printStackTrace();
+		}
+
+		if (reload) {
+			loadSettings();
+		}
+
+	}
+
+	public static void setAvatarURL(final String avatarURL) {
+		Settings.avatarURL = avatarURL;
+	}
+
+	public static void setDisplayAlert(final boolean displayAlert) {
+		Settings.displayAlert = displayAlert;
+	}
+
+	public static void setLastPlayList(final String lastPlayList) {
+		Settings.lastPlayList = lastPlayList;
+	}
+
+	public static void setProfileURL(final String profileURL) {
+		Settings.profileURL = profileURL;
+	}
+
+	public static void setSavePlayBack(final boolean savePlayBack) {
+		Settings.savePlayBack = savePlayBack;
+	}
+
+	public static void setStreamLowQuality(final boolean streamLowQuality) {
+		Settings.streamLowQuality = streamLowQuality;
+	}
+
+	public static void setUserName(final String userName) {
+		Settings.userName = userName;
+	}
+
+	public static void setVolume(final int volume) {
+		Settings.volume = volume;
+	}
+
+	private static String avatarURL = "todo";
+
+	private static String userName = "Aurous User";
+
+	private static int volume = 50; // done
+
+	private static String profileURL = "todo";
+
+	private static boolean displayAlert = true;
+
+	private static boolean streamLowQuality = false;
+
+	private static String lastPlayList = ""; // done
+
+	private static boolean savePlayBack = false;
 }

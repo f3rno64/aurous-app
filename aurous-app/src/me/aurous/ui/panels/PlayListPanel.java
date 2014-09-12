@@ -40,16 +40,6 @@ import me.aurous.utils.playlist.PlayListUtils;
  *
  */
 public class PlayListPanel extends JPanel implements ActionListener {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 7941760374900934885L;
-	public static boolean canSetLast = false;
-	private final Color background = new Color(34, 35, 39);
-	JPopupMenu popup;
-	private static JLabel albumArtLabel;
-	private static JLabel songInformation;
-
 	public static class MyCellRenderer extends DefaultListCellRenderer {
 
 		/**
@@ -87,6 +77,30 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		}
 	}
 
+	private static Image scale(final Image image, final int width,
+			final int height) {
+		return image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+	}
+
+	public static void setAlbumArt(final Image image) {
+		albumArtLabel.setIcon(new ImageIcon(scale(image, 200, 200)));
+	}
+
+	public static void setSongInformation(final String title,
+			final String artist) {
+		final String information = String.format(
+				"<html><strong>%s</strong><br>%s</html>", title, artist);
+		songInformation.setText(information);
+	}
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 7941760374900934885L;
+	public static boolean canSetLast = false;
+
+	private final Color background = new Color(34, 35, 39);
+
 	// public static void run() {
 
 	// EventQueue.invokeLater(() -> new PlayListPanel());
@@ -94,6 +108,12 @@ public class PlayListPanel extends JPanel implements ActionListener {
 	// }
 
 	// private final PlayListFunctions plFunctions = new PlayListFunctions();
+
+	JPopupMenu popup;
+
+	private static JLabel albumArtLabel;
+
+	private static JLabel songInformation;
 
 	public PlayListPanel() {
 		setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -112,7 +132,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		displayList.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		displayList
-				.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+		.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		displayList.setCellRenderer(new MyCellRenderer());
 		displayList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
 		displayList.setName("displayList");
@@ -138,17 +158,6 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		});
 		final MouseListener mouseListener = new MouseAdapter() {
 			@Override
-			public void mouseReleased(final MouseEvent e) {
-				if (e.isPopupTrigger()) {
-
-					final JList<?> list = (JList<?>) e.getSource();
-					list.setSelectedIndex(list.locationToIndex(e.getPoint()));
-
-					popup.show(e.getComponent(), e.getX(), e.getY());
-				}
-			}
-
-			@Override
 			public void mouseClicked(final MouseEvent mouseEvent) {
 				if (mouseEvent.getClickCount() == 2) {
 					final int index = displayList.locationToIndex(mouseEvent
@@ -170,11 +179,22 @@ public class PlayListPanel extends JPanel implements ActionListener {
 					}
 				}
 			}
+
+			@Override
+			public void mouseReleased(final MouseEvent e) {
+				if (e.isPopupTrigger()) {
+
+					final JList<?> list = (JList<?>) e.getSource();
+					list.setSelectedIndex(list.locationToIndex(e.getPoint()));
+
+					popup.show(e.getComponent(), e.getX(), e.getY());
+				}
+			}
 		};
 
 		final JScrollPane scrollPane = new JScrollPane(displayList);
 		scrollPane
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setPreferredSize(new Dimension(200, getHeight()));
 		scrollPane.setBorder(null);
 
@@ -185,8 +205,8 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		albumArtLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		setAlbumArt(new ImageIcon(
 				SettingsWidget.class
-						.getResource("/resources/album-placeholder.png"))
-				.getImage());
+				.getResource("/resources/album-placeholder.png"))
+		.getImage());
 
 		songInformation = new JLabel();
 		songInformation.setHorizontalAlignment(SwingConstants.LEFT);
@@ -246,22 +266,6 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		}
 		// System.out.println(table.getSelectedRow() + " : " +
 		// table.getSelectedColumn());
-	}
-
-	public static void setAlbumArt(final Image image) {
-		albumArtLabel.setIcon(new ImageIcon(scale(image, 200, 200)));
-	}
-
-	public static void setSongInformation(final String title,
-			final String artist) {
-		final String information = String.format(
-				"<html><strong>%s</strong><br>%s</html>", title, artist);
-		songInformation.setText(information);
-	}
-
-	private static Image scale(final Image image, final int width,
-			final int height) {
-		return image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
 	}
 
 }

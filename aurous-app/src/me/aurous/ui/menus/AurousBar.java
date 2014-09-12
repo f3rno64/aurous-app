@@ -6,22 +6,23 @@ import javax.swing.JMenuItem;
 
 import me.aurous.player.Settings;
 import me.aurous.ui.widgets.AboutWidget;
-import me.aurous.ui.widgets.DiscoWidget;
 import me.aurous.ui.widgets.BuilderWidget;
+import me.aurous.ui.widgets.DiscoWidget;
 import me.aurous.ui.widgets.ImporterWidget;
 import me.aurous.ui.widgets.SettingsWidget;
 import me.aurous.utils.playlist.PlayListUtils;
 
 public class AurousBar extends JMenuBar {
-	
+
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -3829530752614750645L;
-	private JMenu fileMenu;
-	private JMenuItem exitMenuItem;
-  public AurousBar() {
-	  this.fileMenu = new JMenu("File");
+	private final JMenu fileMenu;
+	private final JMenuItem exitMenuItem;
+
+	public AurousBar() {
+		this.fileMenu = new JMenu("File");
 		this.exitMenuItem = new JMenuItem("Exit");
 		exitMenuItem.addActionListener(e -> {
 			Settings.saveSettings(false);
@@ -34,7 +35,6 @@ public class AurousBar extends JMenuBar {
 		this.fileMenu.add(this.exitMenuItem);
 		// add menus to menubar
 		add(this.fileMenu);
-		
 
 		final JMenu playListMenu = new JMenu("Playlist");
 		add(playListMenu);
@@ -71,6 +71,6 @@ public class AurousBar extends JMenuBar {
 		final JMenuItem aboutItem = new JMenuItem("About");
 		aboutItem.addActionListener(arg0 -> AboutWidget.showAbout());
 		helpMenu.add(aboutItem);
-		
-  }
+
+	}
 }

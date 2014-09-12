@@ -85,7 +85,7 @@ public class BuilderWidget {
 		builderWidget.getContentPane().setLayout(null);
 		builderWidget.setPreferredSize(new Dimension(400, 545));
 		builderWidget
-				.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
 		loadingIcon = new JLabel("");
 
@@ -188,7 +188,7 @@ public class BuilderWidget {
 		builderScrollPane.setViewportView(playListTextArea);
 		builderScrollPane.setRowHeaderView(lines);
 		builderScrollPane
-		.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
 		builderWidget.getContentPane().add(builderScrollPane);
 
@@ -218,28 +218,28 @@ public class BuilderWidget {
 		buildListButton.setForeground(Color.WHITE);
 		buildListButton.setBackground(Color.DARK_GRAY);
 		buildListButton
-		.addActionListener(e -> {
-			if (playListTextArea.getText().trim().isEmpty()) {
-				JOptionPane.showMessageDialog(builderWidget,
-						"You must add links to build a playlist",
-						"Error", JOptionPane.ERROR_MESSAGE);
-				return;
-			} else if (playListNameTextField.getText().trim().isEmpty()) {
-				JOptionPane.showMessageDialog(builderWidget,
-						"Please enter a name for your playlist",
-						"Error", JOptionPane.ERROR_MESSAGE);
-				return;
-			}
-			loadingIcon.setVisible(true);
-			playListTextArea.setEditable(false);
-			buildListButton.setEnabled(false);
-			playListNameTextField.setEditable(false);
-			final String items = playListTextArea.getText();
+				.addActionListener(e -> {
+					if (playListTextArea.getText().trim().isEmpty()) {
+						JOptionPane.showMessageDialog(builderWidget,
+								"You must add links to build a playlist",
+								"Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					} else if (playListNameTextField.getText().trim().isEmpty()) {
+						JOptionPane.showMessageDialog(builderWidget,
+								"Please enter a name for your playlist",
+								"Error", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					loadingIcon.setVisible(true);
+					playListTextArea.setEditable(false);
+					buildListButton.setEnabled(false);
+					playListNameTextField.setEditable(false);
+					final String items = playListTextArea.getText();
 
-			PlayListUtils.buildPlayList(items,
-					playListNameTextField.getText());
+					PlayListUtils.buildPlayList(items,
+							playListNameTextField.getText());
 
-		});
+				});
 		buildListButton.setBounds(147, 493, 89, 23);
 
 		builderWidget.getContentPane().add(buildListButton);
@@ -251,7 +251,8 @@ public class BuilderWidget {
 				playListNameTextField);
 		ghostText.setHorizontalAlignment(SwingConstants.CENTER);
 		ghostText.setHorizontalTextPosition(SwingConstants.CENTER);
-		builderWidget.setLocationRelativeTo(UISession.getPresenter().getAurousFrame());
+		builderWidget.setLocationRelativeTo(UISession.getPresenter()
+				.getAurousFrame());
 	}
 
 	public JButton getBuildListButton() {

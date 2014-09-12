@@ -205,7 +205,7 @@ public class AboutWidget {
 			}
 		});
 		faceBookButton
-		.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+				.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		faceBookButton.setIcon(new ImageIcon(AboutWidget.class
 				.getResource("/resources/facebook.png")));
 		faceBookButton.setMargin(new Insets(0, 0, 0, 0));
@@ -237,12 +237,12 @@ public class AboutWidget {
 
 		fokMeButton = new JButton();
 		fokMeButton
-		.addActionListener(e -> {
-			try {
-				Utils.openURL(new URL(
-						"https://github.com/Codeusa/aurous-app"));
-			} catch (final Exception e1) {
-				// TODO Auto-generated catch block
+				.addActionListener(e -> {
+					try {
+						Utils.openURL(new URL(
+								"https://github.com/Codeusa/aurous-app"));
+					} catch (final Exception e1) {
+						// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});
@@ -261,7 +261,8 @@ public class AboutWidget {
 				.getResource("/resources/andrew.jpg")));
 		andrewsAvatar.setBounds(0, 0, 80, 63);
 		aboutWidget.getContentPane().add(andrewsAvatar);
-		aboutWidget.setLocationRelativeTo(UISession.getPresenter().getAurousFrame());
+		aboutWidget.setLocationRelativeTo(UISession.getPresenter()
+				.getAurousFrame());
 	}
 
 	public boolean isOpen() {

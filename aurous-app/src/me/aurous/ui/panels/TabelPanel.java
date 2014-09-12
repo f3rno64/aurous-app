@@ -48,6 +48,30 @@ public class TabelPanel extends JPanel implements ActionListener {
 
 	}
 
+	@Override
+	public void actionPerformed(final ActionEvent e) {
+		final Component c = (Component) e.getSource();
+		final JPopupMenu popup = (JPopupMenu) c.getParent();
+		final JTable table = (JTable) popup.getInvoker();
+
+		switch (e.getActionCommand()) {
+		case "Delete":
+			PlayListUtils.removeSelectedRows(table);
+			break;
+		case "Play":
+			MediaUtils.switchMedia(table);
+			break;
+		case "Share":
+			// System.out.println("Sharing");
+			break;
+		case "Copy URL":
+			MediaUtils.copyMediaURL(table);
+			break;
+		}
+		// System.out.println(table.getSelectedRow() + " : " +
+		// table.getSelectedColumn());
+	}
+
 	public void initPanel() {
 		setBackground(background);
 		setLayout(new BorderLayout());
@@ -164,30 +188,6 @@ public class TabelPanel extends JPanel implements ActionListener {
 		scroller.setBorder(BorderFactory.createEmptyBorder());
 		add(this.scroller, BorderLayout.CENTER);
 
-	}
-
-	@Override
-	public void actionPerformed(final ActionEvent e) {
-		final Component c = (Component) e.getSource();
-		final JPopupMenu popup = (JPopupMenu) c.getParent();
-		final JTable table = (JTable) popup.getInvoker();
-
-		switch (e.getActionCommand()) {
-		case "Delete":
-			PlayListUtils.removeSelectedRows(table);
-			break;
-		case "Play":
-			MediaUtils.switchMedia(table);
-			break;
-		case "Share":
-			// System.out.println("Sharing");
-			break;
-		case "Copy URL":
-			MediaUtils.copyMediaURL(table);
-			break;
-		}
-		// System.out.println(table.getSelectedRow() + " : " +
-		// table.getSelectedColumn());
 	}
 
 }

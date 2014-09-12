@@ -31,10 +31,10 @@ public class YouTubeDiscoUtils {
 		final String title = getPlayListTitle(url);
 		if (title.equals("Oops! Something went wrong.")) {
 			JOptionPane
-			.showMessageDialog(
-					UISession.getDiscoWidget().getWidget(),
-					"Unable to locate any playlist for this artist/song \n But don't worry some may show up soon!",
-					"Error", JOptionPane.ERROR_MESSAGE);
+					.showMessageDialog(
+							UISession.getDiscoWidget().getWidget(),
+							"Unable to locate any playlist for this artist/song \n But don't worry some may show up soon!",
+							"Error", JOptionPane.ERROR_MESSAGE);
 			UISession.getDiscoWidget().getDiscoProgressBar().setVisible(false);
 			return;
 		}

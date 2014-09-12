@@ -18,7 +18,7 @@ public class Aurous {
 	public static void main(final String[] args) {
 		try {
 			javax.swing.UIManager
-					.setLookAndFeel(new SyntheticaAluOxideLookAndFeel());
+			.setLookAndFeel(new SyntheticaAluOxideLookAndFeel());
 		} catch (UnsupportedLookAndFeelException | ParseException e) {
 			e.printStackTrace();
 		}

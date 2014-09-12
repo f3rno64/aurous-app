@@ -91,12 +91,12 @@ public class DurationPanel extends JPanel {
 		return currentTime;
 	}
 
-	public JLabel total() {
-		return maximumTime;
-	}
-
 	public JSlider seek() {
 		return seek;
+	}
+
+	public JLabel total() {
+		return maximumTime;
 	}
 
 }

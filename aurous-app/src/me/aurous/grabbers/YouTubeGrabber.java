@@ -125,7 +125,7 @@ public class YouTubeGrabber {
 			final String playercode) {
 		try {
 			final ScriptEngine engine = new ScriptEngineManager()
-			.getEngineByName("nashorn");
+					.getEngineByName("nashorn");
 			engine.eval(new FileReader("data/scripts/decrypt.js"));
 			final Invocable invocable = (Invocable) engine;
 

@@ -12,11 +12,26 @@ import me.aurous.utils.media.MediaUtils;
 
 public class MediaPlayerScene {
 
+	private static void updateTime(final long currentTime,
+			final long totalDuration) {
+
+		final int percentage = (int) (((currentTime * 100.0) / totalDuration) + 0.5); // jesus
+		final double seconds = currentTime / 1000.0;
+		ControlPanel.seek().setValue(percentage);
+		ControlPanel.current().setText(MediaUtils.calculateTime((int) seconds));
+		// god
+		if (percentage == 100) {
+
+			MediaUtils.handleEndOfStream();
+		}
+
+	}
+
 	private Media media;
 
-	private MediaPlayer player;
-
 	// private static StreamFunctions sFunctions = new StreamFunctions();
+
+	private MediaPlayer player;
 
 	private MediaView view;
 
@@ -67,21 +82,6 @@ public class MediaPlayerScene {
 		UISession.setMedia(media);
 
 		return (scene);
-	}
-
-	private static void updateTime(final long currentTime,
-			final long totalDuration) {
-
-		final int percentage = (int) (((currentTime * 100.0) / totalDuration) + 0.5); // jesus
-		final double seconds = currentTime / 1000.0;
-		ControlPanel.seek().setValue(percentage);
-		ControlPanel.current().setText(MediaUtils.calculateTime((int) seconds));
-		// god
-		if (percentage == 100) {
-
-			MediaUtils.handleEndOfStream();
-		}
-
 	}
 
 }

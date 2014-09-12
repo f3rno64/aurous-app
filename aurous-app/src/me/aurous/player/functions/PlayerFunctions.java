@@ -24,41 +24,40 @@ import me.aurous.utils.media.MediaUtils;
  */
 public class PlayerFunctions {
 
-	public boolean switching = false;
-	public static boolean isPaused;
-	public static boolean repeat = false;
-	public static boolean shuffle = false;
+	public static void handleSpecialLabels(final boolean isRepeat) {
+		final JLabel repeatStatusLabel = ControlPanel.repeat();
+		final JLabel shuffleStatusLabel = ControlPanel.shuffle();
+		if (isRepeat) {
+			if (repeatStatusLabel.isEnabled()) {
+				if (repeat == true) {
+					repeat = false;
+					repeatStatusLabel.setText("Repeat : Off");
+					shuffleStatusLabel.setEnabled(true);
 
-	public static void seekNext() {
-		final JTable table = TabelPanel.table;
-		if (table != null) {
-			final int total = table.getRowCount();
-			final int idx = table.getSelectedRow();
-			if (total == 0) {
-				return;
-			} else if ((idx == -1) && (total == 0)) {
-				return;
-			} else if ((idx == -1) && (total > 0)) {
-				table.setRowSelectionInterval(0, 0);
-				MediaUtils.switchMedia(table);
-
-			} else if ((idx + 1) == total) {
-				table.setRowSelectionInterval(0, 0);
-				MediaUtils.switchMedia(table);
-
-			} else {
-
-				try {
-					table.setRowSelectionInterval(0, idx + 1);
-					MediaUtils.switchMedia(table);
-				} catch (final Exception e) {
-					table.setRowSelectionInterval(0, 0);
-					MediaUtils.switchMedia(table);
+				} else {
+					repeat = true;
+					shuffle = false;
+					shuffleStatusLabel.setEnabled(false);
+					repeatStatusLabel.setText("Repeat : On");
+					shuffleStatusLabel.setText("Shuffle : Off");
 				}
+			}
+		} else {
+			if (shuffleStatusLabel.isEnabled()) {
+				if (shuffle == true) {
+					shuffle = false;
+					shuffleStatusLabel.setText("Shuffle : Off");
+					repeatStatusLabel.setEnabled(true);
 
+				} else {
+					shuffle = true;
+					repeat = false;
+					repeatStatusLabel.setEnabled(false);
+					shuffleStatusLabel.setText("Shuffle : On");
+					repeatStatusLabel.setText("Repeat : Off");
+				}
 			}
 		}
-
 	}
 
 	public static void pause(final JButton mediaStateButton) {
@@ -100,6 +99,62 @@ public class PlayerFunctions {
 		}
 	}
 
+	public static void repeat() {
+		final JTable table = TabelPanel.table;
+		if (table != null) {
+			if (table.getRowCount() > 0) {
+				final int index = table.getSelectedRow();
+				table.setRowSelectionInterval(0, index);
+				MediaUtils.switchMedia(table);
+
+			} else {
+
+			}
+		}
+	}
+
+	public static void seek(final int value) {
+		final MediaPlayer player = UISession.getMediaPlayer();
+		if (player != null) {
+			final double d = value / 100D;
+			player.seek(Duration.millis(player.getMedia().getDuration()
+					.toMillis()
+					* d));
+		}
+	}
+
+	public static void seekNext() {
+		final JTable table = TabelPanel.table;
+		if (table != null) {
+			final int total = table.getRowCount();
+			final int idx = table.getSelectedRow();
+			if (total == 0) {
+				return;
+			} else if ((idx == -1) && (total == 0)) {
+				return;
+			} else if ((idx == -1) && (total > 0)) {
+				table.setRowSelectionInterval(0, 0);
+				MediaUtils.switchMedia(table);
+
+			} else if ((idx + 1) == total) {
+				table.setRowSelectionInterval(0, 0);
+				MediaUtils.switchMedia(table);
+
+			} else {
+
+				try {
+					table.setRowSelectionInterval(0, idx + 1);
+					MediaUtils.switchMedia(table);
+				} catch (final Exception e) {
+					table.setRowSelectionInterval(0, 0);
+					MediaUtils.switchMedia(table);
+				}
+
+			}
+		}
+
+	}
+
 	public static void seekPrevious() {
 		final JTable table = TabelPanel.table;
 		if (table != null) {
@@ -130,66 +185,6 @@ public class PlayerFunctions {
 		}
 	}
 
-	public static void handleSpecialLabels(final boolean isRepeat) {
-		final JLabel repeatStatusLabel = ControlPanel.repeat();
-		final JLabel shuffleStatusLabel = ControlPanel.shuffle();
-		if (isRepeat) {
-			if (repeatStatusLabel.isEnabled()) {
-				if (repeat == true) {
-					repeat = false;
-					repeatStatusLabel.setText("Repeat : Off");
-					shuffleStatusLabel.setEnabled(true);
-
-				} else {
-					repeat = true;
-					shuffle = false;
-					shuffleStatusLabel.setEnabled(false);
-					repeatStatusLabel.setText("Repeat : On");
-					shuffleStatusLabel.setText("Shuffle : Off");
-				}
-			}
-		} else {
-			if (shuffleStatusLabel.isEnabled()) {
-				if (shuffle == true) {
-					shuffle = false;
-					shuffleStatusLabel.setText("Shuffle : Off");
-					repeatStatusLabel.setEnabled(true);
-
-				} else {
-					shuffle = true;
-					repeat = false;
-					repeatStatusLabel.setEnabled(false);
-					shuffleStatusLabel.setText("Shuffle : On");
-					repeatStatusLabel.setText("Repeat : Off");
-				}
-			}
-		}
-	}
-
-	public static void repeat() {
-		final JTable table = TabelPanel.table;
-		if (table != null) {
-			if (table.getRowCount() > 0) {
-				final int index = table.getSelectedRow();
-				table.setRowSelectionInterval(0, index);
-				MediaUtils.switchMedia(table);
-
-			} else {
-
-			}
-		}
-	}
-
-	public static void seek(final int value) {
-		final MediaPlayer player = UISession.getMediaPlayer();
-		if (player != null) {
-			final double d = value / 100D;
-			player.seek(Duration.millis(player.getMedia().getDuration()
-					.toMillis()
-					* d));
-		}
-	}
-
 	public static void shuffle() {
 
 		final JTable table = TabelPanel.table;
@@ -199,5 +194,13 @@ public class PlayerFunctions {
 		MediaUtils.switchMedia(table);
 
 	}
+
+	public boolean switching = false;
+
+	public static boolean isPaused;
+
+	public static boolean repeat = false;
+
+	public static boolean shuffle = false;
 
 }

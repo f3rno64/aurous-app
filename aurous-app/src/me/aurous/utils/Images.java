@@ -31,15 +31,15 @@ public class Images {
 	private static Map<String, Image> IMAGE_MAP = new HashMap<>();
 
 	private static String[][] images = {
-		{ "play", "Actions-media-playback-start-icon.png" },
-		{ "volume-low", "Status-audio-volume-low-icon.png" },
-		{ "volume-medium", "Status-audio-volume-medium-icon.png" },
-		{ "volume-high", "Status-audio-volume-high-icon.png" },
-		{ "volume-mute", "Status-audio-volume-muted-icon.png" },
-		{ "pause", "Actions-media-playback-pause-icon.png" },
-		{ "placeholder", "album-placeholder.png" },
+			{ "play", "Actions-media-playback-start-icon.png" },
+			{ "volume-low", "Status-audio-volume-low-icon.png" },
+			{ "volume-medium", "Status-audio-volume-medium-icon.png" },
+			{ "volume-high", "Status-audio-volume-high-icon.png" },
+			{ "volume-mute", "Status-audio-volume-muted-icon.png" },
+			{ "pause", "Actions-media-playback-pause-icon.png" },
+			{ "placeholder", "album-placeholder.png" },
 
-		{ "poptart", "aurouslogo.png" }
+			{ "poptart", "aurouslogo.png" }
 
 	};
 

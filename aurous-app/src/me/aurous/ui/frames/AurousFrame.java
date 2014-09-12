@@ -38,21 +38,9 @@ public class AurousFrame implements WindowListener {
 
 	public JFrame aurousFrame;
 
-	public JFrame getAurousFrame() {
-		return aurousFrame;
-	}
-
 	public JFXPanel jfxPanel;
+
 	public Scene scene;
-
-
-	public Scene getScene() {
-		return scene;
-	}
-
-	public void setScene(Scene scene) {
-		this.scene = scene;
-	}
 
 	/**
 	 * Create the application.
@@ -61,6 +49,14 @@ public class AurousFrame implements WindowListener {
 		initialize();
 		this.aurousFrame.addWindowListener(this);
 
+	}
+
+	public JFrame getAurousFrame() {
+		return aurousFrame;
+	}
+
+	public Scene getScene() {
+		return scene;
 	}
 
 	private void initFX(final JFXPanel fxPanel) throws Throwable {
@@ -93,8 +89,7 @@ public class AurousFrame implements WindowListener {
 			macApp.setDockIconImage(new ImageIcon(this.getClass().getResource(
 					"/resources/aurouslogo.png")).getImage());
 		}
-		
-		
+
 		this.aurousFrame = new JFrame();
 		this.aurousFrame.setResizable(true);
 		this.aurousFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(
@@ -104,13 +99,10 @@ public class AurousFrame implements WindowListener {
 		this.aurousFrame.setSize(new Dimension(800, 600));
 		this.aurousFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.aurousFrame.getContentPane().setLayout(new BorderLayout());
-		
-		
-		//we don't actually have to add the panel
+
+		// we don't actually have to add the panel
 		jfxPanel = new JFXPanel();
-		
-		
-		
+
 		try {
 			final JPanel mediaControlsPanel = new ControlPanel();
 			this.aurousFrame.getContentPane().add(mediaControlsPanel,
@@ -119,14 +111,12 @@ public class AurousFrame implements WindowListener {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
 
 		final JPanel playListPanel = new PlayListPanel();
 		this.aurousFrame.getContentPane().add(playListPanel, BorderLayout.WEST);
 
 		final JMenuBar menuBar = new AurousBar();
-		
+
 		this.aurousFrame.setJMenuBar(menuBar);
 
 		final JPanel tabelPanel = new TabelPanel();
@@ -142,7 +132,7 @@ public class AurousFrame implements WindowListener {
 				e.printStackTrace();
 			}
 		});
-		
+
 		Utils.centerFrameOnMainDisplay(aurousFrame);
 
 		this.aurousFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -154,8 +144,7 @@ public class AurousFrame implements WindowListener {
 			}
 		});
 
-		
-		//tracking code
+		// tracking code
 		final JGoogleAnalyticsTracker tracker = new JGoogleAnalyticsTracker(
 				"Aurous App", "2.1.6", "UA-53956512-1");
 
@@ -165,15 +154,13 @@ public class AurousFrame implements WindowListener {
 
 	}
 
-	@Override
-	public void windowOpened(final WindowEvent e) {
-		MediaUtils.isOutOfFocus = false;
-
+	public void setScene(final Scene scene) {
+		this.scene = scene;
 	}
 
 	@Override
-	public void windowClosing(final WindowEvent e) {
-		// TODO Auto-generated method stub
+	public void windowActivated(final WindowEvent e) {
+		MediaUtils.isOutOfFocus = false;
 
 	}
 
@@ -184,7 +171,13 @@ public class AurousFrame implements WindowListener {
 	}
 
 	@Override
-	public void windowIconified(final WindowEvent e) {
+	public void windowClosing(final WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowDeactivated(final WindowEvent e) {
 		MediaUtils.isOutOfFocus = true;
 
 	}
@@ -196,14 +189,14 @@ public class AurousFrame implements WindowListener {
 	}
 
 	@Override
-	public void windowActivated(final WindowEvent e) {
-		MediaUtils.isOutOfFocus = false;
+	public void windowIconified(final WindowEvent e) {
+		MediaUtils.isOutOfFocus = true;
 
 	}
 
 	@Override
-	public void windowDeactivated(final WindowEvent e) {
-		MediaUtils.isOutOfFocus = true;
+	public void windowOpened(final WindowEvent e) {
+		MediaUtils.isOutOfFocus = false;
 
 	}
 }

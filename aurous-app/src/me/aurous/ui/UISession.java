@@ -17,96 +17,69 @@ import me.aurous.ui.widgets.SettingsWidget;
  */
 public class UISession {
 
-	private static AurousFrame presenter;
-
-	public static AurousFrame getPresenter() {
-		return presenter;
-	}
-
-	public static void setPresenter(final AurousFrame presenter) {
-		UISession.presenter = presenter;
-	}
-	
-	private static AboutWidget aboutWidget;
-
 	public static AboutWidget getAboutWidget() {
 		return aboutWidget;
 	}
-
-	public static void setAboutWidget(final AboutWidget aboutWidget) {
-		UISession.aboutWidget = aboutWidget;
-	}
-	
-	private static SettingsWidget settingsWidget;
-
-	public static SettingsWidget getSettingsWidget() {
-		return settingsWidget;
-	}
-
-	public static void setSettingsWidget(final SettingsWidget settingsWidget) {
-		UISession.settingsWidget = settingsWidget;
-	}
-	
-	
-	private static BuilderWidget builderWidget;
 
 	public static BuilderWidget getBuilderWidget() {
 		return builderWidget;
 	}
 
-	public static void setBuilderWidget(final BuilderWidget builderWidget) {
-		UISession.builderWidget = builderWidget;
+	public static DiscoWidget getDiscoWidget() {
+		return discoWidget;
 	}
-	
-	private static ImporterWidget importerWidget;
 
 	public static ImporterWidget getImporterWidget() {
 		return importerWidget;
 	}
 
-	public static void setImporterWidget(final ImporterWidget importerWidget) {
-		UISession.importerWidget = importerWidget;
-	}
-	
-	
-	
-	private static DiscoWidget discoWidget;
-
-	public static DiscoWidget getDiscoWidget() {
-		return discoWidget;
+	public static JFXPanel getJFXPanel() {
+		return jfxPanel;
 	}
 
-	public static void setDiscoWidget(final DiscoWidget discoWidget) {
-		UISession.discoWidget = discoWidget;
+	public static Media getMedia() {
+		return media;
 	}
-	
-	
-	
-
-	private static MediaPlayer mediaPlayer;
 
 	public static MediaPlayer getMediaPlayer() {
 		return mediaPlayer;
 	}
 
-	public static void setMediaPlayer(final MediaPlayer mediaPlayer) {
-		UISession.mediaPlayer = mediaPlayer;
+	public static MediaPlayerScene getMediaPlayerScene() {
+		return mediaScene;
 	}
-
-	private static MediaView mediaView;
 
 	public static MediaView getMediaView() {
 		return mediaView;
 	}
 
-	public static void setMediaView(final MediaView mediaView) {
-		UISession.mediaView = mediaView;
+	public static AurousFrame getPresenter() {
+		return presenter;
 	}
 
-	private static Media media;
+	public static SettingsWidget getSettingsWidget() {
+		return settingsWidget;
+	}
 
-	public static Media getMedia() {
-		return media;
+	public static void setAboutWidget(final AboutWidget aboutWidget) {
+		UISession.aboutWidget = aboutWidget;
+	}
+
+	public static void setBuilderWidget(final BuilderWidget builderWidget) {
+		UISession.builderWidget = builderWidget;
+	}
+
+	public static void setDiscoWidget(final DiscoWidget discoWidget) {
+		UISession.discoWidget = discoWidget;
+	}
+
+	public static void setImporterWidget(final ImporterWidget importerWidget) {
+		UISession.importerWidget = importerWidget;
+	}
+
+	public static void setJFXPanel(final JFXPanel fxPanel) {
+		UISession.jfxPanel = fxPanel;
+
 	}
 
 	public static void setMedia(final Media media) {
@@ -114,10 +87,8 @@ public class UISession {
 
 	}
 
-	private static MediaPlayerScene mediaScene;
-
-	public static MediaPlayerScene getMediaPlayerScene() {
-		return mediaScene;
+	public static void setMediaPlayer(final MediaPlayer mediaPlayer) {
+		UISession.mediaPlayer = mediaPlayer;
 	}
 
 	public static void setMediaPlayerScene(final MediaPlayerScene scene) {
@@ -125,14 +96,37 @@ public class UISession {
 
 	}
 
+	public static void setMediaView(final MediaView mediaView) {
+		UISession.mediaView = mediaView;
+	}
+
+	public static void setPresenter(final AurousFrame presenter) {
+		UISession.presenter = presenter;
+	}
+
+	public static void setSettingsWidget(final SettingsWidget settingsWidget) {
+		UISession.settingsWidget = settingsWidget;
+	}
+
+	private static AurousFrame presenter;
+
+	private static AboutWidget aboutWidget;
+
+	private static SettingsWidget settingsWidget;
+
+	private static BuilderWidget builderWidget;
+
+	private static ImporterWidget importerWidget;
+
+	private static DiscoWidget discoWidget;
+
+	private static MediaPlayer mediaPlayer;
+
+	private static MediaView mediaView;
+
+	private static Media media;
+
+	private static MediaPlayerScene mediaScene;
+
 	private static JFXPanel jfxPanel;
-
-	public static JFXPanel getJFXPanel() {
-		return jfxPanel;
-	}
-
-	public static void setJFXPanel(final JFXPanel fxPanel) {
-		UISession.jfxPanel = fxPanel;
-
-	}
 }

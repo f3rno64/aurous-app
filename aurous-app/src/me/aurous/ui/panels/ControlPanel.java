@@ -31,12 +31,50 @@ import me.aurous.utils.media.MediaUtils;
  */
 public class ControlPanel extends JPanel {
 
+	public static JLabel current() {
+		return durationPanel.current();
+	}
+
+	public static JButton play() {
+		return play;
+	}
+
+	public static JLabel repeat() {
+		return repeatStatusLabel;
+	}
+
+	public static JSlider seek() {
+		return durationPanel.seek();
+	}
+
+	public static JLabel shuffle() {
+		return shuffleStatusLabel;
+	}
+
+	public static JLabel total() {
+		return durationPanel.total();
+	}
+
+	public static JSlider volume() {
+		return volume;
+	}
+
 	private final Color background = new Color(32, 33, 35);
+
 	private static JSlider volume;
+
 	private static JLabel repeatStatusLabel;
+
 	private static JLabel shuffleStatusLabel;
+
 	private static JButton play;
+
 	private static DurationPanel durationPanel;
+
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 2823722567425016521L;
 
 	public ControlPanel() throws IOException {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -194,37 +232,4 @@ public class ControlPanel extends JPanel {
 		add(Box.createRigidArea(new Dimension(5, 0)));
 
 	}
-
-	public static JLabel current() {
-		return durationPanel.current();
-	}
-
-	public static JLabel total() {
-		return durationPanel.total();
-	}
-
-	public static JSlider seek() {
-		return durationPanel.seek();
-	}
-
-	public static JSlider volume() {
-		return volume;
-	}
-
-	public static JLabel repeat() {
-		return repeatStatusLabel;
-	}
-
-	public static JLabel shuffle() {
-		return shuffleStatusLabel;
-	}
-
-	public static JButton play() {
-		return play;
-	}
-
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 2823722567425016521L;
 }

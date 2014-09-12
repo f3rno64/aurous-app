@@ -40,7 +40,7 @@ public class SettingsWidget {
 				final SettingsWidget window = new SettingsWidget();
 				UISession.setSettingsWidget(window);
 				UISession.getSettingsWidget().getSettingsWidget()
-				.setVisible(true);
+						.setVisible(true);
 			} catch (final Exception e) {
 				e.printStackTrace();
 			}
@@ -221,7 +221,7 @@ public class SettingsWidget {
 		settingsWidget.setType(Type.UTILITY);
 		settingsWidget.setBounds(100, 100, 533, 484);
 		settingsWidget
-		.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+				.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		lblIfYouWant = new JLabel("If you want to show a song on twitch");
 		lblIfYouWant.setForeground(Color.WHITE);
@@ -236,7 +236,8 @@ public class SettingsWidget {
 		savePlayBackCheckBox.setBackground(new Color(49, 49, 49));
 		savePlayBackCheckBox.setBounds(10, 400, 216, 23);
 		settingsWidget.getContentPane().add(savePlayBackCheckBox);
-		settingsWidget.setLocationRelativeTo(UISession.getPresenter().getAurousFrame());
+		settingsWidget.setLocationRelativeTo(UISession.getPresenter()
+				.getAurousFrame());
 
 		showPlayBackAlertCheckbox.setSelected(Settings.isDisplayAlert());
 		lowQualityCheckBox.setSelected(Settings.isStreamLowQuality());
@@ -245,7 +246,7 @@ public class SettingsWidget {
 	}
 
 	public boolean isOpen() {
-		return settingsWidget ==  null ? false : settingsWidget.isVisible();
+		return settingsWidget == null ? false : settingsWidget.isVisible();
 	}
 
 	public void setSettingsWidget(final JFrame settingsWidget) {
