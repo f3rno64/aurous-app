@@ -90,6 +90,7 @@ public class AurousFrame implements WindowListener {
 					"/resources/aurouslogo.png")).getImage());
 		}
 
+		
 		this.aurousFrame = new JFrame();
 		this.aurousFrame.setResizable(true);
 		this.aurousFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(
@@ -104,7 +105,8 @@ public class AurousFrame implements WindowListener {
 		jfxPanel = new JFXPanel();
 
 		try {
-			final JPanel mediaControlsPanel = new ControlPanel();
+			final ControlPanel mediaControlsPanel = new ControlPanel();
+			UISession.setControlPanel(mediaControlsPanel);
 			this.aurousFrame.getContentPane().add(mediaControlsPanel,
 					BorderLayout.SOUTH);
 		} catch (final IOException e) {
@@ -151,7 +153,9 @@ public class AurousFrame implements WindowListener {
 		final FocusPoint focusPoint = new FocusPoint("AppStart");
 
 		tracker.trackAsynchronously(focusPoint);
+		Settings.loadSettings();
 
+		
 	}
 
 	public void setScene(final Scene scene) {

@@ -30,46 +30,47 @@ import me.aurous.utils.media.MediaUtils;
  *
  */
 public class ControlPanel extends JPanel {
-
-	public static JLabel current() {
+	private DurationPanel durationPanel;
+	
+	public JLabel current() {
 		return durationPanel.current();
 	}
 
-	public static JButton play() {
+	public JButton play() {
 		return play;
 	}
 
-	public static JLabel repeat() {
+	public JLabel repeat() {
 		return repeatStatusLabel;
 	}
 
-	public static JSlider seek() {
+	public JSlider seek() {
 		return durationPanel.seek();
 	}
 
-	public static JLabel shuffle() {
+	public JLabel shuffle() {
 		return shuffleStatusLabel;
 	}
 
-	public static JLabel total() {
+	public JLabel total() {
 		return durationPanel.total();
 	}
 
-	public static JSlider volume() {
+	public JSlider volume() {
 		return volume;
 	}
 
 	private final Color background = new Color(32, 33, 35);
 
-	private static JSlider volume;
+	private JSlider volume;
 
-	private static JLabel repeatStatusLabel;
+	private JLabel repeatStatusLabel;
 
-	private static JLabel shuffleStatusLabel;
+	private JLabel shuffleStatusLabel;
 
-	private static JButton play;
+	private JButton play;
 
-	private static DurationPanel durationPanel;
+	
 
 	/**
 	 *
@@ -155,6 +156,7 @@ public class ControlPanel extends JPanel {
 		;
 
 		volume = new JSlider();
+		volume.setValue(Settings.getVolume());
 		volume.setPreferredSize(new Dimension(100, 25));
 		volume.setMaximumSize(new Dimension(100, 25));
 		volume.addChangeListener(e -> {
@@ -164,7 +166,7 @@ public class ControlPanel extends JPanel {
 				Settings.setVolume(volume.getValue());
 			}
 		});
-
+	
 		add(Box.createRigidArea(new Dimension(10, 37)));
 		add(previous);
 		add(Box.createRigidArea(new Dimension(5, 0)));

@@ -14,7 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JTable;
 
 import me.aurous.ui.UISession;
-import me.aurous.ui.panels.ControlPanel;
 import me.aurous.ui.panels.TabelPanel;
 import me.aurous.utils.media.MediaUtils;
 
@@ -25,8 +24,8 @@ import me.aurous.utils.media.MediaUtils;
 public class PlayerFunctions {
 
 	public static void handleSpecialLabels(final boolean isRepeat) {
-		final JLabel repeatStatusLabel = ControlPanel.repeat();
-		final JLabel shuffleStatusLabel = ControlPanel.shuffle();
+		final JLabel repeatStatusLabel = UISession.getControlPanel().repeat();
+		final JLabel shuffleStatusLabel = UISession.getControlPanel().shuffle();
 		if (isRepeat) {
 			if (repeatStatusLabel.isEnabled()) {
 				if (repeat == true) {

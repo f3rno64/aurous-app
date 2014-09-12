@@ -8,7 +8,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import me.aurous.ui.panels.ControlPanel;
+import me.aurous.ui.UISession;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -93,7 +93,7 @@ public class Settings {
 
 			final int volume = json.getInt("volume");
 			setVolume(volume);
-			ControlPanel.volume().setValue(getVolume());
+			UISession.getControlPanel().volume().setValue(getVolume());
 		} catch (final JSONException e) {
 			saveSettings(false);
 

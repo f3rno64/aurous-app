@@ -14,11 +14,12 @@ public class MediaPlayerScene {
 
 	private static void updateTime(final long currentTime,
 			final long totalDuration) {
-
+		final ControlPanel panel = UISession.getControlPanel();
 		final int percentage = (int) (((currentTime * 100.0) / totalDuration) + 0.5); // jesus
 		final double seconds = currentTime / 1000.0;
-		ControlPanel.seek().setValue(percentage);
-		ControlPanel.current().setText(MediaUtils.calculateTime((int) seconds));
+		UISession.getControlPanel().seek().setValue(percentage);
+		panel.seek().setValue(percentage);
+		panel.current().setText(MediaUtils.calculateTime((int) seconds));
 		// god
 		if (percentage == 100) {
 
@@ -36,11 +37,12 @@ public class MediaPlayerScene {
 	private MediaView view;
 
 	public Scene createScene(final String sourceURL) throws Throwable {
-
+		final ControlPanel panel = UISession.getControlPanel();
 		final Group root = new Group();
 		root.autosize();
 		MediaUtils.activeMedia = sourceURL;
 		final String trailer = MediaUtils.getMediaURL(sourceURL);
+		
 
 		media = new Media(trailer);
 
@@ -58,7 +60,7 @@ public class MediaPlayerScene {
 		player.play();
 
 		player.setOnReady(() -> {
-			ControlPanel.seek().setValue(0);
+			panel.seek().setValue(0);
 
 		});
 		player.currentTimeProperty().addListener(

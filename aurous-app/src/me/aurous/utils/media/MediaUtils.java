@@ -28,7 +28,6 @@ import me.aurous.notifiers.NowPlayingNotification;
 import me.aurous.player.Settings;
 import me.aurous.player.functions.PlayerFunctions;
 import me.aurous.ui.UISession;
-import me.aurous.ui.panels.ControlPanel;
 import me.aurous.ui.panels.PlayListPanel;
 import me.aurous.ui.panels.TabelPanel;
 import me.aurous.utils.Internet;
@@ -99,11 +98,11 @@ public class MediaUtils {
 	public static void muteToggle() {
 		if (muted) {
 			muted = false;
-			ControlPanel.volume().setValue(Settings.getVolume());
+			UISession.getControlPanel().volume().setValue(Settings.getVolume());
 		} else {
 			muted = true;
-			Settings.setVolume(ControlPanel.volume().getValue());
-			ControlPanel.volume().setValue(0);
+			Settings.setVolume(UISession.getControlPanel().volume().getValue());
+			UISession.getControlPanel().volume().setValue(0);
 
 		}
 
@@ -118,7 +117,7 @@ public class MediaUtils {
 		switchMediaStream(target);
 		switchMediaMeta(target);
 		switchMediaCover(target);
-		PlayerFunctions.play(ControlPanel.play());
+		PlayerFunctions.play(UISession.getControlPanel().play());
 
 	}
 
@@ -134,7 +133,7 @@ public class MediaUtils {
 		final String artist = target.getValueAt(row, 1).toString().trim();
 		final String time = (String) target.getValueAt(row, 2);
 		PlayListPanel.setSongInformation(title, artist);
-		ControlPanel.total().setText(time);
+		UISession.getControlPanel().total().setText(time);
 		if (Settings.isSavePlayBack()) {
 			try {
 				final File parentDir = new File("./data/livestream/");
@@ -270,7 +269,7 @@ public class MediaUtils {
 						.setScene(UISession.getPresenter().getScene());
 
 				UISession.getMediaPlayer().setVolume(
-						((double) ControlPanel.volume().getValue() / 100));
+						((double) UISession.getControlPanel().volume().getValue() / 100));
 				
 			} catch (final Throwable ei) {
 				ei.printStackTrace();
