@@ -9,7 +9,7 @@ import java.io.OutputStreamWriter;
 
 import javax.swing.JOptionPane;
 
-import me.aurous.tools.PlayListImporter;
+import me.aurous.ui.UISession;
 import me.aurous.utils.media.MediaUtils;
 import me.aurous.utils.playlist.PlayListUtils;
 
@@ -23,11 +23,18 @@ import org.jsoup.select.Elements;
  *
  */
 public class RedditGrabber {
-	private static String COMMENT_QUERY = "?limit=1000"; // is it 500 or 1000?
-
 	private static String addQueryToURL(final String url) {
 		final String commentQueryURL = String.format(url + "%s", COMMENT_QUERY);
 		return commentQueryURL;
+	}
+
+	public static void buildRedditPlayList(String url, final String playListName) {
+		if (url.contains("comments")) {
+			url = addQueryToURL(url);
+		}
+
+		scrapeReddit(url, playListName);
+
 	}
 
 	private static void scrapeReddit(final String url, final String playListName) {
@@ -54,16 +61,17 @@ public class RedditGrabber {
 						bw.newLine();
 						int iterations = 0;
 						for (final Element link : links) {
-							if (PlayListUtils.importerOpen) {
-								if (PlayListImporter.importProgressBar != null) {
+							if (UISession.getImporterWidget().isOpen()) {
+								if (UISession.getImporterWidget()
+										.getImportProgressBar() != null) {
 
 									iterations += 1;
 
 									final int percent = (int) ((iterations * 100.0f) / links
 											.size());
-									System.out.println(percent);
-									PlayListImporter.importProgressBar
-											.setValue(percent);
+									UISession.getImporterWidget()
+											.getImportProgressBar()
+									.setValue(percent);
 									PlayListUtils.disableImporterInterface();
 								}
 								if (!link.attr("abs:href").equals(last)) {
@@ -82,14 +90,16 @@ public class RedditGrabber {
 
 								bw.close();
 								PlayListUtils.deletePlayList(out);
-								if (PlayListImporter.importProgressBar != null) {
+								if (UISession.getImporterWidget()
+										.getImportProgressBar() != null) {
 									PlayListUtils.resetImporterInterface();
 								}
 								return;
 							}
 						}
 						bw.close();
-						if (PlayListImporter.importProgressBar != null) {
+						if (UISession.getImporterWidget()
+								.getImportProgressBar() != null) {
 							PlayListUtils.resetImporterInterface();
 						}
 
@@ -97,7 +107,8 @@ public class RedditGrabber {
 						JOptionPane.showMessageDialog(null,
 								"Invalid URL Detected, is this reddit?",
 								"Error", JOptionPane.ERROR_MESSAGE);
-						if (PlayListImporter.importProgressBar != null) {
+						if (UISession.getImporterWidget()
+								.getImportProgressBar() != null) {
 							PlayListUtils.resetImporterInterface();
 						}
 					}
@@ -105,7 +116,7 @@ public class RedditGrabber {
 					JOptionPane.showMessageDialog(null,
 							"HTTP client error, please try again.", "Error",
 							JOptionPane.ERROR_MESSAGE);
-					if (PlayListImporter.importProgressBar != null) {
+					if (UISession.getImporterWidget().getImportProgressBar() != null) {
 						PlayListUtils.resetImporterInterface();
 					}
 					// e.printStackTrace();
@@ -116,13 +127,6 @@ public class RedditGrabber {
 
 	}
 
-	public static void buildRedditPlayList(String url, final String playListName) {
-		if (url.contains("comments")) {
-			url = addQueryToURL(url);
-		}
-
-		scrapeReddit(url, playListName);
-
-	}
+	private static String COMMENT_QUERY = "?limit=1000"; // is it 500 or 1000?
 
 }

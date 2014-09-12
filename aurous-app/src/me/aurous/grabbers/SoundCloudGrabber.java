@@ -14,38 +14,6 @@ import com.sun.javafx.Utils;
 
 public class SoundCloudGrabber {
 
-	private static String TITLE_PATTERN = "\"title\":\"";
-	private static String ALBUM_ART_PATTERN = "\"og:title\" /><meta content=\"";
-	private static String USERNAME_PATTERN = "{\"username\":\"";
-	private static String DURATION_PATTERN = ",\"duration\":";
-	private static String STREAM_PATTERN = "\"streamUrl\":\"";
-	private static String REDIRECTED_PATTERN = "redirected</a>.&lt;/body&gt;&lt;/html&gt;";
-	private static String STREAM_DOMAIN = "media.soundcloud";
-
-	/**
-	 * @author Andrew Returns the title of the Soundcloud url provided
-	 *
-	 * @return title
-	 */
-	private static String getSongTitle(final String HTML) {
-		String title = "";
-
-		title = MediaUtils.getBetween(HTML, TITLE_PATTERN, "\",\"");
-		title = StringEscapeUtils.escapeHtml4(title.replaceAll(
-				"[^\\x20-\\x7e]", ""));
-		title = Utils.convertUnicode(title);
-		title = StringEscapeUtils.unescapeHtml4(title);
-
-		if (title.contains(",")) {
-			title = escapeComma(title);
-		}
-		return title.trim();
-	}
-
-	private static String escapeComma(final String str) {
-		return str.replace(",", "\\,");
-	}
-
 	/**
 	 * @author Andrew
 	 *
@@ -87,22 +55,20 @@ public class SoundCloudGrabber {
 		return line;
 	}
 
+	private static String escapeComma(final String str) {
+		return str.replace(",", "\\,");
+	}
+
 	/**
 	 * @author Andrew
 	 *
-	 *         Gets the stream URL from the HTML, doesn't need to be scraped
-	 *         every time since the stream url has been constant for over 2
-	 *         years
-	 * @return streamURL
+	 *         Extracts the artist from HTML
 	 *
 	 */
-	public static String getStreamURL(final String HTML) {
-
-		final String streamURL = MediaUtils.getBetween(HTML, STREAM_PATTERN,
-				"\",");
-
-		return streamURL.trim();
-
+	public static String getArtist(final String HTML) {
+		String artist = "";
+		artist = MediaUtils.getBetween(HTML, USERNAME_PATTERN, "\",\"");
+		return artist;
 	}
 
 	/**
@@ -138,13 +104,16 @@ public class SoundCloudGrabber {
 	/**
 	 * @author Andrew
 	 *
-	 *         Extracts the artist from HTML
+	 *         Fetches the albumArt URL from scraping the html
 	 *
+	 * @return covertArt
 	 */
-	public static String getArtist(final String HTML) {
-		String artist = "";
-		artist = MediaUtils.getBetween(HTML, USERNAME_PATTERN, "\",\"");
-		return artist;
+	private static String getCoverArt(final String HTML) {
+		String coverArt = "";
+		coverArt = MediaUtils.getBetween(HTML, ALBUM_ART_PATTERN,
+				"\" property=\"og:i");
+
+		return coverArt.trim();
 	}
 
 	/**
@@ -179,18 +148,55 @@ public class SoundCloudGrabber {
 	}
 
 	/**
+	 * @author Andrew Returns the title of the Soundcloud url provided
+	 *
+	 * @return title
+	 */
+	private static String getSongTitle(final String HTML) {
+		String title = "";
+
+		title = MediaUtils.getBetween(HTML, TITLE_PATTERN, "\",\"");
+		title = StringEscapeUtils.escapeHtml4(title.replaceAll(
+				"[^\\x20-\\x7e]", ""));
+		title = Utils.convertUnicode(title);
+		title = StringEscapeUtils.unescapeHtml4(title);
+
+		if (title.contains(",")) {
+			title = escapeComma(title);
+		}
+		return title.trim();
+	}
+
+	/**
 	 * @author Andrew
 	 *
-	 *         Fetches the albumArt URL from scraping the html
+	 *         Gets the stream URL from the HTML, doesn't need to be scraped
+	 *         every time since the stream url has been constant for over 2
+	 *         years
+	 * @return streamURL
 	 *
-	 * @return covertArt
 	 */
-	private static String getCoverArt(final String HTML) {
-		String coverArt = "";
-		coverArt = MediaUtils.getBetween(HTML, ALBUM_ART_PATTERN,
-				"\" property=\"og:i");
+	public static String getStreamURL(final String HTML) {
 
-		return coverArt.trim();
+		final String streamURL = MediaUtils.getBetween(HTML, STREAM_PATTERN,
+				"\",");
+
+		return streamURL.trim();
+
 	}
+
+	private static String TITLE_PATTERN = "\"title\":\"";
+
+	private static String ALBUM_ART_PATTERN = "\"og:title\" /><meta content=\"";
+
+	private static String USERNAME_PATTERN = "{\"username\":\"";
+
+	private static String DURATION_PATTERN = ",\"duration\":";
+
+	private static String STREAM_PATTERN = "\"streamUrl\":\"";
+
+	private static String REDIRECTED_PATTERN = "redirected</a>.&lt;/body&gt;&lt;/html&gt;";
+
+	private static String STREAM_DOMAIN = "media.soundcloud";
 
 }

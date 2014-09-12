@@ -23,17 +23,6 @@ import me.aurous.ui.panels.TabelPanel;
  */
 public class ModelUtils {
 
-	public static final int TITLE_INDEX = 0;
-	public static final int ARTIST_INDEX = 1;
-	public static final int ALBUM_INDEX = 5;
-	public static final int ALBUMART_INDEX = 6;
-	public static final int TIME_INDEX = 2;
-	public static final int DATE_INDEX = 3;
-	public static final int OWNER_INDEX = 4;
-	public static final int LINK_INDEX = 7;
-	public static boolean playListLoaded;
-	public static JTable table;
-
 	public static class InteractiveRenderer extends DefaultTableCellRenderer {
 		/**
 		 *
@@ -118,5 +107,19 @@ public class ModelUtils {
 			ModelUtils.loadPlayList("data/scripts/blank.plist");
 		}
 	}
+
+	public static final int TITLE_INDEX = 0;
+	public static final int ARTIST_INDEX = 1;
+	public static final int ALBUM_INDEX = 5;
+	public static final int ALBUMART_INDEX = 6;
+	public static final int TIME_INDEX = 2;
+	public static final int DATE_INDEX = 3;
+	public static final int OWNER_INDEX = 4;
+
+	public static final int LINK_INDEX = 7;
+
+	public static boolean playListLoaded;
+
+	public static JTable table;
 
 }

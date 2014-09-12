@@ -1,4 +1,4 @@
-package me.aurous.ui.frames;
+package me.aurous.ui.widgets;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -20,16 +20,38 @@ import javax.swing.WindowConstants;
 
 import me.aurous.ui.UISession;
 import me.aurous.utils.Utils;
-import me.aurous.utils.playlist.PlayListUtils;
 
 /**
  * @author Andrew
  *
  */
-public class AboutFrame {
+public class AboutWidget {
 
-	private static JFrame frmAbout;
+	/**
+	 * Launch the application.
+	 */
+	public static void showAbout() {
+		if ((UISession.getAboutWidget() != null)
+				&& UISession.getAboutWidget().isOpen()) {
+			UISession.getAboutWidget().getWidget().toFront();
+			UISession.getAboutWidget().getWidget().repaint();
+			return;
+		}
+		EventQueue.invokeLater(() -> {
+			try {
+				final AboutWidget window = new AboutWidget();
+				UISession.setAboutWidget(window);
+				UISession.getAboutWidget().getWidget().setVisible(true);
+			} catch (final Exception e) {
+				e.printStackTrace();
+			}
+		});
+	}
+
+	private JFrame aboutWidget;
+
 	private JLabel titleLabel;
+
 	private JLabel copyRightLabel;
 	private JLabel aboutLabel;
 	private JSeparator separator;
@@ -44,52 +66,37 @@ public class AboutFrame {
 	private JLabel andrewsAvatar;
 
 	/**
-	 * Launch the application.
-	 */
-	public static void showAbout() {
-		if (PlayListUtils.aboutOpen == true) {
-			frmAbout.toFront();
-			frmAbout.repaint();
-			return;
-		}
-		EventQueue.invokeLater(() -> {
-			try {
-				final AboutFrame window = new AboutFrame();
-				AboutFrame.frmAbout.setVisible(true);
-			} catch (final Exception e) {
-				e.printStackTrace();
-			}
-		});
-	}
-
-	/**
 	 * Create the application.
 	 */
-	public AboutFrame() {
+	public AboutWidget() {
 		initialize();
+	}
+
+	public JFrame getWidget() {
+		return aboutWidget;
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frmAbout = new JFrame();
-		frmAbout.setIconImage(Toolkit.getDefaultToolkit().getImage(
-				AboutFrame.class.getResource("/resources/aurouslogo.png")));
-		frmAbout.setType(Type.UTILITY);
-		frmAbout.setTitle("About");
-		frmAbout.setResizable(false);
-		frmAbout.setBounds(100, 100, 370, 400);
-		frmAbout.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		frmAbout.getContentPane().setLayout(null);
-		frmAbout.getContentPane().setBackground(new Color(32, 33, 35));
-		frmAbout.addWindowListener(new java.awt.event.WindowAdapter() {
+		aboutWidget = new JFrame();
+		aboutWidget.setIconImage(Toolkit.getDefaultToolkit().getImage(
+				AboutWidget.class.getResource("/resources/aurouslogo.png")));
+		aboutWidget.setType(Type.UTILITY);
+		aboutWidget.setTitle("About");
+		aboutWidget.setResizable(false);
+		aboutWidget.setBounds(100, 100, 370, 400);
+		aboutWidget.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		aboutWidget.getContentPane().setLayout(null);
+		aboutWidget.getContentPane().setBackground(new Color(32, 33, 35));
+		aboutWidget.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(
 					final java.awt.event.WindowEvent windowEvent) {
 
-				PlayListUtils.aboutOpen = false;
-				frmAbout.dispose();
+				UISession.setAboutWidget(null);
+				aboutWidget.dispose();
 
 			}
 		});
@@ -99,14 +106,14 @@ public class AboutFrame {
 		titleLabel.setForeground(Color.WHITE);
 		titleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		titleLabel.setBounds(90, 11, 202, 27);
-		frmAbout.getContentPane().add(titleLabel);
+		aboutWidget.getContentPane().add(titleLabel);
 
 		copyRightLabel = new JLabel("Copyright \u00A9 2014, Codeusa Software");
 		copyRightLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		copyRightLabel.setForeground(Color.WHITE);
 		copyRightLabel.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		copyRightLabel.setBounds(58, 49, 247, 14);
-		frmAbout.getContentPane().add(copyRightLabel);
+		aboutWidget.getContentPane().add(copyRightLabel);
 
 		aboutLabel = new JLabel(
 				"<html><center>Aurous is maintained by one mentally unstable guy with way too much ambition and a habit of premature optimization.<br>If you're interested in helping out check out the links below. </center></html>");
@@ -114,22 +121,22 @@ public class AboutFrame {
 		aboutLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
 		aboutLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		aboutLabel.setBounds(10, 74, 344, 100);
-		frmAbout.getContentPane().add(aboutLabel);
+		aboutWidget.getContentPane().add(aboutLabel);
 
 		separator = new JSeparator();
 		separator.setBounds(10, 186, 344, 2);
-		frmAbout.getContentPane().add(separator);
+		aboutWidget.getContentPane().add(separator);
 
 		socialLabel = new JLabel("Social");
 		socialLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		socialLabel.setForeground(Color.WHITE);
 		socialLabel.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		socialLabel.setBounds(90, 245, 177, 27);
-		frmAbout.getContentPane().add(socialLabel);
+		aboutWidget.getContentPane().add(socialLabel);
 
 		separator_1 = new JSeparator();
 		separator_1.setBounds(10, 283, 344, 2);
-		frmAbout.getContentPane().add(separator_1);
+		aboutWidget.getContentPane().add(separator_1);
 
 		blogButton = new JButton();
 		blogButton.addActionListener(e -> {
@@ -145,10 +152,10 @@ public class AboutFrame {
 		blogButton.setBorder(null);
 		blogButton.setMargin(new Insets(0, 0, 0, 0));
 		blogButton.setContentAreaFilled(false);
-		blogButton.setIcon(new ImageIcon(AboutFrame.class
+		blogButton.setIcon(new ImageIcon(AboutWidget.class
 				.getResource("/resources/tumblr.png")));
 		blogButton.setBounds(20, 296, 64, 64);
-		frmAbout.getContentPane().add(blogButton);
+		aboutWidget.getContentPane().add(blogButton);
 
 		twitterButton = new JButton();
 		twitterButton.addActionListener(e -> {
@@ -160,14 +167,14 @@ public class AboutFrame {
 			}
 		});
 		twitterButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		twitterButton.setIcon(new ImageIcon(AboutFrame.class
+		twitterButton.setIcon(new ImageIcon(AboutWidget.class
 				.getResource("/resources/twitter.png")));
 		twitterButton.setMargin(new Insets(0, 0, 0, 0));
 		twitterButton.setContentAreaFilled(false);
 		twitterButton.setBorderPainted(false);
 		twitterButton.setBorder(null);
 		twitterButton.setBounds(108, 296, 64, 64);
-		frmAbout.getContentPane().add(twitterButton);
+		aboutWidget.getContentPane().add(twitterButton);
 
 		youTubeButton = new JButton();
 		youTubeButton.addActionListener(e -> {
@@ -179,14 +186,14 @@ public class AboutFrame {
 			}
 		});
 		youTubeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		youTubeButton.setIcon(new ImageIcon(AboutFrame.class
+		youTubeButton.setIcon(new ImageIcon(AboutWidget.class
 				.getResource("/resources/youtube.png")));
 		youTubeButton.setMargin(new Insets(0, 0, 0, 0));
 		youTubeButton.setContentAreaFilled(false);
 		youTubeButton.setBorderPainted(false);
 		youTubeButton.setBorder(null);
 		youTubeButton.setBounds(195, 296, 64, 64);
-		frmAbout.getContentPane().add(youTubeButton);
+		aboutWidget.getContentPane().add(youTubeButton);
 
 		faceBookButton = new JButton();
 		faceBookButton.addActionListener(e -> {
@@ -199,14 +206,14 @@ public class AboutFrame {
 		});
 		faceBookButton
 		.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		faceBookButton.setIcon(new ImageIcon(AboutFrame.class
+		faceBookButton.setIcon(new ImageIcon(AboutWidget.class
 				.getResource("/resources/facebook.png")));
 		faceBookButton.setMargin(new Insets(0, 0, 0, 0));
 		faceBookButton.setContentAreaFilled(false);
 		faceBookButton.setBorderPainted(false);
 		faceBookButton.setBorder(null);
 		faceBookButton.setBounds(279, 296, 64, 64);
-		frmAbout.getContentPane().add(faceBookButton);
+		aboutWidget.getContentPane().add(faceBookButton);
 
 		donateButton = new JButton();
 		donateButton.addActionListener(e -> {
@@ -218,7 +225,7 @@ public class AboutFrame {
 			}
 		});
 		donateButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		donateButton.setIcon(new ImageIcon(AboutFrame.class
+		donateButton.setIcon(new ImageIcon(AboutWidget.class
 				.getResource("/resources/paypal.png")));
 		donateButton.setMargin(new Insets(0, 0, 0, 0));
 		donateButton.setContentAreaFilled(false);
@@ -226,7 +233,7 @@ public class AboutFrame {
 		donateButton.setFocusPainted(false);
 		donateButton.setBorder(BorderFactory.createEmptyBorder());
 		donateButton.setBounds(10, 199, 166, 33);
-		frmAbout.getContentPane().add(donateButton);
+		aboutWidget.getContentPane().add(donateButton);
 
 		fokMeButton = new JButton();
 		fokMeButton
@@ -240,21 +247,28 @@ public class AboutFrame {
 			}
 		});
 		fokMeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		fokMeButton.setIcon(new ImageIcon(AboutFrame.class
+		fokMeButton.setIcon(new ImageIcon(AboutWidget.class
 				.getResource("/resources/btn_github_lg.png")));
 		fokMeButton.setMargin(new Insets(0, 0, 0, 0));
 		fokMeButton.setContentAreaFilled(false);
 		fokMeButton.setBorderPainted(false);
 		fokMeButton.setBorder(null);
 		fokMeButton.setBounds(195, 199, 159, 33);
-		frmAbout.getContentPane().add(fokMeButton);
+		aboutWidget.getContentPane().add(fokMeButton);
 
 		andrewsAvatar = new JLabel("");
-		andrewsAvatar.setIcon(new ImageIcon(AboutFrame.class
+		andrewsAvatar.setIcon(new ImageIcon(AboutWidget.class
 				.getResource("/resources/andrew.jpg")));
 		andrewsAvatar.setBounds(0, 0, 80, 63);
-		frmAbout.getContentPane().add(andrewsAvatar);
-		PlayListUtils.aboutOpen = true;
-		frmAbout.setLocationRelativeTo(UISession.getJFXPanel());
+		aboutWidget.getContentPane().add(andrewsAvatar);
+		aboutWidget.setLocationRelativeTo(UISession.getPresenter().getAurousFrame());
+	}
+
+	public boolean isOpen() {
+		return aboutWidget == null ? false : aboutWidget.isVisible();
+	}
+
+	public void setWidget(final JFrame aboutWidget) {
+		this.aboutWidget = aboutWidget;
 	}
 }

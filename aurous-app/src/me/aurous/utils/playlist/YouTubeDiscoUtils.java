@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
-import me.aurous.tools.DiscoMixer;
+import me.aurous.ui.UISession;
 import me.aurous.utils.Internet;
 import me.aurous.utils.media.MediaUtils;
 
@@ -16,39 +16,14 @@ import org.apache.commons.lang3.StringEscapeUtils;
  *
  */
 public class YouTubeDiscoUtils {
-	private static String TOP_100_URL = "https://www.youtube.com/playlist?list=MCUS";
-	private static String DISCO_API_URL = "https://www.youtube.com/disco?action_search=1&query=%s";
-	private static String PLAYLIST_URL = "https://www.youtube.com/playlist?list=%s";
-
-	private static String getDiscoJson(final String query) {
-		String JSON_URL = String.format(DISCO_API_URL, query);
-		JSON_URL = JSON_URL.replace(" ", "%20");
-		final String json_data = Internet.text(JSON_URL);
-
-		return json_data;
-	}
-
-	private static String getPlayListURL(final String json) {
-		final String playListID = MediaUtils.getBetween(json, "\\u0026list=",
-				"\\u0026");
-		final String discoPlayList = String.format(PLAYLIST_URL, playListID);
-
-		return discoPlayList;
-	}
-
-	public static void buildTopPlayList() {
-		YouTubePlayListImporter.importYoutubePlayList(TOP_100_URL,
-				"YouTube Daily Top Tracks");
-
-	}
-
 	public static void buildDiscoPlayList(final String query) {
 		final String json = getDiscoJson(query);
 		if (json.isEmpty()) {
-			JOptionPane.showMessageDialog(DiscoMixer.discoFrame,
+			JOptionPane.showMessageDialog(UISession.getDiscoWidget()
+					.getWidget(),
 					"There was an error getting some needed data, try again!",
 					"Error", JOptionPane.ERROR_MESSAGE);
-			DiscoMixer.discoProgressBar.setVisible(false);
+			UISession.getDiscoWidget().getDiscoProgressBar().setVisible(false);
 			return;
 		}
 
@@ -57,14 +32,28 @@ public class YouTubeDiscoUtils {
 		if (title.equals("Oops! Something went wrong.")) {
 			JOptionPane
 			.showMessageDialog(
-					DiscoMixer.discoFrame,
+					UISession.getDiscoWidget().getWidget(),
 					"Unable to locate any playlist for this artist/song \n But don't worry some may show up soon!",
 					"Error", JOptionPane.ERROR_MESSAGE);
-			DiscoMixer.discoProgressBar.setVisible(false);
+			UISession.getDiscoWidget().getDiscoProgressBar().setVisible(false);
 			return;
 		}
 		YouTubePlayListImporter.importYoutubePlayList(url, title);
 
+	}
+
+	public static void buildTopPlayList() {
+		YouTubePlayListImporter.importYoutubePlayList(TOP_100_URL,
+				"YouTube Daily Top Tracks");
+
+	}
+
+	private static String getDiscoJson(final String query) {
+		String JSON_URL = String.format(DISCO_API_URL, query);
+		JSON_URL = JSON_URL.replace(" ", "%20");
+		final String json_data = Internet.text(JSON_URL);
+
+		return json_data;
 	}
 
 	private static String getPlayListTitle(final String url) {
@@ -87,5 +76,19 @@ public class YouTubeDiscoUtils {
 
 		return title;
 	}
+
+	private static String getPlayListURL(final String json) {
+		final String playListID = MediaUtils.getBetween(json, "\\u0026list=",
+				"\\u0026");
+		final String discoPlayList = String.format(PLAYLIST_URL, playListID);
+
+		return discoPlayList;
+	}
+
+	private static String TOP_100_URL = "https://www.youtube.com/playlist?list=MCUS";
+
+	private static String DISCO_API_URL = "https://www.youtube.com/disco?action_search=1&query=%s";
+
+	private static String PLAYLIST_URL = "https://www.youtube.com/playlist?list=%s";
 
 }

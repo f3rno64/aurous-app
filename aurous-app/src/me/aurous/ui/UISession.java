@@ -6,9 +6,14 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import me.aurous.player.scenes.MediaPlayerScene;
 import me.aurous.ui.frames.AurousFrame;
+import me.aurous.ui.widgets.AboutWidget;
+import me.aurous.ui.widgets.BuilderWidget;
+import me.aurous.ui.widgets.DiscoWidget;
+import me.aurous.ui.widgets.ImporterWidget;
+import me.aurous.ui.widgets.SettingsWidget;
 
 /**
- * Created by Kenneth on 9/4/2014.
+ * Created by Andrew on 9/4/2014.
  */
 public class UISession {
 
@@ -21,6 +26,62 @@ public class UISession {
 	public static void setPresenter(final AurousFrame presenter) {
 		UISession.presenter = presenter;
 	}
+	
+	private static AboutWidget aboutWidget;
+
+	public static AboutWidget getAboutWidget() {
+		return aboutWidget;
+	}
+
+	public static void setAboutWidget(final AboutWidget aboutWidget) {
+		UISession.aboutWidget = aboutWidget;
+	}
+	
+	private static SettingsWidget settingsWidget;
+
+	public static SettingsWidget getSettingsWidget() {
+		return settingsWidget;
+	}
+
+	public static void setSettingsWidget(final SettingsWidget settingsWidget) {
+		UISession.settingsWidget = settingsWidget;
+	}
+	
+	
+	private static BuilderWidget builderWidget;
+
+	public static BuilderWidget getBuilderWidget() {
+		return builderWidget;
+	}
+
+	public static void setBuilderWidget(final BuilderWidget builderWidget) {
+		UISession.builderWidget = builderWidget;
+	}
+	
+	private static ImporterWidget importerWidget;
+
+	public static ImporterWidget getImporterWidget() {
+		return importerWidget;
+	}
+
+	public static void setImporterWidget(final ImporterWidget importerWidget) {
+		UISession.importerWidget = importerWidget;
+	}
+	
+	
+	
+	private static DiscoWidget discoWidget;
+
+	public static DiscoWidget getDiscoWidget() {
+		return discoWidget;
+	}
+
+	public static void setDiscoWidget(final DiscoWidget discoWidget) {
+		UISession.discoWidget = discoWidget;
+	}
+	
+	
+	
 
 	private static MediaPlayer mediaPlayer;
 

@@ -26,81 +26,40 @@ import org.json.JSONObject;
 
 public class YouTubeDataFetcher {
 
-	private static String YOUTUBE_REGEX = "^[^v]+v=(.{11}).*";
-	private static String API_URL = "http://gdata.youtube.com/feeds/api/videos/";
-
 	/**
 	 * @author Andrew
 	 *
-	 *         gets a YouTube video ID from a url
+	 *         Formats all needed variables into a CSV which will be added to
+	 *         the selected playList Album name is missing so we will leave it
+	 *         blank, need to find a suitable api
+	 * @return
 	 *
 	 */
-	public static String getYouTubeID(final String url) {
-		final String id = "";
+	public static String buildPlayListLine(String youTubeVideo) {
 
-		final Pattern pattern = Pattern.compile(YOUTUBE_REGEX);
-		final Matcher matcher = pattern.matcher(url);
-
-		if (matcher.matches()) {
-
-			return matcher.group(1);
-		}
-
-		return id;
-	}
-
-	/**
-	 * @author Andrew
-	 *
-	 *         Gets remote JSON via the GDATA Api which should never time out
-	 *         since no key is needed
-	 *
-	 */
-	public static String getVideoJSON(final String videoID) {
-		URL url; // The URL to read
-		HttpURLConnection conn; // The actual connection to the web page
-		BufferedReader rd; // Used to read results from the web page
-		String line; // An individual line of the web page HTML
-		String result = ""; // A long string containing all the HTML
-		final String gData = String.format("%s%s%s", API_URL, videoID,
-				"?alt=json");
-		if (gData.equals("http://gdata.youtube.com/feeds/api/videos/?alt=json")) {
+		// System.out.println(youTubeVideo);
+		if (!youTubeVideo.startsWith("http")) {
 			return "";
 		}
-		// System.out.println(gData);
-		try {
-			url = new URL(gData);
-			conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			rd = new BufferedReader(
-					new InputStreamReader(conn.getInputStream()));
-			while ((line = rd.readLine()) != null) {
-				result += line;
-			}
-			rd.close();
-		} catch (final Exception e) {
+
+		final String id = getYouTubeID(youTubeVideo);
+		youTubeVideo = formatYouTubeURL(id);
+
+		final String JSON_DATA = getVideoJSON(id);
+		if (JSON_DATA.isEmpty()) {
 			return "";
 		}
-		return result;
-	}
-
-	/**
-	 * @author Andrew
-	 *
-	 *         Formats the id into the YouTube cover image format as highest
-	 *         resolution possible. If format changes will get from the JSON
-	 */
-	public static String getCoverArt(final String id) {
-		final String coverArt;
-		if (checkStatus("http://i.ytimg.com/vi/" + id + "/maxresdefault.jpg") != 404) {
-			coverArt = String.format(
-					"https://i.ytimg.com/vi/%s/maxresdefault.jpg", id);
-		} else {
-			coverArt = String.format("https://i.ytimg.com/vi/%s/hqdefault.jpg",
-					id);
-		}
-
-		return coverArt;
+		final String thumbNail = getCoverArt(id);
+		final String youTubeTitle = getVideoTitle(JSON_DATA);
+		final String artist = (getArtist(JSON_DATA, youTubeTitle));
+		final String songTitle = (getSongtitle(youTubeTitle));
+		final String duration = getDuration(JSON_DATA);
+		final String date = getDate();
+		final String user = Settings.getUserName();
+		final String line = String.format("%s, %s, %s, %s, %s, %s, %s, %s",
+				songTitle, artist, duration, date, user, "", thumbNail,
+				youTubeVideo);
+		return line;
 	}
 
 	private static int checkStatus(final String url) {
@@ -117,34 +76,16 @@ public class YouTubeDataFetcher {
 		}
 	}
 
-	/**
-	 * @author Andrew
-	 *
-	 *         Pulls the title of the video down from JSON
-	 *
-	 */
-	public static String getVideoTitle(final String JSON_DATA) {
-		String title = "";
-		try {
-			final JSONObject json = new JSONObject(JSON_DATA);
-			final JSONObject dataObject = json.getJSONObject("entry");
-			final JSONObject mediaGroup = dataObject
-					.getJSONObject("media$group");
-			final JSONObject media_title = mediaGroup
-					.getJSONObject("media$title");
-			title = StringEscapeUtils.escapeHtml4(media_title.getString("$t")
-					.replaceAll("[^\\x20-\\x7e]", ""));
-			title = StringEscapeUtils.unescapeHtml4(title);
+	private static String escapeComma(final String str) {
+		return str.replace(",", "\\,");
+	}
 
-			if (title.contains(",")) {
-				title = escapeComma(title);
-			}
-			return title;
-		} catch (final JSONException e) {
-			e.printStackTrace();
-		}
+	private static String formatYouTubeURL(final String id) {
 
-		return title;
+		final String url = "https://www.youtube.com/watch?v=%s";
+		final String rebuiltURL = String.format(url, id);
+
+		return rebuiltURL;
 	}
 
 	/**
@@ -168,16 +109,20 @@ public class YouTubeDataFetcher {
 	/**
 	 * @author Andrew
 	 *
-	 *         Extracts the artist from the video title
-	 *
+	 *         Formats the id into the YouTube cover image format as highest
+	 *         resolution possible. If format changes will get from the JSON
 	 */
-	public static String getSongtitle(final String videoTitle) {
-		final Pattern pattern = Pattern.compile("\\-(.*)$");
-		final Matcher matcher = pattern.matcher(videoTitle);
-		while (matcher.find()) {
-			return matcher.group(1).trim();
+	public static String getCoverArt(final String id) {
+		final String coverArt;
+		if (checkStatus("http://i.ytimg.com/vi/" + id + "/maxresdefault.jpg") != 404) {
+			coverArt = String.format(
+					"https://i.ytimg.com/vi/%s/maxresdefault.jpg", id);
+		} else {
+			coverArt = String.format("https://i.ytimg.com/vi/%s/hqdefault.jpg",
+					id);
 		}
-		return videoTitle.trim();
+
+		return coverArt;
 	}
 
 	/**
@@ -223,6 +168,21 @@ public class YouTubeDataFetcher {
 	/**
 	 * @author Andrew
 	 *
+	 *         Extracts the artist from the video title
+	 *
+	 */
+	public static String getSongtitle(final String videoTitle) {
+		final Pattern pattern = Pattern.compile("\\-(.*)$");
+		final Matcher matcher = pattern.matcher(videoTitle);
+		while (matcher.find()) {
+			return matcher.group(1).trim();
+		}
+		return videoTitle.trim();
+	}
+
+	/**
+	 * @author Andrew
+	 *
 	 *         Gets the total seconds a youtube video last
 	 *
 	 */
@@ -244,52 +204,93 @@ public class YouTubeDataFetcher {
 		return duration;
 	}
 
-	private static String formatYouTubeURL(final String id) {
-
-		final String url = "https://www.youtube.com/watch?v=%s";
-		final String rebuiltURL = String.format(url, id);
-
-		return rebuiltURL;
+	/**
+	 * @author Andrew
+	 *
+	 *         Gets remote JSON via the GDATA Api which should never time out
+	 *         since no key is needed
+	 *
+	 */
+	public static String getVideoJSON(final String videoID) {
+		URL url; // The URL to read
+		HttpURLConnection conn; // The actual connection to the web page
+		BufferedReader rd; // Used to read results from the web page
+		String line; // An individual line of the web page HTML
+		String result = ""; // A long string containing all the HTML
+		final String gData = String.format("%s%s%s", API_URL, videoID,
+				"?alt=json");
+		if (gData.equals("http://gdata.youtube.com/feeds/api/videos/?alt=json")) {
+			return "";
+		}
+		// System.out.println(gData);
+		try {
+			url = new URL(gData);
+			conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			rd = new BufferedReader(
+					new InputStreamReader(conn.getInputStream()));
+			while ((line = rd.readLine()) != null) {
+				result += line;
+			}
+			rd.close();
+		} catch (final Exception e) {
+			return "";
+		}
+		return result;
 	}
 
 	/**
 	 * @author Andrew
 	 *
-	 *         Formats all needed variables into a CSV which will be added to
-	 *         the selected playList Album name is missing so we will leave it
-	 *         blank, need to find a suitable api
-	 * @return
+	 *         Pulls the title of the video down from JSON
 	 *
 	 */
-	public static String buildPlayListLine(String youTubeVideo) {
+	public static String getVideoTitle(final String JSON_DATA) {
+		String title = "";
+		try {
+			final JSONObject json = new JSONObject(JSON_DATA);
+			final JSONObject dataObject = json.getJSONObject("entry");
+			final JSONObject mediaGroup = dataObject
+					.getJSONObject("media$group");
+			final JSONObject media_title = mediaGroup
+					.getJSONObject("media$title");
+			title = StringEscapeUtils.escapeHtml4(media_title.getString("$t")
+					.replaceAll("[^\\x20-\\x7e]", ""));
+			title = StringEscapeUtils.unescapeHtml4(title);
 
-		// System.out.println(youTubeVideo);
-		if (!youTubeVideo.startsWith("http")) {
-			return "";
+			if (title.contains(",")) {
+				title = escapeComma(title);
+			}
+			return title;
+		} catch (final JSONException e) {
+			e.printStackTrace();
 		}
 
-		final String id = getYouTubeID(youTubeVideo);
-		youTubeVideo = formatYouTubeURL(id);
+		return title;
+	}
 
-		final String JSON_DATA = getVideoJSON(id);
-		if (JSON_DATA.isEmpty()) {
-			return "";
+	/**
+	 * @author Andrew
+	 *
+	 *         gets a YouTube video ID from a url
+	 *
+	 */
+	public static String getYouTubeID(final String url) {
+		final String id = "";
+
+		final Pattern pattern = Pattern.compile(YOUTUBE_REGEX);
+		final Matcher matcher = pattern.matcher(url);
+
+		if (matcher.matches()) {
+
+			return matcher.group(1);
 		}
-		final String thumbNail = getCoverArt(id);
-		final String youTubeTitle = getVideoTitle(JSON_DATA);
-		final String artist = (getArtist(JSON_DATA, youTubeTitle));
-		final String songTitle = (getSongtitle(youTubeTitle));
-		final String duration = getDuration(JSON_DATA);
-		final String date = getDate();
-		final String user = Settings.getUserName();
-		final String line = String.format("%s, %s, %s, %s, %s, %s, %s, %s",
-				songTitle, artist, duration, date, user, "", thumbNail,
-				youTubeVideo);
-		return line;
+
+		return id;
 	}
 
-	private static String escapeComma(final String str) {
-		return str.replace(",", "\\,");
-	}
+	private static String YOUTUBE_REGEX = "^[^v]+v=(.{11}).*";
+
+	private static String API_URL = "http://gdata.youtube.com/feeds/api/videos/";
 
 }

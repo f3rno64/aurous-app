@@ -1,4 +1,4 @@
-package me.aurous.tools;
+package me.aurous.ui.widgets;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -28,68 +28,93 @@ import me.aurous.utils.playlist.PlayListUtils;
  * @author Andrew
  *
  */
-public class PlayListImporter {
-
-	private static JFrame frmPlaylistImporter;
-	private JTextField playListNameField;
-	private String playListURL = "";
-	private JButton redditServiceButton;
-	public static JButton importPlayListButton;
-	public static JProgressBar importProgressBar;
-	public static JLabel importInstrucLabel;
-	public static JLabel lblEnterAPlaylist;
+public class ImporterWidget {
 
 	public static void openImporter() {
-		if (PlayListUtils.importerOpen == true) {
-			frmPlaylistImporter.toFront();
-			frmPlaylistImporter.repaint();
+		if ((UISession.getImporterWidget() != null)
+				&& UISession.getImporterWidget().isOpen()) {
+			UISession.getImporterWidget().getWidget().toFront();
+			UISession.getImporterWidget().getWidget().repaint();
 			return;
 		}
 		EventQueue.invokeLater(() -> {
 			try {
-				final PlayListImporter window = new PlayListImporter();
-				frmPlaylistImporter.setVisible(true);
+				final ImporterWidget window = new ImporterWidget();
+				UISession.setImporterWidget(window);
+				UISession.getImporterWidget().getWidget().setVisible(true);
 			} catch (final Exception e) {
 				e.printStackTrace();
 			}
 		});
 	}
 
-	public PlayListImporter() {
+	private JFrame importerWidget;
+
+	private JTextField playListNameField;
+	private String playListURL = "";
+
+	private JButton redditServiceButton;
+
+	public JButton importPlayListButton;
+
+	public JProgressBar importProgressBar;
+
+	public JLabel importInstrucLabel;
+
+	public JLabel lblEnterAPlaylist;
+
+	public ImporterWidget() {
 		initialize();
 	}
 
+	public JLabel getEnterPlaylistLabel() {
+		return lblEnterAPlaylist;
+	}
+
+	public JLabel getImportInstrucLabel() {
+		return importInstrucLabel;
+	}
+
+	public JButton getImportPlayListButton() {
+		return importPlayListButton;
+	}
+
+	public JProgressBar getImportProgressBar() {
+		return importProgressBar;
+	}
+
+	public JTextField getPlayListNameField() {
+		return playListNameField;
+	}
+
+	public JFrame getWidget() {
+		return importerWidget;
+	}
+
 	private void initialize() {
-		frmPlaylistImporter = new JFrame();
-		frmPlaylistImporter.setResizable(false);
-		frmPlaylistImporter.setType(Type.UTILITY);
-		frmPlaylistImporter.setIconImage(Toolkit.getDefaultToolkit()
-				.getImage(
-						PlayListImporter.class
-								.getResource("/resources/aurouslogo.png")));
-		frmPlaylistImporter.setTitle("Playlist Importer");
-		frmPlaylistImporter.getContentPane().setBackground(
-				new Color(32, 33, 35));
-		frmPlaylistImporter.setBounds(100, 100, 379, 372);
-		frmPlaylistImporter
-		.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		frmPlaylistImporter.getContentPane().setLayout(null);
-		frmPlaylistImporter
-		.addWindowListener(new java.awt.event.WindowAdapter() {
+		importerWidget = new JFrame();
+		importerWidget.setResizable(false);
+		importerWidget.setType(Type.UTILITY);
+		importerWidget.setIconImage(Toolkit.getDefaultToolkit().getImage(
+				ImporterWidget.class.getResource("/resources/aurouslogo.png")));
+		importerWidget.setTitle("Playlist Importer");
+		importerWidget.getContentPane().setBackground(new Color(32, 33, 35));
+		importerWidget.setBounds(100, 100, 379, 372);
+		importerWidget
+				.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		importerWidget.getContentPane().setLayout(null);
+		importerWidget.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(
 					final java.awt.event.WindowEvent windowEvent) {
-				final int confirm = JOptionPane
-						.showOptionDialog(
-								frmPlaylistImporter,
-								"Are You Sure You Want to Close this Importer?",
-								"Exit Confirmation",
-								JOptionPane.YES_NO_OPTION,
-								JOptionPane.QUESTION_MESSAGE, null,
-								null, null);
+				final int confirm = JOptionPane.showOptionDialog(
+						importerWidget,
+						"Are You Sure You Want to Close this Importer?",
+						"Exit Confirmation", JOptionPane.YES_NO_OPTION,
+						JOptionPane.QUESTION_MESSAGE, null, null, null);
 				if (confirm == 0) {
-					PlayListUtils.importerOpen = false;
-					frmPlaylistImporter.dispose();
+					UISession.setImporterWidget(null);
+					importerWidget.dispose();
 				}
 
 			}
@@ -98,26 +123,26 @@ public class PlayListImporter {
 		final JPanel servicePanel = new JPanel();
 		servicePanel.setBackground(Color.DARK_GRAY);
 		servicePanel.setBounds(0, 67, 373, 65);
-		frmPlaylistImporter.getContentPane().add(servicePanel);
+		importerWidget.getContentPane().add(servicePanel);
 		servicePanel.setLayout(null);
 
 		importProgressBar = new JProgressBar();
 		importProgressBar.setVisible(false);
 		importProgressBar.setStringPainted(true);
 		importProgressBar.setBounds(0, 180, 373, 37);
-		frmPlaylistImporter.getContentPane().add(importProgressBar);
+		importerWidget.getContentPane().add(importProgressBar);
 		final JLabel playListURLLabel = new JLabel("");
 		playListURLLabel.setForeground(Color.WHITE);
 		playListURLLabel.setFont(new Font("Segoe UI", Font.PLAIN, 11));
 		playListURLLabel.setBounds(223, 311, 150, 14);
-		frmPlaylistImporter.getContentPane().add(playListURLLabel);
+		importerWidget.getContentPane().add(playListURLLabel);
 
 		final JButton youTubeServiceButton = new JButton("");
 		youTubeServiceButton.addActionListener(e -> {
 
-			PlayListImporter.this.playListURL = PlayListUtils
+			ImporterWidget.this.playListURL = PlayListUtils
 					.importPlayListPrompt();
-			playListURLLabel.setText(PlayListImporter.this.playListURL);
+			playListURLLabel.setText(ImporterWidget.this.playListURL);
 
 		});
 
@@ -127,10 +152,9 @@ public class PlayListImporter {
 		youTubeServiceButton.setBorder(null);
 		youTubeServiceButton.setMargin(new Insets(0, 0, 0, 0));
 		youTubeServiceButton.setContentAreaFilled(false);
-		youTubeServiceButton.setIcon(new ImageIcon(PlayListImporter.class
+		youTubeServiceButton.setIcon(new ImageIcon(ImporterWidget.class
 				.getResource("/resources/w_youtube.png")));
-		youTubeServiceButton.setRolloverIcon(new ImageIcon(
-				PlayListImporter.class
+		youTubeServiceButton.setRolloverIcon(new ImageIcon(ImporterWidget.class
 				.getResource("/resources/w_youtube_h.png")));
 
 		youTubeServiceButton.setBounds(138, 11, 35, 35);
@@ -139,17 +163,16 @@ public class PlayListImporter {
 
 		redditServiceButton = new JButton("");
 		redditServiceButton.addActionListener(e -> {
-			PlayListImporter.this.playListURL = PlayListUtils
+			ImporterWidget.this.playListURL = PlayListUtils
 					.importPlayListPrompt();
-			playListURLLabel.setText(PlayListImporter.this.playListURL);
+			playListURLLabel.setText(ImporterWidget.this.playListURL);
 
 		});
 		redditServiceButton.setCursor(Cursor
 				.getPredefinedCursor(Cursor.HAND_CURSOR));
-		redditServiceButton.setIcon(new ImageIcon(PlayListImporter.class
+		redditServiceButton.setIcon(new ImageIcon(ImporterWidget.class
 				.getResource("/resources/w_reddit.png")));
-		redditServiceButton
-		.setRolloverIcon(new ImageIcon(PlayListImporter.class
+		redditServiceButton.setRolloverIcon(new ImageIcon(ImporterWidget.class
 				.getResource("/resources/w_reddit_h.png")));
 		redditServiceButton.setMargin(new Insets(0, 0, 0, 0));
 		redditServiceButton.setContentAreaFilled(false);
@@ -163,7 +186,7 @@ public class PlayListImporter {
 		lblSelectAService.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSelectAService.setForeground(Color.WHITE);
 		lblSelectAService.setBounds(54, 11, 251, 50);
-		frmPlaylistImporter.getContentPane().add(lblSelectAService);
+		importerWidget.getContentPane().add(lblSelectAService);
 
 		this.playListNameField = new JTextField();
 		this.playListNameField.setBorder(UIManager
@@ -171,7 +194,7 @@ public class PlayListImporter {
 		this.playListNameField.setHorizontalAlignment(SwingConstants.CENTER);
 		this.playListNameField.setFont(new Font("Segoe UI", Font.PLAIN, 23));
 		this.playListNameField.setBounds(0, 180, 373, 37);
-		frmPlaylistImporter.getContentPane().add(this.playListNameField);
+		importerWidget.getContentPane().add(this.playListNameField);
 		final GhostText ghostText = new GhostText("FMA OST",
 				this.playListNameField);
 		ghostText.setHorizontalAlignment(SwingConstants.CENTER);
@@ -183,13 +206,13 @@ public class PlayListImporter {
 		lblEnterAPlaylist.setForeground(Color.WHITE);
 		lblEnterAPlaylist.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		lblEnterAPlaylist.setBounds(54, 133, 251, 50);
-		frmPlaylistImporter.getContentPane().add(lblEnterAPlaylist);
+		importerWidget.getContentPane().add(lblEnterAPlaylist);
 
 		importPlayListButton = new JButton("");
 		importPlayListButton.addActionListener(e -> {
-			if (!PlayListImporter.this.playListURL.trim().isEmpty()
-					&& !PlayListImporter.this.playListNameField.getText()
-					.trim().isEmpty()) {
+			if (!ImporterWidget.this.playListURL.trim().isEmpty()
+					&& !ImporterWidget.this.playListNameField.getText().trim()
+							.isEmpty()) {
 
 				importProgressBar.setVisible(true);
 
@@ -197,7 +220,7 @@ public class PlayListImporter {
 						this.playListNameField.getText());
 
 			} else {
-				JOptionPane.showMessageDialog(frmPlaylistImporter,
+				JOptionPane.showMessageDialog(importerWidget,
 						"No playlist url or name detected", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				return;
@@ -209,19 +232,22 @@ public class PlayListImporter {
 		importPlayListButton.setBorder(null);
 		importPlayListButton.setMargin(new Insets(0, 0, 0, 0));
 		importPlayListButton.setContentAreaFilled(false);
-		importPlayListButton.setIcon(new ImageIcon(PlayListImporter.class
+		importPlayListButton.setIcon(new ImageIcon(ImporterWidget.class
 				.getResource("/resources/ic_export_import.png")));
 		importPlayListButton.setBounds(149, 261, 64, 64);
-		frmPlaylistImporter.getContentPane().add(importPlayListButton);
+		importerWidget.getContentPane().add(importPlayListButton);
 
 		importInstrucLabel = new JLabel("Import Playlist");
 		importInstrucLabel.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		importInstrucLabel.setForeground(Color.WHITE);
 		importInstrucLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		importInstrucLabel.setBounds(94, 228, 181, 22);
-		frmPlaylistImporter.getContentPane().add(importInstrucLabel);
-		frmPlaylistImporter.setLocationRelativeTo(UISession.getJFXPanel());
-		PlayListUtils.importerOpen = true;
+		importerWidget.getContentPane().add(importInstrucLabel);
+		importerWidget.setLocationRelativeTo(UISession.getPresenter().getAurousFrame());
 
+	}
+
+	public boolean isOpen() {
+		return importerWidget == null ? false : importerWidget.isVisible();
 	}
 }

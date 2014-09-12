@@ -31,7 +31,7 @@ import javax.swing.border.EtchedBorder;
 
 import me.aurous.player.Settings;
 import me.aurous.player.functions.PlayerFunctions;
-import me.aurous.ui.frames.SettingsFrame;
+import me.aurous.ui.widgets.SettingsWidget;
 import me.aurous.utils.ModelUtils;
 import me.aurous.utils.playlist.PlayListUtils;
 
@@ -184,7 +184,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		albumArtLabel.setBorder(BorderFactory.createEmptyBorder());
 		albumArtLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		setAlbumArt(new ImageIcon(
-				SettingsFrame.class
+				SettingsWidget.class
 						.getResource("/resources/album-placeholder.png"))
 				.getImage());
 

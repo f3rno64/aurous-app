@@ -211,7 +211,7 @@ public class MediaUtils {
 	 *         Handles when a stream ends
 	 */
 	public static void handleEndOfStream() {
-
+		
 		final JTable table = TabelPanel.table;
 		if (table.getRowCount() == 0) {
 			return;
@@ -258,17 +258,20 @@ public class MediaUtils {
 				final int row = target.getSelectedRow();
 				final String sourceURL = (String) target.getValueAt(row, 7);
 				UISession.getMediaPlayer().stop();
+				UISession.getMediaPlayer().dispose();
 				UISession.getJFXPanel().setScene(null);
 				UISession.getPresenter().setScene(null);
-				UISession.getMediaPlayer().dispose();
+				System.gc();
 
 				UISession.getPresenter().setScene(UISession
 						.getMediaPlayerScene().createScene(sourceURL));
+				
 				UISession.getJFXPanel()
 						.setScene(UISession.getPresenter().getScene());
 
 				UISession.getMediaPlayer().setVolume(
 						((double) ControlPanel.volume().getValue() / 100));
+				
 			} catch (final Throwable ei) {
 				ei.printStackTrace();
 			}

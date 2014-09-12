@@ -36,10 +36,10 @@ import me.aurous.grabbers.RedditGrabber;
 import me.aurous.grabbers.SoundCloudGrabber;
 import me.aurous.player.Settings;
 import me.aurous.swinghacks.GhostText;
-import me.aurous.tools.DiscoMixer;
-import me.aurous.tools.PlayListBuilder;
-import me.aurous.tools.PlayListImporter;
+import me.aurous.ui.UISession;
 import me.aurous.ui.listeners.ContextMenuMouseListener;
+import me.aurous.ui.widgets.DiscoWidget;
+import me.aurous.ui.widgets.ImporterWidget;
 import me.aurous.utils.media.MediaUtils;
 
 /**
@@ -47,96 +47,6 @@ import me.aurous.utils.media.MediaUtils;
  *
  */
 public class PlayListUtils {
-	public static boolean builderOpen = false;
-	public static boolean importerOpen = false;
-	public static boolean settingsOpen = false;
-	public static boolean discoOpen = false;
-	public static boolean aboutOpen = false;
-
-	/**
-	 * @author Andrew
-	 *
-	 *         Removes a row from the JTable while deleting the line from the
-	 *         playlist
-	 */
-	public static void removeSelectedRows(final JTable table) {
-		final DefaultTableModel model = (DefaultTableModel) table.getModel();
-		final int[] rows = table.getSelectedRows();
-		removeLineFromPlayList(Settings.getLastPlayList(),
-				(String) table.getValueAt(rows[0], 7));
-
-		for (int i = 0; i < rows.length; i++) {
-			model.removeRow(rows[i] - i);
-		}
-
-	}
-
-	public static void disableDiscoInterface() {
-		DiscoMixer.discoBuildButton.setEnabled(false);
-		DiscoMixer.queryField.setEnabled(false);
-		DiscoMixer.top100Button.setEnabled(false);
-	}
-
-	public static void resetDiscoInterface() {
-		DiscoMixer.discoProgressBar.setValue(0);
-		DiscoMixer.discoProgressBar.setVisible(false);
-
-		DiscoMixer.discoBuildButton.setEnabled(true);
-		DiscoMixer.queryField.setEnabled(true);
-		DiscoMixer.top100Button.setEnabled(true);
-	}
-
-	public static void resetImporterInterface() {
-		PlayListImporter.importProgressBar.setValue(0);
-		PlayListImporter.importProgressBar.setVisible(false);
-		PlayListImporter.importInstrucLabel.setText("Import Playlist");
-		PlayListImporter.lblEnterAPlaylist.setText("Enter a Playlist Name");
-		PlayListImporter.importPlayListButton.setEnabled(true);
-	}
-
-	public static void disableImporterInterface() {
-		PlayListImporter.importProgressBar.setVisible(true);
-
-		PlayListImporter.importPlayListButton.setEnabled(false);
-		PlayListImporter.importInstrucLabel.setText("Importing Playlist");
-		PlayListImporter.lblEnterAPlaylist.setText("");
-	}
-
-	public static void getImportRules(final String sourceURL,
-			final String playListName) {
-		if (sourceURL.contains("youtube")) {
-
-			YouTubePlayListImporter.importYoutubePlayList(sourceURL,
-					playListName);
-
-		} else if (sourceURL.contains("soundcloud")) {
-
-		} else if (sourceURL.contains("reddit")) {
-			RedditGrabber.buildRedditPlayList(sourceURL, playListName);
-
-		} else {
-			JOptionPane.showMessageDialog(null, "No importer found!", "Error",
-					JOptionPane.ERROR_MESSAGE);
-			PlayListImporter.importProgressBar.setVisible(false);
-		}
-	}
-
-	public static String getaddRules(final String sourceURL) {
-		if (sourceURL.contains("youtube")) {
-
-			final String tubeLine = YouTubeDataFetcher
-					.buildPlayListLine(sourceURL);
-			return tubeLine;
-
-		} else if (sourceURL.contains("soundcloud")) {
-
-			return SoundCloudGrabber.buildPlayListLine(sourceURL);
-		} else {
-			JOptionPane.showMessageDialog(null, "No importer found!", "Error",
-					JOptionPane.ERROR_MESSAGE);
-		}
-		return "";
-	}
 
 	/**
 	 * popup panel to add url to playlist
@@ -203,42 +113,6 @@ public class PlayListUtils {
 
 	}
 
-	/**
-	 * popup panel to create a playlist
-	 */
-	public static String importPlayListPrompt() {
-		final JTextField urlField = new JTextField();
-		final GhostText gText = new GhostText("Enter service url", urlField);
-
-		urlField.addMouseListener(new ContextMenuMouseListener());
-		urlField.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(final MouseEvent e) {
-
-			}
-		});
-		urlField.setHorizontalAlignment(SwingConstants.CENTER);
-		gText.setHorizontalAlignment(SwingConstants.CENTER);
-
-		final JPanel panel = new JPanel(new GridLayout(0, 1));
-
-		panel.add(new JLabel("Enter a PlayList URL"));
-		panel.add(urlField);
-		final int result = JOptionPane.showConfirmDialog(null, panel,
-				"Add to Service", JOptionPane.OK_CANCEL_OPTION,
-				JOptionPane.PLAIN_MESSAGE);
-
-		if (result == JOptionPane.OK_OPTION) {
-			if (!urlField.getText().isEmpty()) {
-				return urlField.getText();
-			}
-		} else {
-
-		}
-		return "";
-
-	}
-
 	public static void buildPlayList(final String playListItems,
 			final String playListName) {
 		final Thread thread = new Thread() {
@@ -254,7 +128,7 @@ public class PlayListUtils {
 					final String[] lines = playListItems.split("\n");
 					printWriter.println(header);
 					for (final String line : lines) {
-						if (PlayListUtils.builderOpen) {
+						if (UISession.getBuilderWidget().isOpen()) {
 
 							final String playListItem = MediaUtils
 									.getBuiltString(line.trim());
@@ -274,10 +148,15 @@ public class PlayListUtils {
 
 					}
 					printWriter.close();
-					PlayListBuilder.loadingIcon.setVisible(false);
-					PlayListBuilder.playListTextArea.setEditable(true);
-					PlayListBuilder.buildListButton.setEnabled(true);
-					PlayListBuilder.playListNameTextField.setEditable(true);
+					UISession.getBuilderWidget().getLoadingIcon()
+					.setVisible(false);
+					UISession.getBuilderWidget().getPlayListTextArea()
+					.setEditable(true);
+					UISession.getBuilderWidget().getBuildListButton()
+					.setEnabled(true);
+					UISession.getBuilderWidget().getPlayListNameTextField()
+					.setEditable(false);
+
 				} catch (final FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -328,6 +207,199 @@ public class PlayListUtils {
 			e.printStackTrace();
 
 		}
+	}
+
+	public static void disableDiscoInterface() {
+		final DiscoWidget widget = UISession.getDiscoWidget();
+
+		widget.getDiscoBuildButton().setEnabled(false);
+		widget.getQueryField().setEnabled(false);
+		widget.getTop100Button().setEnabled(false);
+
+	}
+
+	public static void disableImporterInterface() {
+
+		final ImporterWidget widget = UISession.getImporterWidget();
+		widget.getImportProgressBar().setVisible(true);
+
+		widget.getImportPlayListButton().setEnabled(false);
+		widget.getImportInstrucLabel().setText("Importing Playlist");
+		widget.getEnterPlaylistLabel().setText("");
+
+	}
+
+	public static String getaddRules(final String sourceURL) {
+		if (sourceURL.contains("youtube")) {
+
+			final String tubeLine = YouTubeDataFetcher
+					.buildPlayListLine(sourceURL);
+			return tubeLine;
+
+		} else if (sourceURL.contains("soundcloud")) {
+
+			return SoundCloudGrabber.buildPlayListLine(sourceURL);
+		} else {
+			JOptionPane.showMessageDialog(null, "No importer found!", "Error",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		return "";
+	}
+
+	public static void getImportRules(final String sourceURL,
+			final String playListName) {
+		if (sourceURL.contains("youtube")) {
+
+			YouTubePlayListImporter.importYoutubePlayList(sourceURL,
+					playListName);
+
+		} else if (sourceURL.contains("soundcloud")) {
+
+		} else if (sourceURL.contains("reddit")) {
+			RedditGrabber.buildRedditPlayList(sourceURL, playListName);
+
+		} else {
+			JOptionPane.showMessageDialog(null, "No importer found!", "Error",
+					JOptionPane.ERROR_MESSAGE);
+			UISession.getImporterWidget().getImportProgressBar()
+			.setVisible(false);
+		}
+	}
+
+	/**
+	 * popup panel to create a playlist
+	 */
+	public static String importPlayListPrompt() {
+		final JTextField urlField = new JTextField();
+		final GhostText gText = new GhostText("Enter service url", urlField);
+
+		urlField.addMouseListener(new ContextMenuMouseListener());
+		urlField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(final MouseEvent e) {
+
+			}
+		});
+		urlField.setHorizontalAlignment(SwingConstants.CENTER);
+		gText.setHorizontalAlignment(SwingConstants.CENTER);
+
+		final JPanel panel = new JPanel(new GridLayout(0, 1));
+
+		panel.add(new JLabel("Enter a PlayList URL"));
+		panel.add(urlField);
+		final int result = JOptionPane.showConfirmDialog(null, panel,
+				"Add to Service", JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.PLAIN_MESSAGE);
+
+		if (result == JOptionPane.OK_OPTION) {
+			if (!urlField.getText().isEmpty()) {
+				return urlField.getText();
+			}
+		} else {
+
+		}
+		return "";
+
+	}
+
+	/**
+	 * @author Andrew
+	 *
+	 *         Deletes line from PlayList
+	 */
+	public static void removeLineFromPlayList(final String file,
+			final String lineToRemove) {
+
+		try {
+
+			final File inFile = new File(file);
+
+			if (!inFile.isFile()) {
+				System.out.println("Parameter is not an existing file");
+				return;
+			}
+
+			// Construct the new file that will later be renamed to the original
+			// filename.
+			final File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
+
+			final BufferedReader br = new BufferedReader(new FileReader(file));
+			final PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+
+			String line = null;
+
+			// Read from the original file and write to the new
+			// unless content matches data to be removed.
+			while ((line = br.readLine()) != null) {
+
+				if (!line.contains(lineToRemove)) {
+
+					pw.println(line);
+					pw.flush();
+				}
+			}
+			pw.close();
+			br.close();
+
+			// Delete the original file
+			if (!inFile.delete()) {
+				System.out.println("Could not delete file");
+				return;
+			}
+
+			// Rename the new file to the filename the original file had.
+			if (!tempFile.renameTo(inFile)) {
+				System.out.println("Could not rename file");
+			}
+			// loadPlayList(PlayerUtils.currentPlayList);
+		} catch (final FileNotFoundException ex) {
+			ex.printStackTrace();
+		} catch (final IOException ex) {
+			ex.printStackTrace();
+		}
+	}
+
+	/**
+	 * @author Andrew
+	 *
+	 *         Removes a row from the JTable while deleting the line from the
+	 *         playlist
+	 */
+	public static void removeSelectedRows(final JTable table) {
+		final DefaultTableModel model = (DefaultTableModel) table.getModel();
+		final int[] rows = table.getSelectedRows();
+		removeLineFromPlayList(Settings.getLastPlayList(),
+				(String) table.getValueAt(rows[0], 7));
+
+		for (int i = 0; i < rows.length; i++) {
+			model.removeRow(rows[i] - i);
+		}
+
+	}
+
+	public static void resetDiscoInterface() {
+		final DiscoWidget widget = UISession.getDiscoWidget();
+		if (widget != null) {
+
+			widget.getDiscoBuildButton().setEnabled(true);
+			widget.getQueryField().setEnabled(true);
+			widget.getTop100Button().setEnabled(true);
+			widget.getDiscoProgressBar().setValue(0);
+			widget.getDiscoProgressBar().setVisible(false);
+		}
+
+	}
+
+	public static void resetImporterInterface() {
+		final ImporterWidget widget = UISession.getImporterWidget();
+		if (widget != null) {
+			widget.getImportProgressBar().setValue(0);
+			widget.getImportProgressBar().setVisible(false);
+			widget.getImportInstrucLabel().setText("Import Playlist");
+			widget.getEnterPlaylistLabel().setText("Enter a Playlist Name");
+			widget.getImportPlayListButton().setEnabled(true);
+		}
+
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -391,62 +463,5 @@ public class PlayListUtils {
 			System.err.println(ex);
 		}
 
-	}
-
-	/**
-	 * @author Andrew
-	 *
-	 *         Deletes line from PlayList
-	 */
-	public static void removeLineFromPlayList(final String file,
-			final String lineToRemove) {
-
-		try {
-
-			final File inFile = new File(file);
-
-			if (!inFile.isFile()) {
-				System.out.println("Parameter is not an existing file");
-				return;
-			}
-
-			// Construct the new file that will later be renamed to the original
-			// filename.
-			final File tempFile = new File(inFile.getAbsolutePath() + ".tmp");
-
-			final BufferedReader br = new BufferedReader(new FileReader(file));
-			final PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
-
-			String line = null;
-
-			// Read from the original file and write to the new
-			// unless content matches data to be removed.
-			while ((line = br.readLine()) != null) {
-
-				if (!line.contains(lineToRemove)) {
-
-					pw.println(line);
-					pw.flush();
-				}
-			}
-			pw.close();
-			br.close();
-
-			// Delete the original file
-			if (!inFile.delete()) {
-				System.out.println("Could not delete file");
-				return;
-			}
-
-			// Rename the new file to the filename the original file had.
-			if (!tempFile.renameTo(inFile)) {
-				System.out.println("Could not rename file");
-			}
-			// loadPlayList(PlayerUtils.currentPlayList);
-		} catch (final FileNotFoundException ex) {
-			ex.printStackTrace();
-		} catch (final IOException ex) {
-			ex.printStackTrace();
-		}
 	}
 }

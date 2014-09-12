@@ -38,6 +38,10 @@ public class AurousFrame implements WindowListener {
 
 	public JFrame aurousFrame;
 
+	public JFrame getAurousFrame() {
+		return aurousFrame;
+	}
+
 	public JFXPanel jfxPanel;
 	public Scene scene;
 

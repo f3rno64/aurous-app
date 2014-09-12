@@ -9,8 +9,9 @@ import java.io.OutputStreamWriter;
 
 import javax.swing.JOptionPane;
 
-import me.aurous.tools.DiscoMixer;
-import me.aurous.tools.PlayListImporter;
+import me.aurous.ui.UISession;
+import me.aurous.ui.widgets.DiscoWidget;
+import me.aurous.ui.widgets.ImporterWidget;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -44,29 +45,36 @@ public class YouTubePlayListImporter {
 								new OutputStreamWriter(fos));
 						final String header = "Title, Artist, Time, Date Added, User, Album, ALBUMART_INDEX, link";
 						int iterations = 0;
-
+						final ImporterWidget importWidget = UISession
+								.getImporterWidget();
+						final DiscoWidget discoWidget = UISession
+								.getDiscoWidget();
 						bw.write(header);
 						bw.newLine();
 						for (final Element link : links) {
-							if (PlayListUtils.importerOpen
-									|| PlayListUtils.discoOpen) {
-								if (DiscoMixer.discoProgressBar != null) {
+							if (((importWidget != null) && importWidget
+									.isOpen())
+									|| ((discoWidget != null) && discoWidget
+											.isOpen())) {
+								if ((discoWidget != null)
+										&& (discoWidget.getDiscoProgressBar() != null)) {
 
 									iterations += 1;
 
 									final int percent = (int) ((iterations * 100.0f) / links
 											.size());
-									System.out.println(percent);
-									DiscoMixer.discoProgressBar
-											.setValue(percent);
+
+									discoWidget.getDiscoProgressBar().setValue(
+											percent);
 									PlayListUtils.disableDiscoInterface();
-								} else if (PlayListImporter.importProgressBar != null) {
+								} else if ((importWidget != null)
+										&& (importWidget.getImportProgressBar() != null)) {
 									iterations += 1;
 
 									final int percent = (int) ((iterations * 100.0f) / links
 											.size());
 
-									PlayListImporter.importProgressBar
+									importWidget.getImportProgressBar()
 											.setValue(percent);
 									PlayListUtils.disableImporterInterface();
 								}
@@ -91,18 +99,18 @@ public class YouTubePlayListImporter {
 
 								bw.close();
 								PlayListUtils.deletePlayList(out);
-								if (PlayListImporter.importProgressBar != null) {
+								if (importWidget != null) {
 									PlayListUtils.resetImporterInterface();
-								} else if (DiscoMixer.discoProgressBar != null) {
+								} else if (discoWidget != null) {
 									PlayListUtils.resetDiscoInterface();
 								}
 								return;
 							}
 						}
 						bw.close();
-						if (PlayListImporter.importProgressBar != null) {
+						if (importWidget != null) {
 							PlayListUtils.resetImporterInterface();
-						} else if (DiscoMixer.discoProgressBar != null) {
+						} else if (discoWidget != null) {
 							PlayListUtils.resetDiscoInterface();
 						}
 
@@ -110,18 +118,18 @@ public class YouTubePlayListImporter {
 						JOptionPane.showMessageDialog(null,
 								"Invalid URL Detected must contain playlist?",
 								"Error", JOptionPane.ERROR_MESSAGE);
-						if (PlayListImporter.importProgressBar != null) {
+						if (UISession.getImporterWidget() != null) {
 							PlayListUtils.resetImporterInterface();
-						} else if (DiscoMixer.discoProgressBar != null) {
+						} else if (UISession.getDiscoWidget() != null) {
 							PlayListUtils.resetDiscoInterface();
 						}
 					}
 				} catch (HeadlessException | IOException e) {
 					JOptionPane.showMessageDialog(null, e.toString(), "Error",
 							JOptionPane.ERROR_MESSAGE);
-					if (PlayListImporter.importProgressBar != null) {
+					if (UISession.getImporterWidget() != null) {
 						PlayListUtils.resetImporterInterface();
-					} else if (DiscoMixer.discoProgressBar != null) {
+					} else if (UISession.getDiscoWidget() != null) {
 						PlayListUtils.resetDiscoInterface();
 					}
 					e.printStackTrace();
@@ -131,7 +139,5 @@ public class YouTubePlayListImporter {
 		thread.start();
 
 	}
-
-
 
 }

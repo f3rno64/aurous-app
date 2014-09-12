@@ -5,11 +5,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import me.aurous.player.Settings;
-import me.aurous.tools.DiscoMixer;
-import me.aurous.tools.PlayListBuilder;
-import me.aurous.tools.PlayListImporter;
-import me.aurous.ui.frames.AboutFrame;
-import me.aurous.ui.frames.SettingsFrame;
+import me.aurous.ui.widgets.AboutWidget;
+import me.aurous.ui.widgets.DiscoWidget;
+import me.aurous.ui.widgets.BuilderWidget;
+import me.aurous.ui.widgets.ImporterWidget;
+import me.aurous.ui.widgets.SettingsWidget;
 import me.aurous.utils.playlist.PlayListUtils;
 
 public class AurousBar extends JMenuBar {
@@ -30,7 +30,7 @@ public class AurousBar extends JMenuBar {
 
 		final JMenuItem settingsItem = new JMenuItem("Settings");
 		fileMenu.add(settingsItem);
-		settingsItem.addActionListener(arg0 -> SettingsFrame.openSettings());
+		settingsItem.addActionListener(arg0 -> SettingsWidget.openSettings());
 		this.fileMenu.add(this.exitMenuItem);
 		// add menus to menubar
 		add(this.fileMenu);
@@ -40,12 +40,12 @@ public class AurousBar extends JMenuBar {
 		add(playListMenu);
 
 		final JMenuItem buildPlayListOption = new JMenuItem("Build Playlist");
-		buildPlayListOption.addActionListener(arg0 -> PlayListBuilder
+		buildPlayListOption.addActionListener(arg0 -> BuilderWidget
 				.openBuilder());
 		playListMenu.add(buildPlayListOption);
 
 		final JMenuItem importPlayListOption = new JMenuItem("Import Playlist");
-		importPlayListOption.addActionListener(arg0 -> PlayListImporter
+		importPlayListOption.addActionListener(arg0 -> ImporterWidget
 				.openImporter());
 		playListMenu.add(importPlayListOption);
 
@@ -62,14 +62,14 @@ public class AurousBar extends JMenuBar {
 		toolsMenu.add(searchItem);
 
 		final JMenuItem discoItem = new JMenuItem("Disco Mode");
-		discoItem.addActionListener(arg0 -> DiscoMixer.openDisco());
+		discoItem.addActionListener(arg0 -> DiscoWidget.openDisco());
 		toolsMenu.add(discoItem);
 
 		final JMenu helpMenu = new JMenu("Help");
 		add(helpMenu);
 
 		final JMenuItem aboutItem = new JMenuItem("About");
-		aboutItem.addActionListener(arg0 -> AboutFrame.showAbout());
+		aboutItem.addActionListener(arg0 -> AboutWidget.showAbout());
 		helpMenu.add(aboutItem);
 		
   }

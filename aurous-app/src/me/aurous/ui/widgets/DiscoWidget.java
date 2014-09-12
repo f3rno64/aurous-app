@@ -1,4 +1,4 @@
-package me.aurous.tools;
+package me.aurous.ui.widgets;
 
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -18,34 +18,29 @@ import javax.swing.WindowConstants;
 
 import me.aurous.swinghacks.GhostText;
 import me.aurous.ui.UISession;
-import me.aurous.utils.playlist.PlayListUtils;
 import me.aurous.utils.playlist.YouTubeDiscoUtils;
 
 /**
  * @author Andrew
  *
  */
-public class DiscoMixer {
-
-	public static JFrame discoFrame;
-	public static JTextField queryField;
-	public static JProgressBar discoProgressBar;
-	public static JButton discoBuildButton;
-	public static JButton top100Button;
+public class DiscoWidget {
 
 	/**
 	 * Launch the application.
 	 */
 	public static void openDisco() {
-		if (PlayListUtils.discoOpen == true) {
-			discoFrame.toFront();
-			discoFrame.repaint();
+		if ((UISession.getDiscoWidget() != null)
+				&& UISession.getDiscoWidget().isOpen()) {
+			UISession.getDiscoWidget().getWidget().toFront();
+			UISession.getDiscoWidget().getWidget().repaint();
 			return;
 		}
 		EventQueue.invokeLater(() -> {
 			try {
-				final DiscoMixer window = new DiscoMixer();
-				DiscoMixer.discoFrame.setVisible(true);
+				final DiscoWidget window = new DiscoWidget();
+				UISession.setDiscoWidget(window);
+				UISession.getDiscoWidget().getWidget().setVisible(true);
 
 			} catch (final Exception e) {
 				e.printStackTrace();
@@ -53,38 +48,65 @@ public class DiscoMixer {
 		});
 	}
 
+	public JFrame discoWidget;
+
+	public JTextField queryField;
+	public JProgressBar discoProgressBar;
+	public JButton discoBuildButton;
+	public JButton top100Button;
+
 	/**
 	 * Create the application.
 	 */
-	public DiscoMixer() {
+	public DiscoWidget() {
 		initialize();
+	}
+
+	public JButton getDiscoBuildButton() {
+		return discoBuildButton;
+	}
+
+	public JProgressBar getDiscoProgressBar() {
+		return discoProgressBar;
+	}
+
+	public JTextField getQueryField() {
+		return queryField;
+	}
+
+	public JButton getTop100Button() {
+		return top100Button;
+	}
+
+	public JFrame getWidget() {
+		return discoWidget;
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		discoFrame = new JFrame();
-		discoFrame.setTitle("Disco Mixer");
-		discoFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(
-				DiscoMixer.class.getResource("/resources/aurouslogo.png")));
-		discoFrame.setType(Type.UTILITY);
-		discoFrame.setResizable(false);
-		discoFrame.setBounds(100, 100, 606, 239);
-		discoFrame
+		discoWidget = new JFrame();
+		discoWidget.setTitle("Disco Mixer");
+		discoWidget.setIconImage(Toolkit.getDefaultToolkit().getImage(
+				DiscoWidget.class.getResource("/resources/aurouslogo.png")));
+		discoWidget.setType(Type.UTILITY);
+		discoWidget.setResizable(false);
+		discoWidget.setBounds(100, 100, 606, 239);
+		discoWidget
 		.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		discoFrame.getContentPane().setLayout(null);
-		discoFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+		discoWidget.getContentPane().setLayout(null);
+		discoWidget.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(
 					final java.awt.event.WindowEvent windowEvent) {
-				final int confirm = JOptionPane.showOptionDialog(discoFrame,
+				final int confirm = JOptionPane.showOptionDialog(discoWidget,
 						"Are You Sure You Want to Close Disco Mixer?",
 						"Exit Confirmation", JOptionPane.YES_NO_OPTION,
 						JOptionPane.QUESTION_MESSAGE, null, null, null);
 				if (confirm == 0) {
-					PlayListUtils.discoOpen = false;
-					discoFrame.dispose();
+					UISession.setDiscoWidget(null);
+					discoWidget.dispose();
 				}
 
 			}
@@ -92,22 +114,22 @@ public class DiscoMixer {
 
 		final JLabel logoLabel = new JLabel("");
 		logoLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		logoLabel.setIcon(new ImageIcon(DiscoMixer.class
+		logoLabel.setIcon(new ImageIcon(DiscoWidget.class
 				.getResource("/resources/fmw.png")));
 		logoLabel.setBounds(10, 0, 580, 70);
-		discoFrame.getContentPane().add(logoLabel);
+		discoWidget.getContentPane().add(logoLabel);
 
 		discoProgressBar = new JProgressBar();
 		discoProgressBar.setStringPainted(true);
 		discoProgressBar.setBounds(113, 119, 380, 49);
 		discoProgressBar.setVisible(false);
-		discoFrame.getContentPane().add(discoProgressBar);
+		discoWidget.getContentPane().add(discoProgressBar);
 
 		queryField = new JTextField();
 		queryField.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		queryField.setHorizontalAlignment(SwingConstants.CENTER);
 		queryField.setBounds(113, 119, 380, 44);
-		discoFrame.getContentPane().add(queryField);
+		discoWidget.getContentPane().add(queryField);
 		queryField.setColumns(10);
 
 		final JLabel instructionsLabel = new JLabel(
@@ -115,7 +137,7 @@ public class DiscoMixer {
 		instructionsLabel.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		instructionsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		instructionsLabel.setBounds(23, 81, 541, 27);
-		discoFrame.getContentPane().add(instructionsLabel);
+		discoWidget.getContentPane().add(instructionsLabel);
 
 		discoBuildButton = new JButton("Disco!");
 		discoBuildButton.addActionListener(e -> {
@@ -123,7 +145,7 @@ public class DiscoMixer {
 				discoProgressBar.setVisible(true);
 				YouTubeDiscoUtils.buildDiscoPlayList(queryField.getText());
 			} else {
-				JOptionPane.showMessageDialog(discoFrame,
+				JOptionPane.showMessageDialog(discoWidget,
 						"Please enter search query", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				return;
@@ -131,7 +153,7 @@ public class DiscoMixer {
 		});
 		discoBuildButton.setForeground(Color.BLACK);
 		discoBuildButton.setBounds(197, 174, 100, 26);
-		discoFrame.getContentPane().add(discoBuildButton);
+		discoWidget.getContentPane().add(discoBuildButton);
 
 		top100Button = new JButton("Top Hits!");
 		top100Button.addActionListener(e -> {
@@ -140,10 +162,13 @@ public class DiscoMixer {
 		});
 		top100Button.setForeground(Color.BLACK);
 		top100Button.setBounds(307, 174, 100, 26);
-		discoFrame.getContentPane().add(top100Button);
-		PlayListUtils.discoOpen = true;
+		discoWidget.getContentPane().add(top100Button);
 		final GhostText ghostText = new GhostText("Ghost B.C.", queryField);
 		ghostText.setHorizontalAlignment(SwingConstants.CENTER);
-		discoFrame.setLocationRelativeTo(UISession.getPresenter().jfxPanel);
+		discoWidget.setLocationRelativeTo(UISession.getPresenter().getAurousFrame());
+	}
+
+	public boolean isOpen() {
+		return discoWidget == null ? false : discoWidget.isVisible();
 	}
 }
