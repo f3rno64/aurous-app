@@ -100,7 +100,6 @@ public class PlayListPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 7941760374900934885L;
 	public static boolean canSetLast = false;
 
-	private int mHoveredJListIndex = -1;
 	private final Color background = new Color(34, 35, 39);
 
 	// public static void run() {

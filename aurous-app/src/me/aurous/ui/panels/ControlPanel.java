@@ -170,6 +170,7 @@ public class ControlPanel extends JPanel {
 			if (UISession.getMediaPlayer() != null) {
 				UISession.getMediaPlayer().setVolume(
 						((double) volume.getValue() / 100));
+			
 				Settings.setVolume(volume.getValue());
 			}
 		});

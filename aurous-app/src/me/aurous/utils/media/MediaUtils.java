@@ -41,6 +41,7 @@ public class MediaUtils {
 	private static boolean muted = false;
 	public static String activeMedia;
 	public static boolean isOutOfFocus;
+	
 
 	/**
 	 * @author Andrew
@@ -71,12 +72,14 @@ public class MediaUtils {
 			return "";
 		}
 		if (sourceURL.contains("youtube")) {
-			return YouTubeGrabber.getYouTubeStream(Internet.text(sourceURL));
+			 YouTubeGrabber youTube = new YouTubeGrabber();
+			return youTube.getYouTubeStream(Internet.text(sourceURL));
 		} else if (sourceURL.contains("soundcloud")) {
 			return SoundCloudGrabber.getCachedURL(sourceURL);
 		} else {
 			return "";
 		}
+		
 	}
 
 	/**
@@ -95,6 +98,8 @@ public class MediaUtils {
 		}
 	}
 
+	
+	
 	public static void muteToggle() {
 		if (muted) {
 			muted = false;
