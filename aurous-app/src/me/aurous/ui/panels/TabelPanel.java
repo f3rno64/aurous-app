@@ -187,6 +187,7 @@ public class TabelPanel extends JPanel implements ActionListener {
 		table.setAutoCreateRowSorter(true);
 		scroller.setBorder(BorderFactory.createEmptyBorder());
 		add(this.scroller, BorderLayout.CENTER);
+		table.setFillsViewportHeight(true);
 
 	}
 

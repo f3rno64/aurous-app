@@ -233,6 +233,7 @@ public class AboutWidget {
 		donateButton.setFocusPainted(false);
 		donateButton.setBorder(BorderFactory.createEmptyBorder());
 		donateButton.setBounds(10, 199, 166, 33);
+		
 		aboutWidget.getContentPane().add(donateButton);
 
 		fokMeButton = new JButton();

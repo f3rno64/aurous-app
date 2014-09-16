@@ -66,6 +66,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 					setBackground(list.getBackground());
 					setForeground(list.getForeground());
 				}
+				
 				setEnabled(list.isEnabled());
 				setFont(list.getFont());
 				setOpaque(true);
@@ -99,6 +100,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 7941760374900934885L;
 	public static boolean canSetLast = false;
 
+	private int mHoveredJListIndex = -1;
 	private final Color background = new Color(34, 35, 39);
 
 	// public static void run() {
@@ -157,6 +159,8 @@ public class PlayListPanel extends JPanel implements ActionListener {
 			}
 		});
 		final MouseListener mouseListener = new MouseAdapter() {
+			
+			
 			@Override
 			public void mouseClicked(final MouseEvent mouseEvent) {
 				if (mouseEvent.getClickCount() == 2) {

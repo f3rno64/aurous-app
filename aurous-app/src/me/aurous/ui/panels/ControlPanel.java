@@ -20,6 +20,8 @@ import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 
+
+
 import me.aurous.player.Settings;
 import me.aurous.player.functions.PlayerFunctions;
 import me.aurous.ui.UISession;
@@ -108,6 +110,8 @@ public class ControlPanel extends JPanel {
 		previous.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		previous.setBorderPainted(false);
 		previous.setBorder(null);
+		
+
 		previous.setMargin(new Insets(0, 0, 0, 0));
 		previous.setContentAreaFilled(false);
 		previous.setIcon(new ImageIcon(previousButtonIcon));
@@ -125,6 +129,7 @@ public class ControlPanel extends JPanel {
 		play.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		play.setBorderPainted(false);
 		play.setBorder(null);
+
 		play.setMargin(new Insets(0, 0, 0, 0));
 		play.setContentAreaFilled(false);
 
@@ -135,6 +140,7 @@ public class ControlPanel extends JPanel {
 		nextButton.addActionListener(e -> PlayerFunctions.seekNext());
 		nextButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		nextButton.setBorderPainted(false);
+	
 		nextButton.setBorder(null);
 		nextButton.setMargin(new Insets(0, 0, 0, 0));
 		nextButton.setContentAreaFilled(false);
@@ -147,13 +153,14 @@ public class ControlPanel extends JPanel {
 		mute.addActionListener(e -> MediaUtils.muteToggle());
 		mute.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mute.setBorderPainted(false);
+
 		mute.setBorder(null);
 		mute.setMargin(new Insets(0, 0, 0, 0));
 		mute.setContentAreaFilled(false);
 
 		mute.setIcon(new ImageIcon(soundButtonIcon));
 		mute.setRolloverIcon(new ImageIcon(soundButtonHover));
-		;
+
 
 		volume = new JSlider();
 		volume.setValue(Settings.getVolume());
