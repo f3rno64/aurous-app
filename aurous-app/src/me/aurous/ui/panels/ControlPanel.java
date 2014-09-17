@@ -20,20 +20,20 @@ import javax.swing.JSeparator;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 
-
-
 import me.aurous.player.Settings;
 import me.aurous.player.functions.PlayerFunctions;
 import me.aurous.ui.UISession;
 import me.aurous.utils.media.MediaUtils;
+
+import com.alee.laf.button.WebButtonUI;
 
 /**
  * @author Andrew
  *
  */
 public class ControlPanel extends JPanel {
-	private DurationPanel durationPanel;
-	
+	private final DurationPanel durationPanel;
+
 	public JLabel current() {
 		return durationPanel.current();
 	}
@@ -64,15 +64,13 @@ public class ControlPanel extends JPanel {
 
 	private final Color background = new Color(32, 33, 35);
 
-	private JSlider volume;
+	private final JSlider volume;
 
-	private JLabel repeatStatusLabel;
+	private final JLabel repeatStatusLabel;
 
-	private JLabel shuffleStatusLabel;
+	private final JLabel shuffleStatusLabel;
 
-	private JButton play;
-
-	
+	private final JButton play;
 
 	/**
 	 *
@@ -82,6 +80,7 @@ public class ControlPanel extends JPanel {
 	public ControlPanel() throws IOException {
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		setBackground(background);
+
 		final Image previousButtonIcon = ImageIO.read(this.getClass()
 				.getResource("/resources/btprev.png"));
 		final Image previousRollOver = ImageIO.read(this.getClass()
@@ -106,11 +105,11 @@ public class ControlPanel extends JPanel {
 				.getResource("/resources/btvolume_h.png"));
 
 		final JButton previous = new JButton("");
+		((WebButtonUI) previous.getUI()).setUndecorated(true);
 		previous.addActionListener(e -> PlayerFunctions.seekPrevious());
 		previous.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		previous.setBorderPainted(false);
 		previous.setBorder(null);
-		
 
 		previous.setMargin(new Insets(0, 0, 0, 0));
 		previous.setContentAreaFilled(false);
@@ -126,6 +125,7 @@ public class ControlPanel extends JPanel {
 				PlayerFunctions.play(play);
 			}
 		});
+		((WebButtonUI) play.getUI()).setUndecorated(true);
 		play.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		play.setBorderPainted(false);
 		play.setBorder(null);
@@ -136,20 +136,22 @@ public class ControlPanel extends JPanel {
 		play.setIcon(new ImageIcon(playBackPaused));
 		play.setRolloverIcon(new ImageIcon(playBackPausedHover));
 
-		final JButton nextButton = new JButton("");
-		nextButton.addActionListener(e -> PlayerFunctions.seekNext());
-		nextButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		nextButton.setBorderPainted(false);
-	
-		nextButton.setBorder(null);
-		nextButton.setMargin(new Insets(0, 0, 0, 0));
-		nextButton.setContentAreaFilled(false);
+		final JButton next = new JButton("");
+		((WebButtonUI) next.getUI()).setUndecorated(true);
+		next.addActionListener(e -> PlayerFunctions.seekNext());
+		next.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		next.setBorderPainted(false);
 
-		nextButton.setIcon(new ImageIcon(forwardButtonIcon));
-		nextButton.setRolloverIcon(new ImageIcon(forwardButtonHover));
-		nextButton.setToolTipText("Next");
+		next.setBorder(null);
+		next.setMargin(new Insets(0, 0, 0, 0));
+		next.setContentAreaFilled(false);
+
+		next.setIcon(new ImageIcon(forwardButtonIcon));
+		next.setRolloverIcon(new ImageIcon(forwardButtonHover));
+		next.setToolTipText("Next");
 
 		final JButton mute = new JButton("");
+		((WebButtonUI) mute.getUI()).setUndecorated(true);
 		mute.addActionListener(e -> MediaUtils.muteToggle());
 		mute.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mute.setBorderPainted(false);
@@ -161,7 +163,6 @@ public class ControlPanel extends JPanel {
 		mute.setIcon(new ImageIcon(soundButtonIcon));
 		mute.setRolloverIcon(new ImageIcon(soundButtonHover));
 
-
 		volume = new JSlider();
 		volume.setValue(Settings.getVolume());
 		volume.setPreferredSize(new Dimension(100, 25));
@@ -170,17 +171,17 @@ public class ControlPanel extends JPanel {
 			if (UISession.getMediaPlayer() != null) {
 				UISession.getMediaPlayer().setVolume(
 						((double) volume.getValue() / 100));
-			
+
 				Settings.setVolume(volume.getValue());
 			}
 		});
-	
+
 		add(Box.createRigidArea(new Dimension(10, 37)));
 		add(previous);
 		add(Box.createRigidArea(new Dimension(5, 0)));
 		add(play);
 		add(Box.createRigidArea(new Dimension(5, 0)));
-		add(nextButton);
+		add(next);
 		add(Box.createRigidArea(new Dimension(10, 0)));
 		add(mute);
 		add(Box.createRigidArea(new Dimension(5, 0)));

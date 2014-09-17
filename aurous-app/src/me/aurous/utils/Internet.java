@@ -40,7 +40,8 @@ public class Internet {
 		}
 		return null;
 	}
-
+	
+	
 	public static String text(final String url) {
 		final StringBuilder builder = new StringBuilder();
 		URLConnection conn = null;

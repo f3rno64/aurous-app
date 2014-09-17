@@ -85,7 +85,7 @@ public class TabelPanel extends JPanel implements ActionListener {
 		header.setOpaque(false);
 		header.setBorder(BorderFactory.createRaisedSoftBevelBorder());
 		header.setBackground(new Color(6, 10, 20));
-		header.setForeground(Color.WHITE);
+		//header.setForeground(Color.WHITE);
 
 		if (Settings.getLastPlayList().isEmpty()) {
 

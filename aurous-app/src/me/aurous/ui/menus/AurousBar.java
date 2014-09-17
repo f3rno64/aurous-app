@@ -22,6 +22,7 @@ public class AurousBar extends JMenuBar {
 	private final JMenuItem exitMenuItem;
 
 	public AurousBar() {
+
 		this.fileMenu = new JMenu("File");
 		this.exitMenuItem = new JMenuItem("Exit");
 		exitMenuItem.addActionListener(e -> {

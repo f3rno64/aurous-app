@@ -149,13 +149,13 @@ public class PlayListUtils {
 					}
 					printWriter.close();
 					UISession.getBuilderWidget().getLoadingIcon()
-							.setVisible(false);
+					.setVisible(false);
 					UISession.getBuilderWidget().getPlayListTextArea()
-							.setEditable(true);
+					.setEditable(true);
 					UISession.getBuilderWidget().getBuildListButton()
-							.setEnabled(true);
+					.setEnabled(true);
 					UISession.getBuilderWidget().getPlayListNameTextField()
-							.setEditable(false);
+					.setEditable(false);
 
 				} catch (final FileNotFoundException e) {
 					// TODO Auto-generated catch block
@@ -262,7 +262,7 @@ public class PlayListUtils {
 			JOptionPane.showMessageDialog(null, "No importer found!", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			UISession.getImporterWidget().getImportProgressBar()
-					.setVisible(false);
+			.setVisible(false);
 		}
 	}
 
@@ -425,31 +425,25 @@ public class PlayListUtils {
 				for (final WatchEvent<?> event : key.pollEvents()) {
 					final WatchEvent.Kind<?> kind = event.kind();
 
-					final WatchEvent<Path> ev = (WatchEvent<Path>) event;
-					final Path fileName = ev.context();
-
-					System.out.println(kind.name() + ": " + fileName);
 					java.awt.EventQueue
-					// i dont question the Java API, it works now.
-							.invokeLater(() -> {
+							// i dont question the Java API, it works now.
+					.invokeLater(() -> {
 
-						final DefaultListModel playListModel = new DefaultListModel();
+								final DefaultListModel playListModel = new DefaultListModel();
 
-								final File[] playListFolder = new File(
-								"data/playlist/").listFiles();
-								if ((kind == ENTRY_CREATE)
-										|| ((kind == ENTRY_DELETE)
-												&& (playListModel != null) && (playListFolder != null))) {
+						final File[] playListFolder = new File(
+										"data/playlist/").listFiles();
+						if ((kind == ENTRY_CREATE)
+								|| ((kind == ENTRY_DELETE)
+										&& (playListModel != null) && (playListFolder != null))) {
 
-									for (final File file : playListFolder) {
-										playListModel.addElement(file);
-									}
-									displayList.setModel(playListModel);
-									displayList.updateUI();
-									System.out
-											.println("Playlist change detected");
-								}
-							});
+							for (final File file : playListFolder) {
+								playListModel.addElement(file);
+							}
+							displayList.setModel(playListModel);
+									// / displayList.updateUI();
+						}
+					});
 
 				}
 

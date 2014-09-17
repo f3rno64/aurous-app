@@ -3,6 +3,7 @@ package me.aurous.ui.panels;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -66,7 +67,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 					setBackground(list.getBackground());
 					setForeground(list.getForeground());
 				}
-				
+
 				setEnabled(list.isEnabled());
 				setFont(list.getFont());
 				setOpaque(true);
@@ -131,9 +132,10 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		displayList.setBackground(background);
 		displayList.setForeground(Color.WHITE);
 		displayList.setBorder(new EmptyBorder(5, 5, 5, 5));
+		displayList.setFont(new Font("Dialog", Font.BOLD, 12));
 
 		displayList
-		.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+				.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		displayList.setCellRenderer(new MyCellRenderer());
 		displayList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
 		displayList.setName("displayList");
@@ -158,8 +160,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 			}
 		});
 		final MouseListener mouseListener = new MouseAdapter() {
-			
-			
+
 			@Override
 			public void mouseClicked(final MouseEvent mouseEvent) {
 				if (mouseEvent.getClickCount() == 2) {
@@ -197,7 +198,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 
 		final JScrollPane scrollPane = new JScrollPane(displayList);
 		scrollPane
-		.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setPreferredSize(new Dimension(200, getHeight()));
 		scrollPane.setBorder(null);
 
@@ -208,8 +209,8 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		albumArtLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		setAlbumArt(new ImageIcon(
 				SettingsWidget.class
-				.getResource("/resources/album-placeholder.png"))
-		.getImage());
+						.getResource("/resources/album-placeholder.png"))
+				.getImage());
 
 		songInformation = new JLabel();
 		songInformation.setHorizontalAlignment(SwingConstants.LEFT);

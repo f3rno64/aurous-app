@@ -1,13 +1,14 @@
 package me.aurous;
 
+import java.awt.Color;
 import java.awt.EventQueue;
-
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
 
 import me.aurous.ui.UISession;
 import me.aurous.ui.frames.AurousFrame;
-import de.javasoft.plaf.synthetica.SyntheticaLookAndFeel;
+
+import com.alee.laf.WebLookAndFeel;
+import com.alee.laf.progressbar.WebProgressBarStyle;
+import com.alee.laf.scroll.WebScrollBarStyle;
 
 /**
  * @author Andrew
@@ -16,7 +17,8 @@ import de.javasoft.plaf.synthetica.SyntheticaLookAndFeel;
 public class Aurous {
 
 	public static void main(final String[] args) {
-		configureSynthetica();
+		WebLookAndFeel.install();
+		configureWebLAF();
 		EventQueue.invokeLater(() -> {
 			try {
 				final AurousFrame window = new AurousFrame();
@@ -30,28 +32,15 @@ public class Aurous {
 
 	}
 
-	private static void configureSynthetica() {
+	private static void configureWebLAF() {
 
-		try {
-			System.setProperty("swing.aatext", "true");
+		WebProgressBarStyle.bgBottom = (new Color(34, 35, 39));
+		WebProgressBarStyle.progressTopColor = Color.pink;
+		WebProgressBarStyle.progressBottomColor = Color.YELLOW;
+		WebScrollBarStyle.paintTrack = true;
 
-			UIManager.put("Synthetica.popupMenu.blur.enabled", false);
-			UIManager.put("Synthetica.dialog.icon.enabled", true);
-			SyntheticaLookAndFeel.setWindowsDecorated(true); // setting for
-																// false allow
-																// for areo
-																// stuff
-
-			UIManager
-			.setLookAndFeel("de.javasoft.plaf.synthetica.SyntheticaAluOxideLookAndFeel");
-			SyntheticaLookAndFeel.setFont("Dialog", 12);
-
-		} catch (ClassNotFoundException | InstantiationException
-				| IllegalAccessException | UnsupportedLookAndFeelException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// WebLookAndFeel.setDecorateFrames(true);
+		// WebLookAndFeel.setDecorateDialogs(true); //not working on linux
 
 	}
-
 }

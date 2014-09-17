@@ -3,6 +3,7 @@ package me.aurous.ui.frames;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
@@ -59,15 +60,20 @@ public class AurousFrame implements WindowListener {
 		return scene;
 	}
 
-	private void initFX(final JFXPanel fxPanel) throws Throwable {
+	private void initFX(final JFXPanel fxPanel) {
 		// This method is invoked on the JavaFX thread
-		final MediaPlayerScene mediaPlayerScene = new MediaPlayerScene();
-		UISession.setMediaPlayerScene(mediaPlayerScene);
-		scene = UISession.getMediaPlayerScene().createScene(
-				"https://www.youtube.com/watch?v=kGubD7KG9FQ");
-		setScene(scene);
-		fxPanel.setScene(scene);
-		UISession.setJFXPanel(fxPanel);
+		try {
+			final MediaPlayerScene mediaPlayerScene = new MediaPlayerScene();
+			UISession.setMediaPlayerScene(mediaPlayerScene);
+			scene = UISession.getMediaPlayerScene().createScene(
+					"https://www.youtube.com/watch?v=kGubD7KG9FQ");
+			setScene(scene);
+			fxPanel.setScene(scene);
+			UISession.setJFXPanel(fxPanel);
+		} catch (final Throwable e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -90,9 +96,9 @@ public class AurousFrame implements WindowListener {
 					"/resources/aurouslogo.png")).getImage());
 		}
 
-		
 		this.aurousFrame = new JFrame();
 		this.aurousFrame.setResizable(true);
+
 		this.aurousFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				AurousFrame.class.getResource("/resources/aurouslogo.png")));
 		this.aurousFrame.setTitle("Aurous");
@@ -100,7 +106,7 @@ public class AurousFrame implements WindowListener {
 		this.aurousFrame.setSize(new Dimension(800, 600));
 		this.aurousFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.aurousFrame.getContentPane().setLayout(new BorderLayout());
-
+		this.aurousFrame.setFont(new Font("Dialog", Font.BOLD, 12));
 		// we don't actually have to add the panel
 		jfxPanel = new JFXPanel();
 
@@ -126,13 +132,7 @@ public class AurousFrame implements WindowListener {
 
 		// lets make the panel support media
 		Platform.runLater(() -> {
-			try {
-
-				initFX(jfxPanel);
-			} catch (final Throwable e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			initFX(jfxPanel);
 		});
 
 		Utils.centerFrameOnMainDisplay(aurousFrame);
@@ -155,7 +155,6 @@ public class AurousFrame implements WindowListener {
 		tracker.trackAsynchronously(focusPoint);
 		Settings.loadSettings();
 
-		
 	}
 
 	public void setScene(final Scene scene) {
