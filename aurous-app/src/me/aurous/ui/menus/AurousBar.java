@@ -24,6 +24,7 @@ public class AurousBar extends JMenuBar {
 	public AurousBar() {
 
 		this.fileMenu = new JMenu("File");
+
 		this.exitMenuItem = new JMenuItem("Exit");
 		exitMenuItem.addActionListener(e -> {
 			Settings.saveSettings(false);
@@ -60,6 +61,7 @@ public class AurousBar extends JMenuBar {
 		add(toolsMenu);
 
 		final JMenuItem searchItem = new JMenuItem("Search");
+
 		toolsMenu.add(searchItem);
 
 		final JMenuItem discoItem = new JMenuItem("Disco Mode");
@@ -74,4 +76,5 @@ public class AurousBar extends JMenuBar {
 		helpMenu.add(aboutItem);
 
 	}
+
 }

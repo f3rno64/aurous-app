@@ -61,12 +61,13 @@ public class PlayListPanel extends JPanel implements ActionListener {
 						PlayListPanel.class.getResource("/resources/music.png")));
 
 				if (isSelected) {
-					setBackground(list.getSelectionBackground());
-					setForeground(list.getSelectionForeground());
-				} else {
-					setBackground(list.getBackground());
-					setForeground(list.getForeground());
-				}
+				    setBackground(new Color(36,36,36));
+				     setForeground(Color.LIGHT_GRAY);
+				    } else {
+				     
+				    setBackground(new Color(36,36,36));
+				     setForeground(Color.GRAY);
+				    }
 
 				setEnabled(list.isEnabled());
 				setFont(list.getFont());
@@ -101,7 +102,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 7941760374900934885L;
 	public static boolean canSetLast = false;
 
-	private final Color background = new Color(34, 35, 39);
+	private final Color background = new Color(35,35,35);
 
 	// public static void run() {
 
@@ -124,6 +125,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		setBorder(new EtchedBorder());
 
 		setBackground(background);
+	
 		setPreferredSize(new Dimension(200, getHeight()));
 
 		final JList<?> displayList = new JList<Object>(new File(
@@ -132,7 +134,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		displayList.setBackground(background);
 		displayList.setForeground(Color.WHITE);
 		displayList.setBorder(new EmptyBorder(5, 5, 5, 5));
-		displayList.setFont(new Font("Dialog", Font.BOLD, 12));
+		displayList.setFont(new Font("Dialog", Font.PLAIN, 12));
 
 		displayList
 				.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -140,6 +142,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		displayList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
 		displayList.setName("displayList");
 		displayList.setVisibleRowCount(-1);
+		displayList.setForeground(new Color(180, 182, 184));
 		displayList.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(final KeyEvent e) {
@@ -163,7 +166,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void mouseClicked(final MouseEvent mouseEvent) {
-				if (mouseEvent.getClickCount() == 2) {
+			
 					final int index = displayList.locationToIndex(mouseEvent
 							.getPoint());
 					if (index >= 0) {
@@ -181,7 +184,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 
 						System.out.println("Dhouble-clicked on: " + playlist);
 					}
-				}
+				
 			}
 
 			@Override
@@ -242,6 +245,8 @@ public class PlayListPanel extends JPanel implements ActionListener {
 				() -> PlayListUtils.watchPlayListDirectory(displayList));
 		// start the thread
 		thread.start();
+		
+		
 
 	}
 

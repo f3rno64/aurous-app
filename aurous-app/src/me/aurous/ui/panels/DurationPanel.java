@@ -34,9 +34,9 @@ public class DurationPanel extends JPanel {
 		current = "0:00";
 		maximum = "0:00";
 		currentTime = new JLabel(current);
-		currentTime.setForeground(Color.WHITE);
+		currentTime.setForeground(Color.GRAY);
 		maximumTime = new JLabel(maximum);
-		maximumTime.setForeground(Color.WHITE);
+		maximumTime.setForeground(Color.GRAY);
 
 		seek = new JSlider() {
 			private static final long serialVersionUID = -4931644654633925931L;

@@ -62,7 +62,7 @@ public class ControlPanel extends JPanel {
 		return volume;
 	}
 
-	private final Color background = new Color(32, 33, 35);
+	private final Color background = new Color(35,35,35);
 
 	private final JSlider volume;
 
@@ -220,7 +220,7 @@ public class ControlPanel extends JPanel {
 		});
 		shuffleStatusLabel.setCursor(Cursor
 				.getPredefinedCursor(Cursor.HAND_CURSOR));
-		shuffleStatusLabel.setForeground(Color.WHITE);
+		shuffleStatusLabel.setForeground(Color.GRAY);
 
 		repeatStatusLabel = new JLabel("Repeat : Off");
 		repeatStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -235,8 +235,8 @@ public class ControlPanel extends JPanel {
 		});
 		repeatStatusLabel.setCursor(Cursor
 				.getPredefinedCursor(Cursor.HAND_CURSOR));
-		repeatStatusLabel.setForeground(Color.WHITE);
-
+		repeatStatusLabel.setForeground(Color.GRAY);
+		
 		add(shuffleStatusLabel);
 		add(Box.createRigidArea(new Dimension(5, 0)));
 		add(repeatStatusLabel);

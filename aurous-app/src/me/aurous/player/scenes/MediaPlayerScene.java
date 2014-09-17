@@ -75,7 +75,7 @@ public class MediaPlayerScene {
 				});
 
 		// PlayerUtils.activeYoutubeVideo = youtubeVideo;
-		if (sourceURL.equals("https://www.youtube.com/watch?v=kGubD7KG9FQ")) {
+		if (sourceURL.contains("https://www.youtube.com/watch?v=kGubD7KG9FQ")) {
 			player.pause();
 		}
 

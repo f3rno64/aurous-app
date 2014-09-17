@@ -102,7 +102,7 @@ public class AurousFrame implements WindowListener {
 		this.aurousFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				AurousFrame.class.getResource("/resources/aurouslogo.png")));
 		this.aurousFrame.setTitle("Aurous");
-		this.aurousFrame.getContentPane().setBackground(new Color(36, 35, 40));
+		this.aurousFrame.getContentPane().setBackground(new Color(30,30,30));
 		this.aurousFrame.setSize(new Dimension(800, 600));
 		this.aurousFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.aurousFrame.getContentPane().setLayout(new BorderLayout());

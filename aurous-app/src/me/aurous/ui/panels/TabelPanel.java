@@ -3,6 +3,7 @@ package me.aurous.ui.panels;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -16,6 +17,8 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
@@ -33,7 +36,7 @@ import me.aurous.utils.playlist.PlayListUtils;
 public class TabelPanel extends JPanel implements ActionListener {
 	public static JTable table;
 	public static DefaultTableModel tableModel;
-	private final Color background = new Color(18, 19, 21);
+	private final Color background = new Color(35, 35, 35);
 	JPopupMenu popup;
 
 	/**
@@ -79,13 +82,16 @@ public class TabelPanel extends JPanel implements ActionListener {
 		table = new JTable();
 
 		table.setBackground(background);
-		table.setForeground(Color.WHITE);
+		table.setForeground(Color.GRAY);
+		table.setOpaque(true);
 
 		final JTableHeader header = table.getTableHeader();
 		header.setOpaque(false);
 		header.setBorder(BorderFactory.createRaisedSoftBevelBorder());
-		header.setBackground(new Color(6, 10, 20));
-		//header.setForeground(Color.WHITE);
+		header.setForeground(Color.GRAY);
+		header.setAutoscrolls(true);
+
+		header.setBorder(BorderFactory.createEmptyBorder());
 
 		if (Settings.getLastPlayList().isEmpty()) {
 
@@ -117,13 +123,11 @@ public class TabelPanel extends JPanel implements ActionListener {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(final MouseEvent e) {
-				if (e.getClickCount() == 2) {
 
-					final JTable target = (JTable) e.getSource();
-					target.getSelectedRow();
-					MediaUtils.switchMedia(target);
+				final JTable target = (JTable) e.getSource();
+				target.getSelectedRow();
+				MediaUtils.switchMedia(target);
 
-				}
 			}
 
 			@Override
@@ -166,9 +170,6 @@ public class TabelPanel extends JPanel implements ActionListener {
 		// setBorder(new EtchedBorder());
 
 		// this.scroller.setBorder(BorderFactory.createEmptyBorder());
-		table.setOpaque(true);
-		table.setBackground(new Color(18, 19, 21));
-		table.setForeground(new Color(229, 229, 229));
 
 		popup = new JPopupMenu();
 
@@ -188,6 +189,12 @@ public class TabelPanel extends JPanel implements ActionListener {
 		scroller.setBorder(BorderFactory.createEmptyBorder());
 		add(this.scroller, BorderLayout.CENTER);
 		table.setFillsViewportHeight(true);
+		table.setSelectionBackground(table.getBackground());
+		table.setSelectionForeground(new Color(213, 163, 0));
+		table.setGridColor(new Color(44, 44, 44));
+		table.setShowVerticalLines(false);
+		table.setBorder(new CompoundBorder(new EmptyBorder(new Insets(1, 4, 1,
+				4)), table.getBorder()));
 
 	}
 
