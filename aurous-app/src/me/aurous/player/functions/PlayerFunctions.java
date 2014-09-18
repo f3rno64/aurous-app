@@ -1,14 +1,11 @@
 package me.aurous.player.functions;
 
-import java.awt.Image;
-import java.io.IOException;
+import java.awt.Color;
 import java.util.Random;
 
 import javafx.scene.media.MediaPlayer;
 import javafx.util.Duration;
 
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
@@ -30,78 +27,61 @@ public class PlayerFunctions {
 			if (repeatStatusLabel.isEnabled()) {
 				if (repeat == true) {
 					repeat = false;
-					repeatStatusLabel.setText("Repeat : Off");
+					repeatStatusLabel.setForeground(Color.GRAY);
 					shuffleStatusLabel.setEnabled(true);
 
 				} else {
 					repeat = true;
 					shuffle = false;
 					shuffleStatusLabel.setEnabled(false);
-					repeatStatusLabel.setText("Repeat : On");
-					shuffleStatusLabel.setText("Shuffle : Off");
+					repeatStatusLabel.setForeground(Color.WHITE);
+					shuffleStatusLabel.setForeground(Color.GRAY);
 				}
 			}
 		} else {
 			if (shuffleStatusLabel.isEnabled()) {
 				if (shuffle == true) {
 					shuffle = false;
-					shuffleStatusLabel.setText("Shuffle : Off");
+					shuffleStatusLabel.setForeground(Color.GRAY);
 					repeatStatusLabel.setEnabled(true);
 
 				} else {
 					shuffle = true;
 					repeat = false;
 					repeatStatusLabel.setEnabled(false);
-					shuffleStatusLabel.setText("Shuffle : On");
-					repeatStatusLabel.setText("Repeat : Off");
+					shuffleStatusLabel.setForeground(Color.WHITE);
+					repeatStatusLabel.setForeground(Color.GRAY);
 				}
 			}
 		}
 	}
 
 	public static void pause(final JButton mediaStateButton) {
-		try {
-			if (UISession.getMediaPlayer() != null) {
-				final Image playBackPaused = ImageIO.read(mediaStateButton
-						.getClass().getResource("/resources/btplay2.png"));
-				final Image playBackPausedHover = ImageIO.read(mediaStateButton
-						.getClass().getResource("/resources/btplay2_h.png"));
-				mediaStateButton.setIcon(new ImageIcon(playBackPaused));
-				mediaStateButton.setRolloverIcon(new ImageIcon(
-						playBackPausedHover));
+	
+			if (UISession.getMediaPlayer() != null){
+				mediaStateButton.setText("\uF04C");
 				UISession.getMediaPlayer().pause();
 				isPaused = true;
 				mediaStateButton.setToolTipText("Play");
 			}
-		} catch (final IOException e) {
-			e.printStackTrace();
-		}
+		
 	}
 
 	public static void play(final JButton mediaStateButton) {
-		try {
+		
 			if (UISession.getMediaPlayer() != null) {
-				final Image playBackPaused = ImageIO.read(mediaStateButton
-						.getClass().getResource("/resources/btpause2.png"));
-				final Image playBackPausedHover = ImageIO.read(mediaStateButton
-						.getClass().getResource("/resources/btpause2_h.png"));
-				mediaStateButton.setIcon(new ImageIcon(playBackPaused));
-				mediaStateButton.setRolloverIcon(new ImageIcon(
-						playBackPausedHover));
-
+				mediaStateButton.setText("\uf04b");
 				UISession.getMediaPlayer().play();
 				isPaused = false;
 				mediaStateButton.setToolTipText("Pause");
 			}
-		} catch (final IOException e) {
-			e.printStackTrace();
-		}
+		
 	}
 
 	public static void repeat() {
 		final JTable table = TabelPanel.table;
 		if (table != null) {
-			if (table.getRowCount() > 0) {
+			
 				final int index = table.getSelectedRow();
 				table.setRowSelectionInterval(0, index);
 				MediaUtils.switchMedia(table);
@@ -109,7 +89,7 @@ public class PlayerFunctions {
 			} else {
 
 			}
-		}
+		
 	}
 
 	public static void seek(final int value) {

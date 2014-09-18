@@ -15,7 +15,6 @@ import java.awt.event.MouseListener;
 import java.io.File;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.ImageIcon;
@@ -27,7 +26,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 import javax.swing.border.EtchedBorder;
 
 import me.aurous.player.Settings;
@@ -61,13 +59,13 @@ public class PlayListPanel extends JPanel implements ActionListener {
 						PlayListPanel.class.getResource("/resources/music.png")));
 
 				if (isSelected) {
-				    setBackground(new Color(36,36,36));
-				     setForeground(Color.LIGHT_GRAY);
-				    } else {
-				     
-				    setBackground(new Color(36,36,36));
-				     setForeground(Color.GRAY);
-				    }
+					setBackground(new Color(36, 36, 36));
+					setForeground(Color.LIGHT_GRAY);
+				} else {
+
+					setBackground(new Color(36, 36, 36));
+					setForeground(Color.GRAY);
+				}
 
 				setEnabled(list.isEnabled());
 				setFont(list.getFont());
@@ -102,7 +100,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 7941760374900934885L;
 	public static boolean canSetLast = false;
 
-	private final Color background = new Color(35,35,35);
+	private final Color background = new Color(35, 35, 35);
 
 	// public static void run() {
 
@@ -121,23 +119,22 @@ public class PlayListPanel extends JPanel implements ActionListener {
 	public PlayListPanel() {
 		setAlignmentX(Component.LEFT_ALIGNMENT);
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setPreferredSize(new Dimension(200, getHeight()));
 
-		setBorder(new EtchedBorder());
+		
 
 		setBackground(background);
-	
-		setPreferredSize(new Dimension(200, getHeight()));
 
 		final JList<?> displayList = new JList<Object>(new File(
 				"data/playlist/").listFiles());
 
 		displayList.setBackground(background);
 		displayList.setForeground(Color.WHITE);
-		displayList.setBorder(new EmptyBorder(5, 5, 5, 5));
+
 		displayList.setFont(new Font("Dialog", Font.PLAIN, 12));
 
 		displayList
-				.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+		.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		displayList.setCellRenderer(new MyCellRenderer());
 		displayList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
 		displayList.setName("displayList");
@@ -166,25 +163,24 @@ public class PlayListPanel extends JPanel implements ActionListener {
 
 			@Override
 			public void mouseClicked(final MouseEvent mouseEvent) {
-			
-					final int index = displayList.locationToIndex(mouseEvent
-							.getPoint());
-					if (index >= 0) {
-						final Object o = displayList.getModel().getElementAt(
-								index);
-						// PlayListFrame.this.plFunctions.loadPlayList(o
-						// .toString());
-						final String playlist = o.toString();
-						ModelUtils.loadPlayList(playlist);
-						if (canSetLast == true) {
-							canSetLast = false;
-							Settings.setLastPlayList(playlist);
 
-						}
+				final int index = displayList.locationToIndex(mouseEvent
+						.getPoint());
+				if (index >= 0) {
+					final Object o = displayList.getModel().getElementAt(index);
+					// PlayListFrame.this.plFunctions.loadPlayList(o
+					// .toString());
+					final String playlist = o.toString();
+					ModelUtils.loadPlayList(playlist);
+					if (canSetLast == true) {
+						canSetLast = false;
+						Settings.setLastPlayList(playlist);
 
-						System.out.println("Dhouble-clicked on: " + playlist);
 					}
-				
+
+					System.out.println("Dhouble-clicked on: " + playlist);
+				}
+
 			}
 
 			@Override
@@ -201,30 +197,36 @@ public class PlayListPanel extends JPanel implements ActionListener {
 
 		final JScrollPane scrollPane = new JScrollPane(displayList);
 		scrollPane
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPane
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setPreferredSize(new Dimension(200, getHeight()));
-		scrollPane.setBorder(null);
+
+		scrollPane.setBorder(new EtchedBorder());
 
 		albumArtLabel = new JLabel();
+		albumArtLabel.setPreferredSize(new Dimension(200, 200));
 
-		albumArtLabel.setBorder(new EtchedBorder());
+		
 		albumArtLabel.setBorder(BorderFactory.createEmptyBorder());
-		albumArtLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
 		setAlbumArt(new ImageIcon(
 				SettingsWidget.class
-						.getResource("/resources/album-placeholder.png"))
-				.getImage());
+				.getResource("/resources/album-placeholder.png"))
+		.getImage());
 
 		songInformation = new JLabel();
 		songInformation.setHorizontalAlignment(SwingConstants.LEFT);
-		songInformation.setForeground(Color.WHITE);
+		songInformation.setForeground(Color.LIGHT_GRAY);
 
 		add(scrollPane);
 
-		add(Box.createRigidArea(new Dimension(0, 5)));
-
 		add(albumArtLabel);
+
 		add(songInformation);
+		scrollPane.setAlignmentX(Component.LEFT_ALIGNMENT);
+		albumArtLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		songInformation.setAlignmentX(Component.LEFT_ALIGNMENT);
 
 		popup = new JPopupMenu();
 		final JMenuItem playItem = new JMenuItem("Play");
@@ -245,8 +247,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 				() -> PlayListUtils.watchPlayListDirectory(displayList));
 		// start the thread
 		thread.start();
-		
-		
+		repaint();
 
 	}
 

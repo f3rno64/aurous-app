@@ -95,7 +95,7 @@ public class AurousFrame implements WindowListener {
 			macApp.setDockIconImage(new ImageIcon(this.getClass().getResource(
 					"/resources/aurouslogo.png")).getImage());
 		}
-
+		
 		this.aurousFrame = new JFrame();
 		this.aurousFrame.setResizable(true);
 

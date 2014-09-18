@@ -3,7 +3,6 @@ package me.aurous.ui.panels;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -17,8 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
@@ -123,10 +121,12 @@ public class TabelPanel extends JPanel implements ActionListener {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(final MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					final JTable target = (JTable) e.getSource();
 
-				final JTable target = (JTable) e.getSource();
-				target.getSelectedRow();
-				MediaUtils.switchMedia(target);
+					target.getSelectedRow();
+					MediaUtils.switchMedia(target);
+				}
 
 			}
 
@@ -193,8 +193,7 @@ public class TabelPanel extends JPanel implements ActionListener {
 		table.setSelectionForeground(new Color(213, 163, 0));
 		table.setGridColor(new Color(44, 44, 44));
 		table.setShowVerticalLines(false);
-		table.setBorder(new CompoundBorder(new EmptyBorder(new Insets(1, 4, 1,
-				4)), table.getBorder()));
+		table.setBorder(new EtchedBorder());
 
 	}
 

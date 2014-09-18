@@ -88,8 +88,9 @@ public class BuilderWidget {
 		.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
 		loadingIcon = new JLabel("");
+		loadingIcon.setForeground(Color.CYAN);
 
-		loadingIcon.setBackground(Color.WHITE);
+		loadingIcon.setBackground(Color.DARK_GRAY);
 		loadingIcon.setHorizontalAlignment(SwingConstants.CENTER);
 		loadingIcon.setIcon(new ImageIcon(BuilderWidget.class
 				.getResource("/resources/loading1.gif")));

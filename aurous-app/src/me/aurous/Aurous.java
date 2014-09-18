@@ -3,6 +3,7 @@ package me.aurous;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
+import java.awt.Insets;
 
 import me.aurous.ui.UISession;
 import me.aurous.ui.frames.AurousFrame;
@@ -13,6 +14,7 @@ import com.alee.laf.menu.WebMenuBarStyle;
 import com.alee.laf.menu.WebMenuItemStyle;
 import com.alee.laf.progressbar.WebProgressBarStyle;
 import com.alee.laf.scroll.WebScrollBarStyle;
+import com.alee.laf.separator.WebSeparatorStyle;
 import com.alee.laf.slider.WebSliderStyle;
 import com.alee.laf.table.WebTableStyle;
 
@@ -40,13 +42,18 @@ public class Aurous {
 	}
 
 	private static void configureWebLAF() {
-
+		 System.setProperty("awt.useSystemAAFontSettings","on");
+		 System.setProperty("swing.aatext", "true"); //enable System aa
+		
+		  
+		 /* Editing constants */
 		StyleConstants.backgroundColor = (new Color(35, 35, 35));
 		StyleConstants.darkBackgroundColor = (new Color(35, 35, 35));
 		StyleConstants.shadeColor = new Color(35, 35, 35);
 		StyleConstants.fieldFocusColor = new Color(35, 35, 35);
 		StyleConstants.darkBackgroundColor = new Color(35, 35, 35);
 		StyleConstants.textColor = Color.GRAY;
+		StyleConstants.borderColor = Color.DARK_GRAY;
 
 		WebScrollBarStyle.buttonsSize = new Dimension(10, 10);
 
@@ -54,6 +61,7 @@ public class Aurous {
 		WebProgressBarStyle.progressTopColor = Color.pink;
 		WebProgressBarStyle.progressBottomColor = Color.YELLOW;
 
+		
 		// WebLookAndFeel.setDecorateFrames(true);
 		// WebLookAndFeel.setDecorateDialogs(true); //not working on linux
 
@@ -75,6 +83,17 @@ public class Aurous {
 
 		WebMenuItemStyle.selectedBottomBg = (new Color(35, 35, 35));
 		WebMenuItemStyle.selectedTopBg = (new Color(35, 35, 35));
+		
+		StyleConstants.separatorLightUpperColor = Color.DARK_GRAY;
+		StyleConstants.separatorLightColor = Color.DARK_GRAY;
+		StyleConstants.separatorUpperColor = Color.DARK_GRAY;
+		StyleConstants.separatorColor = Color.DARK_GRAY;
+		 WebSeparatorStyle.margin = new Insets(0,-1,0,0);
+		
+		
+		
+		
+		
 
 	}
 }

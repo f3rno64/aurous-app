@@ -38,7 +38,7 @@ import me.aurous.utils.playlist.YouTubeDataFetcher;
  *
  */
 public class MediaUtils {
-	private static boolean muted = false;
+	public static boolean muted = false;
 	public static String activeMedia;
 	public static boolean isOutOfFocus;
 	
@@ -119,10 +119,14 @@ public class MediaUtils {
 	 *         calls all needed functions for a switching of media
 	 */
 	public static void switchMedia(final JTable target) {
+		
+			
+		
 		switchMediaStream(target);
 		switchMediaMeta(target);
 		switchMediaCover(target);
 		PlayerFunctions.play(UISession.getControlPanel().play());
+		
 
 	}
 
@@ -133,7 +137,7 @@ public class MediaUtils {
 	 */
 	private static void switchMediaMeta(final JTable target) {
 		final int row = target.getSelectedRow();
-		if (row >= 0) {
+		
 
 		final String title = target.getValueAt(row, 0).toString().trim();
 		final String artist = target.getValueAt(row, 1).toString().trim();
@@ -153,7 +157,7 @@ public class MediaUtils {
 				e.printStackTrace();
 			}
 		}
-		}
+		
 
 	}
 
@@ -165,8 +169,7 @@ public class MediaUtils {
 	private static void switchMediaCover(final JTable target) {
 		try {
 			final int row = target.getSelectedRow();
-			if (row >= 0) {
-
+			
 			final String albumArt = (String) target.getValueAt(row, 6);
 
 			final ImageIcon icon = new ImageIcon(new URL(albumArt));
@@ -190,7 +193,7 @@ public class MediaUtils {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
+			
 			}
 		} catch (final MalformedURLException e) {
 			e.printStackTrace();
@@ -265,7 +268,7 @@ public class MediaUtils {
 		Platform.runLater(() -> {
 			try {
 				final int row = target.getSelectedRow();
-				if (row >= 0) {
+				
 				final String sourceURL = (String) target.getValueAt(row, 7);
 				UISession.getMediaPlayer().stop();
 				UISession.getMediaPlayer().dispose();
@@ -281,7 +284,7 @@ public class MediaUtils {
 
 				UISession.getMediaPlayer().setVolume(
 						((double) UISession.getControlPanel().volume().getValue() / 100));
-				}
+				
 				
 			} catch (final Throwable ei) {
 				ei.printStackTrace();
