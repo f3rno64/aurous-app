@@ -46,7 +46,6 @@ public class RedditGrabber {
 
 				try {
 					if (url.contains("reddit")) {
-						System.out.println("dacac");
 						// print("Fetching %s...", url);
 						String last = "";
 						final String out = "data/playlist/" + playListName

@@ -4,10 +4,7 @@ import java.io.IOException;
 
 import me.aurous.vkapi.VkApi;
 
-/**
- *
- * @author Dmitry Ginzburg <dmitry.a.ginzburg@gmail.com>
- */
+
 public class AudioApi extends VkApi {
 
 	public AudioApi(final int applicationId, final String formData) {

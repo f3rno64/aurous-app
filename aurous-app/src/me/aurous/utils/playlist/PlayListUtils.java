@@ -183,9 +183,9 @@ public class PlayListUtils {
 			final File file = new File(path);
 
 			if (file.delete()) {
-				System.out.println(file.getName() + " is deleted!");
+			//	System.out.println(file.getName() + " is deleted!");
 			} else {
-				System.out.println("Delete operation is failed.");
+			//	System.out.println("Delete operation is failed.");
 			}
 
 		} catch (final Exception e) {
@@ -204,9 +204,9 @@ public class PlayListUtils {
 			final File file = new File(path);
 
 			if (file.delete()) {
-				System.out.println(file.getName() + " is deleted!");
+			//	System.out.println(file.getName() + " is deleted!");
 			} else {
-				System.out.println("Delete operation is failed.");
+				//System.out.println("Delete operation is failed.");
 			}
 
 		} catch (final Exception e) {

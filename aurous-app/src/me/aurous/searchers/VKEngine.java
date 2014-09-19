@@ -106,7 +106,6 @@ public class VKEngine {
 
 		try {
 			final String json = api.searchAudioJson(parameters);
-			System.out.println(json);
 			if (json.contains("\"response\":[0]")) {
 				JOptionPane.showMessageDialog(UISession.getSearchWidget().getWidget(), "No results found!", "Error",
 						JOptionPane.ERROR_MESSAGE);

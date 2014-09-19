@@ -60,7 +60,7 @@ public class ModelUtils {
 			if (evt.getType() == TableModelEvent.UPDATE) {
 				final int column = evt.getColumn();
 				final int row = evt.getFirstRow();
-				System.out.println("row: " + row + " column: " + column);
+				//System.out.println("row: " + row + " column: " + column);
 				table.setColumnSelectionInterval(column + 1, column + 1);
 				table.setRowSelectionInterval(row, row);
 
@@ -104,7 +104,6 @@ public class ModelUtils {
 					ALBUMART_INDEX));
 
 		} catch (final FileNotFoundException e) {
-			System.out.println("afaafvava");
 			ModelUtils.loadPlayList("data/scripts/blank.plist");
 		}
 	}
