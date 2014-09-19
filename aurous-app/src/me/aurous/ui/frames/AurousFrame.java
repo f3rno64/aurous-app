@@ -149,7 +149,7 @@ public class AurousFrame implements WindowListener {
 
 		// tracking code
 		final JGoogleAnalyticsTracker tracker = new JGoogleAnalyticsTracker(
-				"Aurous App", "2.2", "UA-53956512-1");
+				"Aurous App", "2.2.5", "UA-53956512-1");
 
 		final FocusPoint focusPoint = new FocusPoint("AppStart");
 

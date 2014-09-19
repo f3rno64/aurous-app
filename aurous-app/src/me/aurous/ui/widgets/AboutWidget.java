@@ -101,7 +101,7 @@ public class AboutWidget {
 			}
 		});
 
-		titleLabel = new JLabel("Aurous 2.2");
+		titleLabel = new JLabel("Aurous 2.5");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setForeground(Color.WHITE);
 		titleLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
