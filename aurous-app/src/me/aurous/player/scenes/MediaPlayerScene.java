@@ -10,6 +10,8 @@ import me.aurous.ui.UISession;
 import me.aurous.ui.panels.ControlPanel;
 import me.aurous.utils.media.MediaUtils;
 
+
+
 public class MediaPlayerScene {
 
 	private static void updateTime(final long currentTime,
@@ -42,9 +44,8 @@ public class MediaPlayerScene {
 		root.autosize();
 		MediaUtils.activeMedia = sourceURL;
 		final String trailer = MediaUtils.getMediaURL(sourceURL);
-		
 
-		media = new Media(trailer);
+		media = new Media(trailer.trim());
 
 		player = new MediaPlayer(media);
 

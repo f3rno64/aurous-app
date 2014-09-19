@@ -68,6 +68,10 @@ public class MediaUtils {
 	 *         handles a given site and returns the stream url
 	 */
 	public static String getMediaURL(final String sourceURL) {
+		if (sourceURL == null) {
+			 YouTubeGrabber youTube = new YouTubeGrabber();
+				return youTube.getYouTubeStream(Internet.text("https://www.youtube.com/watch?v=kGubD7KG9FQ"));
+		}
 		if (sourceURL.isEmpty()) {
 			return "";
 		}
@@ -76,8 +80,10 @@ public class MediaUtils {
 			return youTube.getYouTubeStream(Internet.text(sourceURL));
 		} else if (sourceURL.contains("soundcloud")) {
 			return SoundCloudGrabber.getCachedURL(sourceURL);
+		} else if (sourceURL.contains("vk.me")) {
+			return sourceURL;
 		} else {
-			return "";
+			return sourceURL;
 		}
 		
 	}
@@ -142,7 +148,7 @@ public class MediaUtils {
 		final String title = target.getValueAt(row, 0).toString().trim();
 		final String artist = target.getValueAt(row, 1).toString().trim();
 		final String time = (String) target.getValueAt(row, 2);
-		PlayListPanel.setSongInformation(title, artist);
+		PlayListPanel.setSongInformation(title.replace("\\", ""), artist.replace("\\", ""));
 		UISession.getControlPanel().total().setText(time);
 		if (Settings.isSavePlayBack()) {
 			try {
@@ -170,7 +176,7 @@ public class MediaUtils {
 		try {
 			final int row = target.getSelectedRow();
 			
-			final String albumArt = (String) target.getValueAt(row, 6);
+			final String albumArt = target.getName().equals("search") ? "http://codeusa.net/apps/poptart/bad.png" : (String) target.getValueAt(row, 6);
 
 			final ImageIcon icon = new ImageIcon(new URL(albumArt));
 			PlayListPanel.setAlbumArt(icon.getImage());
@@ -210,7 +216,7 @@ public class MediaUtils {
 	public static void copyMediaURL(final JTable target) {
 		final int row = target.getSelectedRow();
 
-		final String link = (String) target.getValueAt(row, 7);
+		final String link = target.getName().equals("search") ? (String) target.getValueAt(row, 3) :(String) target.getValueAt(row, 7);;
 		final StringSelection stringSelection = new StringSelection(link);
 		final Clipboard clpbrd = Toolkit.getDefaultToolkit()
 				.getSystemClipboard();
@@ -269,7 +275,7 @@ public class MediaUtils {
 			try {
 				final int row = target.getSelectedRow();
 				
-				final String sourceURL = (String) target.getValueAt(row, 7);
+				final String sourceURL = target.getName().equals("search") ? (String) target.getValueAt(row, 3) : (String) target.getValueAt(row, 7);
 				UISession.getMediaPlayer().stop();
 				UISession.getMediaPlayer().dispose();
 				UISession.getJFXPanel().setScene(null);
@@ -278,6 +284,7 @@ public class MediaUtils {
 
 				UISession.getPresenter().setScene(UISession
 						.getMediaPlayerScene().createScene(sourceURL));
+			
 				
 				UISession.getJFXPanel()
 						.setScene(UISession.getPresenter().getScene());

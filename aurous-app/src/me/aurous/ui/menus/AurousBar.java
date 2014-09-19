@@ -1,5 +1,7 @@
 package me.aurous.ui.menus;
 
+import java.awt.Font;
+
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -9,6 +11,7 @@ import me.aurous.ui.widgets.AboutWidget;
 import me.aurous.ui.widgets.BuilderWidget;
 import me.aurous.ui.widgets.DiscoWidget;
 import me.aurous.ui.widgets.ImporterWidget;
+import me.aurous.ui.widgets.SearchWidget;
 import me.aurous.ui.widgets.SettingsWidget;
 import me.aurous.utils.playlist.PlayListUtils;
 
@@ -22,7 +25,7 @@ public class AurousBar extends JMenuBar {
 	private final JMenuItem exitMenuItem;
 
 	public AurousBar() {
-
+		setFont(new Font("Calibri", Font.PLAIN, 12));
 		this.fileMenu = new JMenu("File");
 
 		this.exitMenuItem = new JMenuItem("Exit");
@@ -61,7 +64,7 @@ public class AurousBar extends JMenuBar {
 		add(toolsMenu);
 
 		final JMenuItem searchItem = new JMenuItem("Search");
-
+		searchItem.addActionListener(arg0 -> SearchWidget.openSearch());
 		toolsMenu.add(searchItem);
 
 		final JMenuItem discoItem = new JMenuItem("Disco Mode");

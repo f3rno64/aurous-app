@@ -104,21 +104,21 @@ public class AboutWidget {
 		titleLabel = new JLabel("Aurous 2.2");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setForeground(Color.WHITE);
-		titleLabel.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		titleLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
 		titleLabel.setBounds(90, 11, 202, 27);
 		aboutWidget.getContentPane().add(titleLabel);
 
 		copyRightLabel = new JLabel("Copyright \u00A9 2014, Codeusa Software");
 		copyRightLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		copyRightLabel.setForeground(Color.WHITE);
-		copyRightLabel.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		copyRightLabel.setFont(new Font("Calibri", Font.PLAIN, 11));
 		copyRightLabel.setBounds(58, 49, 247, 14);
 		aboutWidget.getContentPane().add(copyRightLabel);
 
 		aboutLabel = new JLabel(
 				"<html><center>Aurous is maintained by one mentally unstable guy with way too much ambition and a habit of premature optimization.<br>If you're interested in helping out check out the links below. </center></html>");
 		aboutLabel.setForeground(Color.WHITE);
-		aboutLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		aboutLabel.setFont(new Font("Calibri", Font.PLAIN, 13));
 		aboutLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		aboutLabel.setBounds(10, 74, 344, 100);
 		aboutWidget.getContentPane().add(aboutLabel);
@@ -130,7 +130,7 @@ public class AboutWidget {
 		socialLabel = new JLabel("Social");
 		socialLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		socialLabel.setForeground(Color.WHITE);
-		socialLabel.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		socialLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
 		socialLabel.setBounds(90, 245, 177, 27);
 		aboutWidget.getContentPane().add(socialLabel);
 
@@ -205,7 +205,7 @@ public class AboutWidget {
 			}
 		});
 		faceBookButton
-				.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		faceBookButton.setIcon(new ImageIcon(AboutWidget.class
 				.getResource("/resources/facebook.png")));
 		faceBookButton.setMargin(new Insets(0, 0, 0, 0));
@@ -233,17 +233,17 @@ public class AboutWidget {
 		donateButton.setFocusPainted(false);
 		donateButton.setBorder(BorderFactory.createEmptyBorder());
 		donateButton.setBounds(10, 199, 166, 33);
-		
+
 		aboutWidget.getContentPane().add(donateButton);
 
 		fokMeButton = new JButton();
 		fokMeButton
-				.addActionListener(e -> {
-					try {
-						Utils.openURL(new URL(
-								"https://github.com/Codeusa/aurous-app"));
-					} catch (final Exception e1) {
-						// TODO Auto-generated catch block
+		.addActionListener(e -> {
+			try {
+				Utils.openURL(new URL(
+						"https://github.com/Codeusa/aurous-app"));
+			} catch (final Exception e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});

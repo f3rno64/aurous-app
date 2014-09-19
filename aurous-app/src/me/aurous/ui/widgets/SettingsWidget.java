@@ -40,7 +40,7 @@ public class SettingsWidget {
 				final SettingsWidget window = new SettingsWidget();
 				UISession.setSettingsWidget(window);
 				UISession.getSettingsWidget().getSettingsWidget()
-						.setVisible(true);
+				.setVisible(true);
 			} catch (final Exception e) {
 				e.printStackTrace();
 			}
@@ -221,7 +221,7 @@ public class SettingsWidget {
 		settingsWidget.setType(Type.UTILITY);
 		settingsWidget.setBounds(100, 100, 533, 484);
 		settingsWidget
-				.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		lblIfYouWant = new JLabel("If you want to show a song on twitch");
 		lblIfYouWant.setForeground(Color.WHITE);

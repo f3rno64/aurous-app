@@ -11,6 +11,7 @@ import me.aurous.ui.widgets.AboutWidget;
 import me.aurous.ui.widgets.BuilderWidget;
 import me.aurous.ui.widgets.DiscoWidget;
 import me.aurous.ui.widgets.ImporterWidget;
+import me.aurous.ui.widgets.SearchWidget;
 import me.aurous.ui.widgets.SettingsWidget;
 
 /**
@@ -24,6 +25,10 @@ public class UISession {
 
 	public static BuilderWidget getBuilderWidget() {
 		return builderWidget;
+	}
+
+	public static ControlPanel getControlPanel() {
+		return controlPanel;
 	}
 
 	public static DiscoWidget getDiscoWidget() {
@@ -58,11 +63,12 @@ public class UISession {
 		return presenter;
 	}
 
+	public static SearchWidget getSearchWidget() {
+		return searchWidget;
+	}
+
 	public static SettingsWidget getSettingsWidget() {
 		return settingsWidget;
-	}
-	public static ControlPanel getControlPanel() {
-		return controlPanel;
 	}
 
 	public static void setAboutWidget(final AboutWidget aboutWidget) {
@@ -71,6 +77,10 @@ public class UISession {
 
 	public static void setBuilderWidget(final BuilderWidget builderWidget) {
 		UISession.builderWidget = builderWidget;
+	}
+
+	public static void setControlPanel(final ControlPanel controlPanel) {
+		UISession.controlPanel = controlPanel;
 	}
 
 	public static void setDiscoWidget(final DiscoWidget discoWidget) {
@@ -108,17 +118,19 @@ public class UISession {
 		UISession.presenter = presenter;
 	}
 
+	public static void setSearchWidget(final SearchWidget searchWidget) {
+		UISession.searchWidget = searchWidget;
+	}
+
 	public static void setSettingsWidget(final SettingsWidget settingsWidget) {
 		UISession.settingsWidget = settingsWidget;
 	}
-	
-	public static void setControlPanel(final ControlPanel controlPanel) {
-		UISession.controlPanel = controlPanel;
-	}
 
 	private static AurousFrame presenter;
-	
+
 	private static ControlPanel controlPanel;
+
+	private static SearchWidget searchWidget;
 
 	private static AboutWidget aboutWidget;
 

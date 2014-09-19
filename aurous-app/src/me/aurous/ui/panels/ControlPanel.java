@@ -31,40 +31,13 @@ import me.aurous.utils.media.MediaUtils;
 
 import com.alee.laf.button.WebButtonUI;
 
+
 /**
  * @author Andrew
  *
  */
 public class ControlPanel extends JPanel {
 	private final DurationPanel durationPanel;
-
-	public JLabel current() {
-		return durationPanel.current();
-	}
-
-	public JButton play() {
-		return play;
-	}
-
-	public JLabel repeat() {
-		return repeatStatusLabel;
-	}
-
-	public JSlider seek() {
-		return durationPanel.seek();
-	}
-
-	public JLabel shuffle() {
-		return shuffleStatusLabel;
-	}
-
-	public JLabel total() {
-		return durationPanel.total();
-	}
-
-	public JSlider volume() {
-		return volume;
-	}
 
 	private final Color background = new Color(35, 35, 35);
 
@@ -75,6 +48,7 @@ public class ControlPanel extends JPanel {
 	private final JLabel shuffleStatusLabel;
 
 	private final JButton play;
+
 	Font fontAwesome;
 
 	/**
@@ -324,5 +298,33 @@ public class ControlPanel extends JPanel {
 		add(repeatStatusLabel);
 		add(Box.createRigidArea(new Dimension(5, 0)));
 
+	}
+
+	public JLabel current() {
+		return durationPanel.current();
+	}
+
+	public JButton play() {
+		return play;
+	}
+
+	public JLabel repeat() {
+		return repeatStatusLabel;
+	}
+
+	public JSlider seek() {
+		return durationPanel.seek();
+	}
+
+	public JLabel shuffle() {
+		return shuffleStatusLabel;
+	}
+
+	public JLabel total() {
+		return durationPanel.total();
+	}
+
+	public JSlider volume() {
+		return volume;
 	}
 }

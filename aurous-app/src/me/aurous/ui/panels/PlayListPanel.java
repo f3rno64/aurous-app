@@ -121,8 +121,6 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setPreferredSize(new Dimension(200, getHeight()));
 
-		
-
 		setBackground(background);
 
 		final JList<?> displayList = new JList<Object>(new File(
@@ -131,10 +129,10 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		displayList.setBackground(background);
 		displayList.setForeground(Color.WHITE);
 
-		displayList.setFont(new Font("Dialog", Font.PLAIN, 12));
+		displayList.setFont(new Font("Calibri", Font.PLAIN, 14));
 
 		displayList
-		.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+				.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		displayList.setCellRenderer(new MyCellRenderer());
 		displayList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
 		displayList.setName("displayList");
@@ -197,9 +195,9 @@ public class PlayListPanel extends JPanel implements ActionListener {
 
 		final JScrollPane scrollPane = new JScrollPane(displayList);
 		scrollPane
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setPreferredSize(new Dimension(200, getHeight()));
 
 		scrollPane.setBorder(new EtchedBorder());
@@ -207,13 +205,12 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		albumArtLabel = new JLabel();
 		albumArtLabel.setPreferredSize(new Dimension(200, 200));
 
-		
 		albumArtLabel.setBorder(BorderFactory.createEmptyBorder());
 
 		setAlbumArt(new ImageIcon(
 				SettingsWidget.class
-				.getResource("/resources/album-placeholder.png"))
-		.getImage());
+						.getResource("/resources/album-placeholder.png"))
+				.getImage());
 
 		songInformation = new JLabel();
 		songInformation.setHorizontalAlignment(SwingConstants.LEFT);
@@ -245,9 +242,10 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		displayList.addMouseListener(mouseListener);
 		final Thread thread = new Thread(
 				() -> PlayListUtils.watchPlayListDirectory(displayList));
-		// start the thread
+		// start the threadff
 		thread.start();
 		repaint();
+		songInformation.setFont(new Font("Calibri", Font.PLAIN, 14));
 
 	}
 
@@ -274,8 +272,8 @@ public class PlayListPanel extends JPanel implements ActionListener {
 			// System.out.println("Sharing");
 			break;
 		}
-		// System.out.println(table.getSelectedRow() + " : " +
-		// table.getSelectedColumn());
+		// System.out.println(searchTable.getSelectedRow() + " : " +
+		// searchTable.getSelectedColumn());
 	}
 
 }

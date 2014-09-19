@@ -2,6 +2,7 @@ package me.aurous.ui.panels;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -34,9 +35,11 @@ public class DurationPanel extends JPanel {
 		current = "0:00";
 		maximum = "0:00";
 		currentTime = new JLabel(current);
+		currentTime.setFont(new Font("Calibri", Font.PLAIN, 13));
 		currentTime.setForeground(Color.GRAY);
 		maximumTime = new JLabel(maximum);
 		maximumTime.setForeground(Color.GRAY);
+		maximumTime.setFont(new Font("Calibri", Font.PLAIN, 13));
 
 		seek = new JSlider() {
 			private static final long serialVersionUID = -4931644654633925931L;

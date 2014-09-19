@@ -94,7 +94,7 @@ public class DiscoWidget {
 		discoWidget.setResizable(false);
 		discoWidget.setBounds(100, 100, 606, 239);
 		discoWidget
-				.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		discoWidget.getContentPane().setLayout(null);
 		discoWidget.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override

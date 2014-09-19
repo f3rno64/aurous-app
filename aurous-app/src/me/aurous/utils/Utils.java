@@ -5,8 +5,17 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.URL;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.HashMap;
+import java.util.Map;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
@@ -17,7 +26,6 @@ import javax.swing.JFrame;
  *
  */
 public class Utils {
-
 	/**
 	 *
 	 * An enum containing operating system types
@@ -123,6 +131,24 @@ public class Utils {
 	}
 
 	/**
+	 * Returns icon loaded from example icons package.
+	 *
+	 * @param path
+	 *            path to the icon inside icons package
+	 * @return loaded icon
+	 */
+	public static ImageIcon loadIcon(final String path) {
+		final String key = Utils.class.getCanonicalName() + ":" + path;
+		if (!iconsCache.containsKey(key)) {
+			iconsCache
+					.put(key,
+							new ImageIcon(Utils.class.getResource("/resources/"
+									+ path)));
+		}
+		return iconsCache.get(key);
+	}
+
+	/**
 	 * Open a file using {@link Desktop} if supported, or a manual
 	 * platform-specific method if not.
 	 *
@@ -190,6 +216,18 @@ public class Utils {
 				}
 	}
 
+	public static String readFile(final String path, final Charset encoding) {
+
+		byte[] encoded = null;
+		try {
+			encoded = Files.readAllBytes(Paths.get(path));
+		} catch (final IOException e) {
+
+			e.printStackTrace();
+		}
+		return new String(encoded, encoding);
+	}
+
 	/**
 	 * Trim the string's start/finish of the specified character
 	 *
@@ -241,6 +279,25 @@ public class Utils {
 		}
 		return out.toString();
 	}
+
+	public static void writeFile(final String content, final String path) {
+
+		try {
+			final PrintWriter writer = new PrintWriter(path);
+			writer.print("");
+			writer.close();
+			Files.write(Paths.get(path), content.getBytes(),
+					StandardOpenOption.CREATE);
+		} catch (final IOException e) {
+
+			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * icons cache.
+	 */
+	private static final Map<String, ImageIcon> iconsCache = new HashMap<String, ImageIcon>();
 
 	static final String errMsg = "Error opening browser";
 	/**

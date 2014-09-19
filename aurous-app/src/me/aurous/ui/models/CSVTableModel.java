@@ -13,7 +13,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Andrew
  *
  */
-public class Csv2TableModel {
+public class CSVTableModel {
 
 	/**
 	 *

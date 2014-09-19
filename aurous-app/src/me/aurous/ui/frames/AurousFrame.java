@@ -31,6 +31,7 @@ import me.aurous.utils.media.MediaUtils;
 import com.boxysystems.jgoogleanalytics.FocusPoint;
 import com.boxysystems.jgoogleanalytics.JGoogleAnalyticsTracker;
 
+
 /**
  * @author Andrew
  *
@@ -95,18 +96,18 @@ public class AurousFrame implements WindowListener {
 			macApp.setDockIconImage(new ImageIcon(this.getClass().getResource(
 					"/resources/aurouslogo.png")).getImage());
 		}
-		
+
 		this.aurousFrame = new JFrame();
 		this.aurousFrame.setResizable(true);
 
 		this.aurousFrame.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				AurousFrame.class.getResource("/resources/aurouslogo.png")));
 		this.aurousFrame.setTitle("Aurous");
-		this.aurousFrame.getContentPane().setBackground(new Color(30,30,30));
+		this.aurousFrame.getContentPane().setBackground(new Color(30, 30, 30));
 		this.aurousFrame.setSize(new Dimension(800, 600));
 		this.aurousFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.aurousFrame.getContentPane().setLayout(new BorderLayout());
-		this.aurousFrame.setFont(new Font("Dialog", Font.BOLD, 12));
+		this.aurousFrame.setFont(new Font("Calibri", Font.PLAIN, 12));
 		// we don't actually have to add the panel
 		jfxPanel = new JFXPanel();
 

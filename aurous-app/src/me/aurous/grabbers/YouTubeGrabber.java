@@ -22,6 +22,8 @@ import me.aurous.utils.Internet;
  *
  */
 public class YouTubeGrabber {
+	public static String staticPlayerCode = "";
+
 	private List<String> extractURLS(final String html)
 			throws UnsupportedEncodingException {
 		final List<String> streams = new ArrayList<String>();
@@ -77,8 +79,8 @@ public class YouTubeGrabber {
 
 			if (signatures.size() > 0) {
 
-				final String Sign = signDecipher(
-						signatures.get(i).toString(), staticPlayerCode);
+				final String Sign = signDecipher(signatures.get(i).toString(),
+						staticPlayerCode);
 
 				URL += "&signature=" + Sign;
 				// System.out.println(URL.trim());
@@ -89,7 +91,7 @@ public class YouTubeGrabber {
 		}
 
 		return urls;
-	
+
 	}
 
 	public String getYouTubeStream(final String html) {
@@ -122,11 +124,10 @@ public class YouTubeGrabber {
 
 	}
 
-	private String signDecipher(final String signature,
-			final String playercode) {
+	private String signDecipher(final String signature, final String playercode) {
 		try {
 			final ScriptEngine engine = new ScriptEngineManager()
-					.getEngineByName("nashorn");
+			.getEngineByName("nashorn");
 			engine.eval(new FileReader("data/scripts/decrypt.js"));
 			final Invocable invocable = (Invocable) engine;
 
@@ -140,7 +141,5 @@ public class YouTubeGrabber {
 		}
 		return "error";
 	}
-
-	public static String staticPlayerCode = "";
 
 }

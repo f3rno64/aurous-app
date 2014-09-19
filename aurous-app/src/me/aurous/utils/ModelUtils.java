@@ -13,9 +13,10 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
-import me.aurous.ui.models.Csv2TableModel;
+import me.aurous.ui.models.CSVTableModel;
 import me.aurous.ui.panels.PlayListPanel;
 import me.aurous.ui.panels.TabelPanel;
+import me.aurous.ui.widgets.SearchWidget;
 
 /**
  * @author Andrew
@@ -75,7 +76,7 @@ public class ModelUtils {
 			final String datafile = fileLocation;
 			final FileReader fin = new FileReader(datafile);
 
-			tableModel = Csv2TableModel.createTableModel(fin, null);
+			tableModel = CSVTableModel.createTableModel(fin, null);
 			if (tableModel == null) {
 				JOptionPane.showMessageDialog(null,
 						"Error loading playlist, corrupted or unfinished.",
@@ -105,6 +106,37 @@ public class ModelUtils {
 		} catch (final FileNotFoundException e) {
 			System.out.println("afaafvava");
 			ModelUtils.loadPlayList("data/scripts/blank.plist");
+		}
+	}
+
+	public static void loadSearchResults(final String searchResults) {
+		try {
+
+			final JTable table = SearchWidget.getSearchTable();
+			DefaultTableModel tableModel = SearchWidget.getTableModel();
+			final String datafile = searchResults;
+			final FileReader fin = new FileReader(datafile);
+
+			tableModel = CSVTableModel.createTableModel(fin, null);
+			if (tableModel == null) {
+				JOptionPane.showMessageDialog(null,
+						"Error Loading Search Results.", "Error",
+						JOptionPane.ERROR_MESSAGE);
+
+				ModelUtils.loadSearchResults("data/settings/blank.plist");
+				return;
+			} else {
+
+			}
+			table.setModel(tableModel);
+			final TableColumn hiddenLink = table.getColumnModel().getColumn(3);
+			hiddenLink.setMinWidth(2);
+			hiddenLink.setPreferredWidth(2);
+			hiddenLink.setMaxWidth(2);
+			hiddenLink.setCellRenderer(new InteractiveRenderer(3));
+
+		} catch (final FileNotFoundException e) {
+			ModelUtils.loadSearchResults("data/settings/blank.plist");
 		}
 	}
 

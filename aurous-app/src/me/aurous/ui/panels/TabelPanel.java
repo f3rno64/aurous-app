@@ -3,6 +3,7 @@ package me.aurous.ui.panels;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -26,6 +27,8 @@ import me.aurous.ui.models.ForcedListSelectionModel;
 import me.aurous.utils.ModelUtils;
 import me.aurous.utils.media.MediaUtils;
 import me.aurous.utils.playlist.PlayListUtils;
+
+
 
 /**
  * @author Andrew
@@ -69,8 +72,8 @@ public class TabelPanel extends JPanel implements ActionListener {
 			MediaUtils.copyMediaURL(table);
 			break;
 		}
-		// System.out.println(table.getSelectedRow() + " : " +
-		// table.getSelectedColumn());
+		// System.out.println(searchTable.getSelectedRow() + " : " +
+		// searchTable.getSelectedColumn());
 	}
 
 	public void initPanel() {
@@ -88,6 +91,8 @@ public class TabelPanel extends JPanel implements ActionListener {
 		header.setBorder(BorderFactory.createRaisedSoftBevelBorder());
 		header.setForeground(Color.GRAY);
 		header.setAutoscrolls(true);
+
+		header.setFont(new Font("Calibri", Font.PLAIN, 14));
 
 		header.setBorder(BorderFactory.createEmptyBorder());
 
@@ -194,6 +199,8 @@ public class TabelPanel extends JPanel implements ActionListener {
 		table.setGridColor(new Color(44, 44, 44));
 		table.setShowVerticalLines(false);
 		table.setBorder(new EtchedBorder());
+		table.setFont(new Font("Calibri", Font.PLAIN, 14));
+		table.setName("playlist");
 
 	}
 

@@ -24,29 +24,11 @@ import com.alee.laf.table.WebTableStyle;
  */
 public class Aurous {
 
-	public static void main(final String[] args) {
-		configureWebLAF();
-		WebLookAndFeel.install();
-
-		EventQueue.invokeLater(() -> {
-			try {
-				final AurousFrame window = new AurousFrame();
-				UISession.setPresenter(window);
-				window.aurousFrame.setVisible(true);
-
-			} catch (final Exception e) {
-				e.printStackTrace();
-			}
-		});
-
-	}
-
 	private static void configureWebLAF() {
-		 System.setProperty("awt.useSystemAAFontSettings","on");
-		 System.setProperty("swing.aatext", "true"); //enable System aa
-		
-		  
-		 /* Editing constants */
+		System.setProperty("awt.useSystemAAFontSettings", "on");
+		System.setProperty("swing.aatext", "true"); // enable System aa
+
+		/* Editing constants */
 		StyleConstants.backgroundColor = (new Color(35, 35, 35));
 		StyleConstants.darkBackgroundColor = (new Color(35, 35, 35));
 		StyleConstants.shadeColor = new Color(35, 35, 35);
@@ -61,7 +43,6 @@ public class Aurous {
 		WebProgressBarStyle.progressTopColor = Color.pink;
 		WebProgressBarStyle.progressBottomColor = Color.YELLOW;
 
-		
 		// WebLookAndFeel.setDecorateFrames(true);
 		// WebLookAndFeel.setDecorateDialogs(true); //not working on linux
 
@@ -76,24 +57,36 @@ public class Aurous {
 		WebTableStyle.background = (new Color(35, 35, 35));
 		WebTableStyle.foreground = Color.GRAY;
 		WebTableStyle.cellsSpacing = new Dimension(5, 5);
-		WebTableStyle.gridColor = Color.pink;
+		WebTableStyle.gridColor = (new Color(35, 35, 35));
 
 		WebMenuBarStyle.undecorated = true;
 		WebMenuBarStyle.borderColor = (new Color(35, 35, 35));
 
 		WebMenuItemStyle.selectedBottomBg = (new Color(35, 35, 35));
 		WebMenuItemStyle.selectedTopBg = (new Color(35, 35, 35));
-		
+
 		StyleConstants.separatorLightUpperColor = Color.DARK_GRAY;
 		StyleConstants.separatorLightColor = Color.DARK_GRAY;
 		StyleConstants.separatorUpperColor = Color.DARK_GRAY;
 		StyleConstants.separatorColor = Color.DARK_GRAY;
-		 WebSeparatorStyle.margin = new Insets(0,-1,0,0);
-		
-		
-		
-		
-		
+		WebSeparatorStyle.margin = new Insets(0, -1, 0, 0);
+
+	}
+
+	public static void main(final String[] args) {
+		configureWebLAF();
+		WebLookAndFeel.install();
+
+		EventQueue.invokeLater(() -> {
+			try {
+				final AurousFrame window = new AurousFrame();
+				UISession.setPresenter(window);
+				window.aurousFrame.setVisible(true);
+
+			} catch (final Exception e) {
+				e.printStackTrace();
+			}
+		});
 
 	}
 }

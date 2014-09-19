@@ -14,6 +14,8 @@ import me.aurous.ui.UISession;
 import me.aurous.ui.panels.TabelPanel;
 import me.aurous.utils.media.MediaUtils;
 
+
+
 /**
  * @author Andrew
  *
@@ -57,39 +59,39 @@ public class PlayerFunctions {
 	}
 
 	public static void pause(final JButton mediaStateButton) {
-	
-			if (UISession.getMediaPlayer() != null){
-				mediaStateButton.setText("\uF04C");
-				UISession.getMediaPlayer().pause();
-				isPaused = true;
-				mediaStateButton.setToolTipText("Play");
-			}
-		
+
+		if (UISession.getMediaPlayer() != null) {
+			mediaStateButton.setText("\uF04C");
+			UISession.getMediaPlayer().pause();
+			isPaused = true;
+			mediaStateButton.setToolTipText("Play");
+		}
+
 	}
 
 	public static void play(final JButton mediaStateButton) {
-		
-			if (UISession.getMediaPlayer() != null) {
-				mediaStateButton.setText("\uf04b");
-				UISession.getMediaPlayer().play();
-				isPaused = false;
-				mediaStateButton.setToolTipText("Pause");
-			}
-		
+
+		if (UISession.getMediaPlayer() != null) {
+			mediaStateButton.setText("\uf04b");
+			UISession.getMediaPlayer().play();
+			isPaused = false;
+			mediaStateButton.setToolTipText("Pause");
+		}
+
 	}
 
 	public static void repeat() {
 		final JTable table = TabelPanel.table;
 		if (table != null) {
-			
-				final int index = table.getSelectedRow();
-				table.setRowSelectionInterval(0, index);
-				MediaUtils.switchMedia(table);
 
-			} else {
+			final int index = table.getSelectedRow();
+			table.setRowSelectionInterval(0, index);
+			MediaUtils.switchMedia(table);
 
-			}
-		
+		} else {
+
+		}
+
 	}
 
 	public static void seek(final int value) {

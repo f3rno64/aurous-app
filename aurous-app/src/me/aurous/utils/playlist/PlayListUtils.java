@@ -42,6 +42,8 @@ import me.aurous.ui.widgets.DiscoWidget;
 import me.aurous.ui.widgets.ImporterWidget;
 import me.aurous.utils.media.MediaUtils;
 
+
+
 /**
  * @author Andrew
  *
@@ -88,7 +90,7 @@ public class PlayListUtils {
 
 	}
 
-	private static void addUrlToPlayList(final String url) {
+	public static void addUrlToPlayList(final String url) {
 		if (url.isEmpty()) {
 			return;
 		}
@@ -99,8 +101,13 @@ public class PlayListUtils {
 				final String filename = Settings.getLastPlayList();
 
 				final FileWriter fw = new FileWriter(filename, true); // the
+				String data = "";
 				// true
-				final String data = getaddRules(url);
+				if (url.contains("vk.me/")) {
+					data = url;
+				} else {
+					data = getaddRules(url);
+				}
 
 				fw.write("\n" + data);// appends
 
