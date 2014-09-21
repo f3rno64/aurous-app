@@ -6,8 +6,10 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Insets;
+import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -23,6 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.plaf.basic.BasicSliderUI;
 
 import me.aurous.player.Settings;
 import me.aurous.player.functions.PlayerFunctions;
@@ -30,7 +33,6 @@ import me.aurous.ui.UISession;
 import me.aurous.utils.media.MediaUtils;
 
 import com.alee.laf.button.WebButtonUI;
-
 
 /**
  * @author Andrew
@@ -199,10 +201,37 @@ public class ControlPanel extends JPanel {
 				}
 			}
 		});
-		// mute.setIcon(new ImageIcon(soundButtonIcon));
-		// mute.setRolloverIcon(new ImageIcon(soundButtonHover));
 
-		volume = new JSlider();
+		volume = new JSlider() {
+			private static final long serialVersionUID = -4931644654633925931L;
+
+			{
+				final MouseListener[] listeners = getMouseListeners();
+				for (final MouseListener l : listeners) {
+					removeMouseListener(l); // remove UI-installed TrackListener
+				}
+				final BasicSliderUI ui = (BasicSliderUI) getUI();
+				final BasicSliderUI.TrackListener tl = ui.new TrackListener() {
+					// this is where we jump to absolute value of click
+					@Override
+					public void mouseClicked(final MouseEvent e) {
+						final Point p = e.getPoint();
+						final int value = ui.valueForXPosition(p.x);
+
+						setValue(value);
+
+					}
+
+					// disable check that will invoke scrollDueToClickInTrack
+					@Override
+					public boolean shouldScroll(final int dir) {
+						return false;
+					}
+				};
+				addMouseListener(tl);
+			}
+		};
+
 		volume.addChangeListener(listener -> {
 			final double volumeLevel = volume().getValue() / 100D;
 			if (UISession.getMediaPlayer() != null) {
@@ -222,11 +251,14 @@ public class ControlPanel extends JPanel {
 			} else {
 				mute.setText("\uF026");
 			}
+			System.out.println(mute.getHeight());
 		});
 
 		volume.setValue(Settings.getVolume());
 		volume.setPreferredSize(new Dimension(100, 25));
 		volume.setMaximumSize(new Dimension(100, 25));
+		mute.setPreferredSize(new Dimension(22, 25));
+		mute.setMaximumSize(new Dimension(22, 25));
 
 		add(Box.createRigidArea(new Dimension(10, 37)));
 		add(previous);

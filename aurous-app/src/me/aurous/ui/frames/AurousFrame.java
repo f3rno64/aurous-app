@@ -86,7 +86,7 @@ public class AurousFrame implements WindowListener {
 	private void initialize() {
 		if (com.sun.javafx.Utils.isMac()) {
 			// take the menu bar off the jframe
-			System.setProperty("apple.laf.useScreenMenuBar", "true");
+			System.setProperty("apple.laf.useScreenMenuBar", "false");
 
 			// set the name of the application menu item
 			System.setProperty(
