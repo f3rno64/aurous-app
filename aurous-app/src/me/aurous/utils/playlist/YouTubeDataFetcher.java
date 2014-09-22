@@ -14,12 +14,9 @@ import java.util.regex.Pattern;
 import me.aurous.player.Settings;
 import me.aurous.utils.media.MediaUtils;
 
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-
 
 /**
  * @author Andrew
@@ -76,10 +73,6 @@ public class YouTubeDataFetcher {
 		} catch (final IOException e) {
 			return 400;
 		}
-	}
-
-	private static String escapeComma(final String str) {
-		return str.replace(",", "\\,");
 	}
 
 	private static String formatYouTubeURL(final String id) {
@@ -256,13 +249,9 @@ public class YouTubeDataFetcher {
 					.getJSONObject("media$group");
 			final JSONObject media_title = mediaGroup
 					.getJSONObject("media$title");
-			title = StringEscapeUtils.escapeHtml4(media_title.getString("$t")
-					.replaceAll("[^\\x20-\\x7e]", ""));
-			title = StringEscapeUtils.unescapeHtml4(title);
+			title = media_title.getString("$t");
 
-			if (title.contains(",")) {
-				title = escapeComma(title);
-			}
+			title = MediaUtils.cleanString(title);
 			return title;
 		} catch (final JSONException e) {
 			e.printStackTrace();

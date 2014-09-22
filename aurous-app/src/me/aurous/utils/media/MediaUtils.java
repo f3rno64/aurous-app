@@ -1,5 +1,7 @@
 package me.aurous.utils.media;
 
+import static com.sun.javafx.Utils.convertUnicode;
+
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -12,6 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.Normalizer;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,7 +25,10 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import me.aurous.grabbers.SoundCloudGrabber;
+import me.aurous.grabbers.VKGrabber;
 import me.aurous.grabbers.YouTubeGrabber;
 import me.aurous.notifiers.NowPlayingNotification;
 import me.aurous.player.Settings;
@@ -81,12 +87,47 @@ public class MediaUtils {
 		} else if (sourceURL.contains("soundcloud")) {
 			return SoundCloudGrabber.getCachedURL(sourceURL);
 		} else if (sourceURL.contains("vk.me")) {
-			return sourceURL;
+			if (sourceURL.contains(".mp3")) {
+				return sourceURL;
+			}
+			return VKGrabber.grab(sourceURL);
 		} else {
 			return sourceURL;
 		}
 		
 	}
+	
+	public static String cleanString(String dirtyString) {
+		dirtyString = StringEscapeUtils.escapeHtml4(dirtyString.replaceAll(
+				"[^\\x20-\\x7e]", ""));
+		dirtyString = flattenToAscii(dirtyString);
+		dirtyString = convertUnicode(dirtyString);
+
+		if (dirtyString.contains(",")) {
+			dirtyString = escapeComma(dirtyString);
+		}
+		dirtyString = StringEscapeUtils.unescapeHtml4(dirtyString);
+		final String cleanedString = dirtyString;
+		return cleanedString;
+	}
+
+	private static String escapeComma(final String str) {
+		return str.replace(",", "\\,");
+	}
+
+	private static String flattenToAscii(String string) {
+		final char[] out = new char[string.length()];
+		string = Normalizer.normalize(string, Normalizer.Form.NFD);
+		int j = 0;
+		for (int i = 0, n = string.length(); i < n; ++i) {
+			final char c = string.charAt(i);
+			if (c <= '\u007F') {
+				out[j++] = c;
+			}
+		}
+		return new String(out);
+	}
+
 
 	/**
 	 * @author Andrew

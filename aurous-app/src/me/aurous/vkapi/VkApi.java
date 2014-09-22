@@ -39,7 +39,6 @@ public class VkApi {
 
 	public String submitQuery(final String methodName, final String parameters)
 			throws IOException {
-		
 		return Internet.text(generateQuery(methodName, parameters));
 	}
 

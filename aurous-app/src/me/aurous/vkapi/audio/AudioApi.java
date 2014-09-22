@@ -22,5 +22,8 @@ public class AudioApi extends VkApi {
 	public String searchAudioJson(final String paramaters) throws IOException {
 		return submitQuery("audio.search", paramaters);
 	}
+	public String searchAudioByIdJson(final String paramaters) throws IOException {
+		return submitQuery("audio.getById", paramaters);
+	}
 
 }

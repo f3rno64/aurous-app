@@ -157,16 +157,16 @@ public class TabelPanel extends JPanel implements ActionListener {
 
 		final TableColumn hiddenLink = table.getColumnModel().getColumn(
 				ModelUtils.LINK_INDEX);
-		hiddenLink.setMinWidth(2);
-		hiddenLink.setPreferredWidth(2);
-		hiddenLink.setMaxWidth(2);
+		hiddenLink.setMinWidth(0);
+		hiddenLink.setPreferredWidth(0);
+		hiddenLink.setMaxWidth(0);
 		hiddenLink.setCellRenderer(new ModelUtils.InteractiveRenderer(
 				ModelUtils.LINK_INDEX));
 		final TableColumn hiddenAlbumArt = table.getColumnModel().getColumn(
 				ModelUtils.ALBUMART_INDEX);
-		hiddenAlbumArt.setMinWidth(2);
-		hiddenAlbumArt.setPreferredWidth(2);
-		hiddenAlbumArt.setMaxWidth(2);
+		hiddenAlbumArt.setMinWidth(0);
+		hiddenAlbumArt.setPreferredWidth(0);
+		hiddenAlbumArt.setMaxWidth(0);
 		hiddenAlbumArt.setCellRenderer(new ModelUtils.InteractiveRenderer(
 				ModelUtils.ALBUMART_INDEX));
 

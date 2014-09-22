@@ -8,11 +8,6 @@ import me.aurous.player.Settings;
 import me.aurous.utils.Internet;
 import me.aurous.utils.media.MediaUtils;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-
-import com.sun.javafx.Utils;
-
-
 public class SoundCloudGrabber {
 
 	/**
@@ -54,10 +49,6 @@ public class SoundCloudGrabber {
 				streamURL);
 
 		return line;
-	}
-
-	private static String escapeComma(final String str) {
-		return str.replace(",", "\\,");
 	}
 
 	/**
@@ -157,14 +148,7 @@ public class SoundCloudGrabber {
 		String title = "";
 
 		title = MediaUtils.getBetween(HTML, TITLE_PATTERN, "\",\"");
-		title = StringEscapeUtils.escapeHtml4(title.replaceAll(
-				"[^\\x20-\\x7e]", ""));
-		title = Utils.convertUnicode(title);
-		title = StringEscapeUtils.unescapeHtml4(title);
-
-		if (title.contains(",")) {
-			title = escapeComma(title);
-		}
+		title = MediaUtils.cleanString(title);
 		return title.trim();
 	}
 

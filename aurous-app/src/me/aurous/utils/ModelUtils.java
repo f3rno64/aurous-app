@@ -91,15 +91,15 @@ public class ModelUtils {
 			table.setModel(tableModel);
 			final TableColumn hiddenLink = table.getColumnModel().getColumn(
 					LINK_INDEX);
-			hiddenLink.setMinWidth(2);
-			hiddenLink.setPreferredWidth(2);
-			hiddenLink.setMaxWidth(2);
+			hiddenLink.setMinWidth(0);
+			hiddenLink.setPreferredWidth(0);
+			hiddenLink.setMaxWidth(0);
 			hiddenLink.setCellRenderer(new InteractiveRenderer(LINK_INDEX));
 			final TableColumn hiddenAlbumArt = table.getColumnModel()
 					.getColumn(ALBUMART_INDEX);
-			hiddenAlbumArt.setMinWidth(2);
-			hiddenAlbumArt.setPreferredWidth(2);
-			hiddenAlbumArt.setMaxWidth(2);
+			hiddenAlbumArt.setMinWidth(0);
+			hiddenAlbumArt.setPreferredWidth(0);
+			hiddenAlbumArt.setMaxWidth(0);
 			hiddenAlbumArt.setCellRenderer(new InteractiveRenderer(
 					ALBUMART_INDEX));
 
@@ -122,20 +122,25 @@ public class ModelUtils {
 						"Error Loading Search Results.", "Error",
 						JOptionPane.ERROR_MESSAGE);
 
-				ModelUtils.loadSearchResults("data/settings/blank.plist");
+				ModelUtils.loadSearchResults("data/search/search.blank");
 				return;
 			} else {
 
 			}
 			table.setModel(tableModel);
 			final TableColumn hiddenLink = table.getColumnModel().getColumn(3);
-			hiddenLink.setMinWidth(2);
-			hiddenLink.setPreferredWidth(2);
-			hiddenLink.setMaxWidth(2);
+			hiddenLink.setMinWidth(0);
+			hiddenLink.setPreferredWidth(0);
+			hiddenLink.setMaxWidth(0);
 			hiddenLink.setCellRenderer(new InteractiveRenderer(3));
+			final TableColumn hiddenIDS = table.getColumnModel().getColumn(4);
+			hiddenIDS.setMinWidth(0);
+			hiddenIDS.setPreferredWidth(0);
+			hiddenIDS.setMaxWidth(0);
+			hiddenIDS.setCellRenderer(new InteractiveRenderer(4));
 
 		} catch (final FileNotFoundException e) {
-			ModelUtils.loadSearchResults("data/settings/blank.plist");
+			ModelUtils.loadSearchResults("data/search/search.blank");
 		}
 	}
 
