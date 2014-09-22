@@ -139,7 +139,7 @@ public class SearchWidget implements ActionListener {
 					"%s, %s, %s, %s, %s, %s, %s, %s", table.getValueAt(row, 0),
 					table.getValueAt(row, 1), table.getValueAt(row, 2), date,
 					Settings.getUserName(), "",
-					"http://codeusa.net/apps/poptart/bad.png",
+					"https://aurous.me/bad.png",
 					table.getValueAt(row, 4));
 			PlayListUtils.addUrlToPlayList(playListAddition);
 		case "Copy URL":

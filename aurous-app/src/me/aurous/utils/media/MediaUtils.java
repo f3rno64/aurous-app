@@ -217,7 +217,7 @@ public class MediaUtils {
 		try {
 			final int row = target.getSelectedRow();
 			
-			final String albumArt = target.getName().equals("search") ? "http://codeusa.net/apps/poptart/bad.png" : (String) target.getValueAt(row, 6);
+			final String albumArt = target.getName().equals("search") ? "https://aurous.me/bad.png" : (String) target.getValueAt(row, 6);
 
 			final ImageIcon icon = new ImageIcon(new URL(albumArt));
 			PlayListPanel.setAlbumArt(icon.getImage());

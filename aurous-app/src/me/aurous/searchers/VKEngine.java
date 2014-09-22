@@ -36,7 +36,6 @@ public class VKEngine {
 			final int id = jsonResults.getInt("aid");
 			final int owner_id = jsonResults.getInt("owner_id");
 			final String id_mix = "http://vk.me/" + owner_id + "_" + id;
-			System.out.println(id_mix);
 			title = MediaUtils.cleanString(title);
 
 			artist = MediaUtils.cleanString(artist);
