@@ -37,6 +37,7 @@ import me.aurous.ui.UISession;
 import me.aurous.ui.panels.PlayListPanel;
 import me.aurous.ui.panels.TabelPanel;
 import me.aurous.utils.Internet;
+import me.aurous.utils.Utils;
 import me.aurous.utils.playlist.YouTubeDataFetcher;
 
 /**
@@ -216,16 +217,19 @@ public class MediaUtils {
 	private static void switchMediaCover(final JTable target) {
 		try {
 			final int row = target.getSelectedRow();
-			
-			final String albumArt = target.getName().equals("search") ? "https://aurous.me/bad.png" : (String) target.getValueAt(row, 6);
-
-			final ImageIcon icon = new ImageIcon(new URL(albumArt));
-			PlayListPanel.setAlbumArt(icon.getImage());
+			ImageIcon albumArt = null;
+			final String albumArtURL = target.getName().equals("search") ? "bad" : (String) target.getValueAt(row, 6);
+			if (albumArtURL.contains("bad")) {
+				albumArt = Utils.loadIcon("bad.png");
+			} else {
+				albumArt = new ImageIcon(new URL(albumArtURL));
+			}
+			PlayListPanel.setAlbumArt(albumArt.getImage());
 
 			if (Settings.isSavePlayBack()) {
 				try {
 
-					final Image img = icon.getImage();
+					final Image img = albumArt.getImage();
 
 					final BufferedImage bi = new BufferedImage(
 							img.getWidth(null), img.getHeight(null),
