@@ -45,7 +45,11 @@ public class MediaPlayerScene {
 		MediaUtils.activeMedia = sourceURL;
 		final String trailer = MediaUtils.getMediaURL(sourceURL);
 
-		media = new Media(trailer.trim());
+		try {
+			media = new Media(trailer.trim());
+		} catch (Exception e) {
+			MediaUtils.handleEndOfStream();
+		}
 
 		player = new MediaPlayer(media);
 
