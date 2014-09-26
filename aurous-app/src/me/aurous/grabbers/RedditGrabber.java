@@ -10,6 +10,7 @@ import java.io.OutputStreamWriter;
 import javax.swing.JOptionPane;
 
 import me.aurous.ui.UISession;
+import me.aurous.utils.Constants;
 import me.aurous.utils.media.MediaUtils;
 import me.aurous.utils.playlist.PlayListUtils;
 
@@ -48,7 +49,7 @@ public class RedditGrabber {
 					if (url.contains("reddit")) {
 						// print("Fetching %s...", url);
 						String last = "";
-						final String out = "data/playlist/" + playListName
+						final String out = Constants.DATA_PATH +  "playlist/" + playListName
 								+ ".plist";
 						final Document doc = Jsoup.connect(url).get();
 						final Elements links = doc.select("a[href]");

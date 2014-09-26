@@ -40,6 +40,7 @@ import me.aurous.ui.UISession;
 import me.aurous.ui.listeners.ContextMenuMouseListener;
 import me.aurous.ui.widgets.DiscoWidget;
 import me.aurous.ui.widgets.ImporterWidget;
+import me.aurous.utils.Constants;
 import me.aurous.utils.media.MediaUtils;
 
 
@@ -126,7 +127,7 @@ public class PlayListUtils {
 			@Override
 			public void run() {
 				try {
-					final String name = "data/playlist/" + playListName
+					final String name = Constants.DATA_PATH + "playlist/" + playListName
 							+ ".plist";
 					final String header = "Title, Artist, Time, Date Added, User, Album, ALBUMART_INDEX, link";
 					final File file = new File(name);
@@ -305,6 +306,7 @@ public class PlayListUtils {
 		} else {
 
 		}
+		
 		return "";
 
 	}
@@ -415,7 +417,7 @@ public class PlayListUtils {
 		try {
 			final WatchService watcher = FileSystems.getDefault()
 					.newWatchService();
-			final Path dir = Paths.get("data/playlist/");
+			final Path dir = Paths.get(Constants.DATA_PATH + "playlist/");
 			dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
 
 			System.out.println("Watch Service registered for dir: "
@@ -439,7 +441,7 @@ public class PlayListUtils {
 								final DefaultListModel playListModel = new DefaultListModel();
 
 						final File[] playListFolder = new File(
-										"data/playlist/").listFiles();
+								Constants.DATA_PATH + "playlist/").listFiles();
 						if ((kind == ENTRY_CREATE)
 								|| ((kind == ENTRY_DELETE)
 										&& (playListModel != null) && (playListFolder != null))) {

@@ -82,7 +82,7 @@ public class ModelUtils {
 						"Error loading playlist, corrupted or unfinished.",
 						"Error", JOptionPane.ERROR_MESSAGE);
 
-				ModelUtils.loadPlayList("data/scripts/blank.plist");
+				ModelUtils.loadPlayList(Constants.DATA_PATH + "scripts/blank.plist");
 				PlayListPanel.canSetLast = false;
 				return;
 			} else {
@@ -104,7 +104,7 @@ public class ModelUtils {
 					ALBUMART_INDEX));
 
 		} catch (final FileNotFoundException e) {
-			ModelUtils.loadPlayList("data/scripts/blank.plist");
+			ModelUtils.loadPlayList(Constants.DATA_PATH + "scripts/blank.plist");
 		}
 	}
 
@@ -122,7 +122,7 @@ public class ModelUtils {
 						"Error Loading Search Results.", "Error",
 						JOptionPane.ERROR_MESSAGE);
 
-				ModelUtils.loadSearchResults("data/search/search.blank");
+				ModelUtils.loadSearchResults(Constants.DATA_PATH + "search/search.blank");
 				return;
 			} else {
 
@@ -140,7 +140,7 @@ public class ModelUtils {
 			hiddenIDS.setCellRenderer(new InteractiveRenderer(4));
 
 		} catch (final FileNotFoundException e) {
-			ModelUtils.loadSearchResults("data/search/search.blank");
+			ModelUtils.loadSearchResults(Constants.DATA_PATH + "search/search.blank");
 		}
 	}
 

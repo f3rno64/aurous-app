@@ -4,9 +4,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Insets;
+import java.io.File;
+
+import javax.swing.JOptionPane;
 
 import me.aurous.ui.UISession;
 import me.aurous.ui.frames.AurousFrame;
+import me.aurous.utils.Constants;
 
 import com.alee.global.StyleConstants;
 import com.alee.laf.WebLookAndFeel;
@@ -17,6 +21,7 @@ import com.alee.laf.scroll.WebScrollBarStyle;
 import com.alee.laf.separator.WebSeparatorStyle;
 import com.alee.laf.slider.WebSliderStyle;
 import com.alee.laf.table.WebTableStyle;
+import com.alee.utils.FileUtils;
 
 /**
  * @author Andrew
@@ -74,7 +79,9 @@ public class Aurous {
 	}
 
 	public static void main(final String[] args) {
+
 		configureWebLAF();
+		setup();
 		WebLookAndFeel.install();
 
 		EventQueue.invokeLater(() -> {
@@ -88,5 +95,27 @@ public class Aurous {
 			}
 		});
 
+	}
+
+	private static void setup() {
+
+		final File data_path = new File(Constants.DATA_PATH);
+		if (data_path.exists()) {
+			// empty
+		} else {
+			final boolean success = data_path.mkdirs();
+			if (!success) {
+				JOptionPane
+				.showMessageDialog(
+						null,
+						"Unable to create data folder, try running as admin. Program will exit",
+						"Error", JOptionPane.ERROR_MESSAGE);
+				System.exit(1);
+			} else {
+				// move files to new data folder
+				final File source = new File("data");
+				FileUtils.copyDirectory(source, data_path);
+			}
+		}
 	}
 }

@@ -31,6 +31,7 @@ import javax.swing.border.EtchedBorder;
 import me.aurous.player.Settings;
 import me.aurous.player.functions.PlayerFunctions;
 import me.aurous.ui.widgets.SettingsWidget;
+import me.aurous.utils.Constants;
 import me.aurous.utils.ModelUtils;
 import me.aurous.utils.playlist.PlayListUtils;
 
@@ -124,7 +125,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		setBackground(background);
 
 		final JList<?> displayList = new JList<Object>(new File(
-				"data/playlist/").listFiles());
+				Constants.DATA_PATH + "playlist/").listFiles());
 
 		displayList.setBackground(background);
 		displayList.setForeground(Color.WHITE);

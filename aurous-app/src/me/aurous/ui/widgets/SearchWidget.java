@@ -33,6 +33,7 @@ import me.aurous.player.Settings;
 import me.aurous.searchers.VKEngine;
 import me.aurous.ui.UISession;
 import me.aurous.ui.models.ForcedListSelectionModel;
+import me.aurous.utils.Constants;
 import me.aurous.utils.ModelUtils;
 import me.aurous.utils.Utils;
 import me.aurous.utils.media.MediaUtils;
@@ -63,7 +64,7 @@ public class SearchWidget implements ActionListener {
 			UISession.getSearchWidget().getWidget().repaint();
 			return;
 		}
-		final File f = new File("data/settings/vkauth.dat");
+		final File f = new File(Constants.DATA_PATH + "settings/vkauth.dat");
 		if (!f.exists() && !f.isDirectory()) {
 			final int dialogButton = JOptionPane.YES_NO_OPTION;
 			final int dialogResult = JOptionPane
@@ -271,7 +272,7 @@ public class SearchWidget implements ActionListener {
 		this.scroller = new javax.swing.JScrollPane(searchTable);
 		scroller.setSize(445, 320);
 		scroller.setLocation(0, 33);
-		ModelUtils.loadSearchResults("data/settings/search.blank");
+		ModelUtils.loadSearchResults(Constants.DATA_PATH + "settings/search.blank");
 
 		final TableColumn hiddenLink = searchTable.getColumnModel()
 				.getColumn(3);

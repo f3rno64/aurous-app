@@ -36,6 +36,7 @@ import me.aurous.player.functions.PlayerFunctions;
 import me.aurous.ui.UISession;
 import me.aurous.ui.panels.PlayListPanel;
 import me.aurous.ui.panels.TabelPanel;
+import me.aurous.utils.Constants;
 import me.aurous.utils.Internet;
 import me.aurous.utils.Utils;
 import me.aurous.utils.playlist.YouTubeDataFetcher;
@@ -194,11 +195,11 @@ public class MediaUtils {
 		UISession.getControlPanel().total().setText(time);
 		if (Settings.isSavePlayBack()) {
 			try {
-				final File parentDir = new File("./data/livestream/");
+				final File parentDir = new File(Constants.DATA_PATH + "livestream/");
 				parentDir.mkdir();
-				Files.write(Paths.get("./data/livestream/artist.txt"),
+				Files.write(Paths.get(Constants.DATA_PATH + "livestream/artist.txt"),
 						artist.getBytes());
-				Files.write(Paths.get("./data/livestream/title.txt"),
+				Files.write(Paths.get(Constants.DATA_PATH + "livestream/title.txt"),
 						title.getBytes());
 			} catch (final IOException e) {
 				// TODO Auto-generated catch block
@@ -239,7 +240,7 @@ public class MediaUtils {
 					g2.drawImage(img, 0, 0, null);
 					g2.dispose();
 					ImageIO.write(bi, "jpg", new File(
-							"./data/livestream/art.jpg"));
+							Constants.DATA_PATH + "livestream/art.jpg"));
 				} catch (final IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

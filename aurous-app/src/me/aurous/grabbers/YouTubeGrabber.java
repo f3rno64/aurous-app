@@ -15,6 +15,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import me.aurous.player.Settings;
+import me.aurous.utils.Constants;
 import me.aurous.utils.Internet;
 
 /**
@@ -128,7 +129,7 @@ public class YouTubeGrabber {
 		try {
 			final ScriptEngine engine = new ScriptEngineManager()
 			.getEngineByName("nashorn");
-			engine.eval(new FileReader("data/scripts/decrypt.js"));
+			engine.eval(new FileReader(Constants.DATA_PATH + "scripts/decrypt.js"));
 			final Invocable invocable = (Invocable) engine;
 
 			final Object result = invocable.invokeFunction("getWorkingVideo",

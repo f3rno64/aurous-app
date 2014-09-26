@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 
 import javax.swing.JOptionPane;
 
+import me.aurous.utils.Constants;
+
 public class VkAuth extends Application {
 
 	public static void main(final String[] args) {
@@ -55,7 +57,7 @@ public class VkAuth extends Application {
 
 	@Override
 	public void start(final Stage primaryStage) {
-		final File f = new File("data/settings/vkauth.dat");
+		final File f = new File(Constants.DATA_PATH + "settings/vkauth.dat");
 		if (f.exists() && !f.isDirectory()) { /* do something */
 			final int dialogButton = JOptionPane.YES_NO_OPTION;
 			final int dialogResult = JOptionPane
@@ -94,8 +96,8 @@ public class VkAuth extends Application {
 			} else {
 				try {
 
-					final PrintWriter out = new PrintWriter(
-							"data/settings/vkauth.dat");
+					final PrintWriter out = new PrintWriter(Constants.DATA_PATH + 
+							"settings/vkauth.dat");
 					out.println(formData);
 					out.close();
 					Platform.exit();

@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 import me.aurous.ui.UISession;
 import me.aurous.ui.widgets.DiscoWidget;
 import me.aurous.ui.widgets.ImporterWidget;
+import me.aurous.utils.Constants;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -34,7 +35,7 @@ public class YouTubePlayListImporter {
 					if (url.contains("playlist?")) {
 						// fsyprint("Fetching %s...", url);
 						String last = "";
-						final String out = "data/playlist/" + playListName
+						final String out = Constants.DATA_PATH + "playlist/" + playListName
 								+ ".plist";
 						final Document doc = Jsoup.connect(url).get();
 						final Elements links = doc.select("a[href]");

@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import me.aurous.ui.UISession;
+import me.aurous.utils.Constants;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,7 +58,7 @@ public class Settings {
 		try {
 			String line;
 			br = new BufferedReader(new FileReader(
-					"data/settings/settings.json"));
+					Constants.DATA_PATH + "settings/settings.json"));
 			while ((line = br.readLine()) != null) {
 				jsonData += line + "\n";
 			}
@@ -121,7 +122,7 @@ public class Settings {
 		try {
 
 			final FileWriter file = new FileWriter(
-					"data/settings/settings.json");
+					Constants.DATA_PATH + "settings/settings.json");
 			file.write(obj.toString());
 			file.flush();
 			file.close();

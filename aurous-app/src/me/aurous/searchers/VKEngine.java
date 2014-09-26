@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import javax.swing.JOptionPane;
 
 import me.aurous.ui.UISession;
+import me.aurous.utils.Constants;
 import me.aurous.utils.ModelUtils;
 import me.aurous.utils.Utils;
 import me.aurous.utils.media.MediaUtils;
@@ -62,7 +63,7 @@ public class VKEngine {
 		final int PERFORMER_ONLY = UISession.getSearchWidget().getComboBox()
 				.getSelectedItem().toString().equals("by title") ? 0 : 1;
 
-		final String formData = Utils.readFile("data/settings/vkauth.dat",
+		final String formData = Utils.readFile(Constants.DATA_PATH +  "settings/vkauth.dat",
 				Charset.defaultCharset());
 
 		final AudioApi api = new AudioApi(VkAuth.VK_APP_ID, formData.trim());
@@ -80,8 +81,8 @@ public class VKEngine {
 				return;
 			}
 			final String csv = buildSearchCSV(json);
-			Utils.writeFile(csv, "data/search/vkcache.dat");
-			ModelUtils.loadSearchResults("data/search/vkcache.dat");
+			Utils.writeFile(csv, Constants.DATA_PATH + "search/vkcache.dat");
+			ModelUtils.loadSearchResults(Constants.DATA_PATH + "search/vkcache.dat");
 			isSearching = false;
 		} catch (final IOException e) {
 			e.printStackTrace();

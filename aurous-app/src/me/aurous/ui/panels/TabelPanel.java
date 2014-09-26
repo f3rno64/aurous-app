@@ -24,6 +24,7 @@ import javax.swing.table.TableColumn;
 
 import me.aurous.player.Settings;
 import me.aurous.ui.models.ForcedListSelectionModel;
+import me.aurous.utils.Constants;
 import me.aurous.utils.ModelUtils;
 import me.aurous.utils.media.MediaUtils;
 import me.aurous.utils.playlist.PlayListUtils;
@@ -98,7 +99,7 @@ public class TabelPanel extends JPanel implements ActionListener {
 
 		if (Settings.getLastPlayList().isEmpty()) {
 
-			ModelUtils.loadPlayList("data/scripts/blank.plist");
+			ModelUtils.loadPlayList(Constants.DATA_PATH + "scripts/blank.plist");
 		} else {
 			ModelUtils.loadPlayList(Settings.getLastPlayList());
 		}

@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import javax.swing.JOptionPane;
 
 import me.aurous.ui.UISession;
+import me.aurous.utils.Constants;
 import me.aurous.utils.Utils;
 import me.aurous.vkapi.VkAuth;
 import me.aurous.vkapi.audio.AudioApi;
@@ -32,7 +33,7 @@ public class VKGrabber {
 		String json = null;
 		final int pos = url.lastIndexOf("/");
 		final String ids = url.substring(pos + "/".length());
-		final String formData = Utils.readFile("data/settings/vkauth.dat",
+		final String formData = Utils.readFile(Constants.DATA_PATH + "settings/vkauth.dat",
 				Charset.defaultCharset());
 
 		final AudioApi api = new AudioApi(VkAuth.VK_APP_ID, formData.trim());
