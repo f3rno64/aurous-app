@@ -31,6 +31,7 @@ import me.aurous.grabbers.YouTubeGrabber;
 import me.aurous.notifiers.NowPlayingNotification;
 import me.aurous.player.Settings;
 import me.aurous.player.functions.PlayerFunctions;
+import me.aurous.player.scenes.VisualizerScene;
 import me.aurous.ui.UISession;
 import me.aurous.ui.panels.PlayListPanel;
 import me.aurous.ui.panels.TabelPanel;
@@ -342,8 +343,11 @@ public class MediaUtils {
 				final String sourceURL = target.getName().equals("search") ? (String) target
 						.getValueAt(row, 3) : (String) target
 						.getValueAt(row, 7);
+						VisualizerScene visualScene = new VisualizerScene();
 				if (UISession.getMediaPlayer() != null) {
+					
 					UISession.getMediaPlayer().stop();
+					UISession.getMediaPlayer().currentTimeProperty().removeListener(UISession.getMediaPlayerScene().progressChangeListener);
 					UISession.getMediaPlayer().dispose();
 					UISession.getMediaPlayerScene().player = null; // getting
 					// desperate
@@ -370,12 +374,11 @@ public class MediaUtils {
 						&& UISession.getVisualFrame().isOpen()) {
 					UISession.getVisualFrame().panel.setScene(null);
 					UISession.getVisualFrame().scene = null;
-					UISession.getVisualFrame().scene = UISession
-							.getVisualFrame().createVisualScene();
+					UISession.getVisualFrame().scene = visualScene.createVisualScene();
 					UISession.getVisualFrame().panel.setScene(UISession
 							.getVisualFrame().scene);
 				}
-
+				Utils.doGC();     
 			} catch (final Throwable ei) {
 				ei.printStackTrace();
 			}

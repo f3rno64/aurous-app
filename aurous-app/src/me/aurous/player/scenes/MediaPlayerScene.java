@@ -1,19 +1,18 @@
 package me.aurous.player.scenes;
 
+import javafx.beans.value.ChangeListener;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import me.aurous.ui.UISession;
 import me.aurous.ui.panels.ControlPanel;
 import me.aurous.utils.media.MediaUtils;
 
-
-
 public class MediaPlayerScene {
-
 	private static void updateTime(final long currentTime,
 			final long totalDuration) {
 		final ControlPanel panel = UISession.getControlPanel();
@@ -22,13 +21,10 @@ public class MediaPlayerScene {
 		UISession.getControlPanel().seek().setValue(percentage);
 		panel.seek().setValue(percentage);
 		panel.current().setText(MediaUtils.calculateTime((int) seconds));
-		// god
-		if (percentage == 100) {
-
-			MediaUtils.handleEndOfStream();
-		}
 
 	}
+
+	public ChangeListener<Duration> progressChangeListener;
 
 	private Media media;
 
@@ -47,7 +43,7 @@ public class MediaPlayerScene {
 
 		try {
 			media = new Media(trailer.trim());
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			MediaUtils.handleEndOfStream();
 		}
 
@@ -62,26 +58,35 @@ public class MediaPlayerScene {
 
 		final Scene scene = new Scene(root, 1, 1, Color.BLACK);
 
-	//	player.play();
-		
+		// player.play();
+
 		player.setOnReady(() -> {
 			panel.seek().setValue(0);
-			if (sourceURL.contains("https://www.youtube.com/watch?v=kGubD7KG9FQ")) {
+			if (sourceURL
+					.contains("https://www.youtube.com/watch?v=kGubD7KG9FQ")) {
 				player.pause();
 			} else {
 				player.play();
 			}
 		});
-		player.currentTimeProperty().addListener(
-				(observableValue, duration, current) -> {
 
-					final long currentTime = (long) current.toMillis();
+		progressChangeListener = (observableValue, oldValue, newValue) -> {
 
-					final long totalDuration = (long) player.getMedia()
-							.getDuration().toMillis();
-					updateTime(currentTime, totalDuration);
+			final long currentTime = (long) newValue.toMillis();
 
-				});
+			final long totalDuration = (long) player.getMedia().getDuration()
+					.toMillis();
+			updateTime(currentTime, totalDuration);
+		};
+
+		player.currentTimeProperty().addListener(progressChangeListener);
+
+		player.setOnEndOfMedia(() -> {
+			player.currentTimeProperty().removeListener(progressChangeListener);
+			player.stop();
+			
+			MediaUtils.handleEndOfStream();
+		});
 
 		UISession.setMediaPlayer(player);
 		UISession.setMediaView(view);

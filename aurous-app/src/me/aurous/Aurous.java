@@ -8,7 +8,6 @@ import java.io.File;
 
 import javax.swing.JOptionPane;
 
-import me.aurous.task.CollectionTask;
 import me.aurous.ui.UISession;
 import me.aurous.ui.frames.AurousFrame;
 import me.aurous.utils.Constants;
@@ -99,8 +98,6 @@ public class Aurous {
 	}
 
 	private static void setup() {
-		 CollectionTask executingTask = new CollectionTask();
-		 executingTask.start();
 		final File data_path = new File(Constants.DATA_PATH);
 		if (data_path.exists()) {
 			// empty
