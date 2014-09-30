@@ -80,7 +80,6 @@ public class Utils {
 		while (ref.get() != null) {
 			System.gc();
 		}
-
 	}
 
 	/**

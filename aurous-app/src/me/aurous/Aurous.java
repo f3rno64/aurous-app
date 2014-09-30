@@ -5,6 +5,13 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Insets;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.List;
+import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
@@ -78,6 +85,36 @@ public class Aurous {
 
 	}
 
+	private static boolean containsLine(final String fileName,
+			final String lineStop) {
+		try {
+			final Scanner s = new Scanner(System.in);
+
+			final File f = new File(fileName);
+			final Scanner numScan = new Scanner(f);
+
+			String line;
+
+			while (numScan.hasNext()) {
+				line = numScan.nextLine();
+				if (line.contains(lineStop)) {
+
+					s.close();
+					numScan.close();
+					System.out.println("fadv");
+					return true;
+				}
+			}
+			s.close();
+			numScan.close();
+			System.out.println("fadgyv");
+			return false;
+		} catch (final FileNotFoundException e) {
+			System.out.println("fav");
+			return true;
+		}
+	}
+
 	public static void main(final String[] args) {
 
 		configureWebLAF();
@@ -94,10 +131,47 @@ public class Aurous {
 				e.printStackTrace();
 			}
 		});
-	
+
 	}
 
 	private static void setup() {
+		if (!containsLine("Aurous 64.ini", "Virtual Machine Parameters")) {
+			try {
+
+				final List<String> lines = Files.readAllLines(
+						Paths.get("Aurous 64.ini"), StandardCharsets.UTF_8);
+				lines.add(
+						11,
+						"Virtual Machine Parameters=-XX:MinHeapFreeRatio=40 -XX:MaxHeapFreeRatio=70 -Xms3670k -Xmx256m -Dsun.java2d.noddraw=true -XX:+UseParallelGC");
+				Files.write(Paths.get("Aurous 64.ini"), lines,
+						StandardCharsets.UTF_8);
+
+			} catch (final IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		if (!containsLine("Aurous.ini", "Virtual Machine Parameters")) {
+			try {
+
+				final List<String> lines = Files.readAllLines(
+						Paths.get("Aurous.ini"), StandardCharsets.UTF_8);
+				lines.add(
+						11,
+						"Virtual Machine Parameters=-XX:MinHeapFreeRatio=40 -XX:MaxHeapFreeRatio=70 -Xms3670k -Xmx256m -Dsun.java2d.noddraw=true -XX:+UseParallelGC");
+				Files.write(Paths.get("Aurous.ini"), lines,
+						StandardCharsets.UTF_8);
+				JOptionPane
+						.showMessageDialog(
+								null,
+								"Aurous has modified some core settings, application will exit. Please restart.",
+								"Don't worry!", JOptionPane.WARNING_MESSAGE);
+				System.exit(0);
+			} catch (final IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		final File data_path = new File(Constants.DATA_PATH);
 		if (data_path.exists()) {
 			// empty
