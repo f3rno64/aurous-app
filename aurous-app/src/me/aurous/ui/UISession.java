@@ -6,6 +6,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import me.aurous.player.scenes.MediaPlayerScene;
 import me.aurous.ui.frames.AurousFrame;
+import me.aurous.ui.frames.VisualizerFrame;
 import me.aurous.ui.panels.ControlPanel;
 import me.aurous.ui.widgets.AboutWidget;
 import me.aurous.ui.widgets.BuilderWidget;
@@ -70,6 +71,9 @@ public class UISession {
 	public static SettingsWidget getSettingsWidget() {
 		return settingsWidget;
 	}
+	public static VisualizerFrame getVisualFrame() {
+		return visualFrame;
+	}
 
 	public static void setAboutWidget(final AboutWidget aboutWidget) {
 		UISession.aboutWidget = aboutWidget;
@@ -125,6 +129,9 @@ public class UISession {
 	public static void setSettingsWidget(final SettingsWidget settingsWidget) {
 		UISession.settingsWidget = settingsWidget;
 	}
+	public static void setVisualFrame(final VisualizerFrame visualFrame) {
+		UISession.visualFrame = visualFrame;
+	}
 
 	private static AurousFrame presenter;
 
@@ -149,6 +156,7 @@ public class UISession {
 	private static Media media;
 
 	private static MediaPlayerScene mediaScene;
+	private static VisualizerFrame visualFrame;
 
 	private static JFXPanel jfxPanel;
 }

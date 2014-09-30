@@ -66,10 +66,6 @@ public class AurousFrame implements WindowListener {
 		try {
 			final MediaPlayerScene mediaPlayerScene = new MediaPlayerScene();
 			UISession.setMediaPlayerScene(mediaPlayerScene);
-			scene = UISession.getMediaPlayerScene().createScene(
-					"https://www.youtube.com/watch?v=kGubD7KG9FQ");
-			setScene(scene);
-			fxPanel.setScene(scene);
 			UISession.setJFXPanel(fxPanel);
 		} catch (final Throwable e) {
 			// TODO Auto-generated catch block

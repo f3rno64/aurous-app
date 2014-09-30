@@ -34,9 +34,9 @@ public class MediaPlayerScene {
 
 	// private static StreamFunctions sFunctions = new StreamFunctions();
 
-	private MediaPlayer player;
+	public MediaPlayer player;
 
-	private MediaView view;
+	public MediaView view;
 
 	public Scene createScene(final String sourceURL) throws Throwable {
 		final ControlPanel panel = UISession.getControlPanel();
@@ -62,11 +62,15 @@ public class MediaPlayerScene {
 
 		final Scene scene = new Scene(root, 1, 1, Color.BLACK);
 
-		player.play();
-
+	//	player.play();
+		
 		player.setOnReady(() -> {
 			panel.seek().setValue(0);
-
+			if (sourceURL.contains("https://www.youtube.com/watch?v=kGubD7KG9FQ")) {
+				player.pause();
+			} else {
+				player.play();
+			}
 		});
 		player.currentTimeProperty().addListener(
 				(observableValue, duration, current) -> {
@@ -78,11 +82,6 @@ public class MediaPlayerScene {
 					updateTime(currentTime, totalDuration);
 
 				});
-
-		// PlayerUtils.activeYoutubeVideo = youtubeVideo;
-		if (sourceURL.contains("https://www.youtube.com/watch?v=kGubD7KG9FQ")) {
-			player.pause();
-		}
 
 		UISession.setMediaPlayer(player);
 		UISession.setMediaView(view);

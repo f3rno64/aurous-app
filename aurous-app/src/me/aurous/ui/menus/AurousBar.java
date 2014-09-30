@@ -7,6 +7,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
 import me.aurous.player.Settings;
+import me.aurous.ui.frames.VisualizerFrame;
 import me.aurous.ui.widgets.AboutWidget;
 import me.aurous.ui.widgets.BuilderWidget;
 import me.aurous.ui.widgets.DiscoWidget;
@@ -37,6 +38,10 @@ public class AurousBar extends JMenuBar {
 		final JMenuItem settingsItem = new JMenuItem("Settings");
 		fileMenu.add(settingsItem);
 		settingsItem.addActionListener(arg0 -> SettingsWidget.openSettings());
+		
+		final JMenuItem visualItem = new JMenuItem("Visual");
+		fileMenu.add(visualItem);
+		visualItem.addActionListener(arg0 -> VisualizerFrame.visualize());
 		this.fileMenu.add(this.exitMenuItem);
 		// add menus to menubar
 		add(this.fileMenu);

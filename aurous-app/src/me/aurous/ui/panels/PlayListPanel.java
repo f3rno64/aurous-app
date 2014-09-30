@@ -33,6 +33,7 @@ import me.aurous.player.functions.PlayerFunctions;
 import me.aurous.ui.widgets.SettingsWidget;
 import me.aurous.utils.Constants;
 import me.aurous.utils.ModelUtils;
+import me.aurous.utils.media.MediaUtils;
 import me.aurous.utils.playlist.PlayListUtils;
 
 /**
@@ -92,6 +93,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 			final String artist) {
 		final String information = String.format(
 				"<html><strong>%s</strong><br>%s</html>", title, artist);
+		MediaUtils.activeInfo = title + "\n" + artist;
 		songInformation.setText(information);
 	}
 
