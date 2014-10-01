@@ -101,7 +101,6 @@ public class Aurous {
 
 					s.close();
 					numScan.close();
-					System.out.println("fadv");
 					return true;
 				}
 			}

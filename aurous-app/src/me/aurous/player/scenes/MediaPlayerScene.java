@@ -13,7 +13,7 @@ import me.aurous.ui.panels.ControlPanel;
 import me.aurous.utils.media.MediaUtils;
 
 public class MediaPlayerScene {
-	private static void updateTime(final long currentTime,
+	private void updateTime(final long currentTime,
 			final long totalDuration) {
 		final ControlPanel panel = UISession.getControlPanel();
 		final int percentage = (int) (((currentTime * 100.0) / totalDuration) + 0.5); // jesus
@@ -33,6 +33,7 @@ public class MediaPlayerScene {
 	public MediaPlayer player;
 
 	public MediaView view;
+
 
 	public Scene createScene(final String sourceURL) throws Throwable {
 		final ControlPanel panel = UISession.getControlPanel();
@@ -61,6 +62,7 @@ public class MediaPlayerScene {
 		// player.play();
 
 		player.setOnReady(() -> {
+			player.setAutoPlay(false);
 			panel.seek().setValue(0);
 			if (sourceURL
 					.contains("https://www.youtube.com/watch?v=kGubD7KG9FQ")) {
@@ -68,6 +70,7 @@ public class MediaPlayerScene {
 			} else {
 				player.play();
 			}
+		
 		});
 
 		progressChangeListener = (observableValue, oldValue, newValue) -> {
@@ -83,9 +86,9 @@ public class MediaPlayerScene {
 
 		player.setOnEndOfMedia(() -> {
 			player.currentTimeProperty().removeListener(progressChangeListener);
-			player.stop();
-			
 			MediaUtils.handleEndOfStream();
+			
+		
 		});
 
 		UISession.setMediaPlayer(player);

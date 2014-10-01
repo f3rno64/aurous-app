@@ -198,10 +198,13 @@ public class MediaUtils {
 		}
 		if ((PlayerFunctions.repeat == false)
 				&& (PlayerFunctions.shuffle == false)) {
+		
 			PlayerFunctions.seekNext();
 		} else if (PlayerFunctions.repeat == true) {
+		
 			PlayerFunctions.repeat();
 		} else if (PlayerFunctions.shuffle == true) {
+			
 			PlayerFunctions.shuffle();
 
 		}
@@ -217,10 +220,9 @@ public class MediaUtils {
 						title, artist, albumArt);
 				np.displayAlert();
 			} catch (final MalformedURLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			} catch (final InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -345,7 +347,7 @@ public class MediaUtils {
 						.getValueAt(row, 7);
 						VisualizerScene visualScene = new VisualizerScene();
 				if (UISession.getMediaPlayer() != null) {
-					
+					UISession.getMediaPlayer().pause();
 					UISession.getMediaPlayer().stop();
 					UISession.getMediaPlayer().currentTimeProperty().removeListener(UISession.getMediaPlayerScene().progressChangeListener);
 					UISession.getMediaPlayer().dispose();

@@ -179,7 +179,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 
 					}
 
-					System.out.println("Dhouble-clicked on: " + playlist);
+					
 				}
 
 			}
