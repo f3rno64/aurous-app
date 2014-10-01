@@ -380,7 +380,7 @@ public class MediaUtils {
 					UISession.getVisualFrame().panel.setScene(UISession
 							.getVisualFrame().scene);
 				}
-				Utils.doGC();     
+		
 			} catch (final Throwable ei) {
 				ei.printStackTrace();
 			}

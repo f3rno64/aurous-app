@@ -7,7 +7,6 @@ import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.ref.WeakReference;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -67,20 +66,7 @@ public class Utils {
 		return (System.currentTimeMillis() / 1000);
 	}
 	
-	 /**
-	    * This method guarantees that garbage collection is
-	    * done unlike <code>{@link System#gc()}</code>
-	    */
-
-	public static void doGC() {
-
-		Object obj = new Object();
-		final WeakReference<Object> ref = new WeakReference<Object>(obj);
-		obj = null;
-		while (ref.get() != null) {
-			System.gc();
-		}
-	}
+	
 
 	/**
 	 * Finds the first supported program in the list (for UNIX-like platforms

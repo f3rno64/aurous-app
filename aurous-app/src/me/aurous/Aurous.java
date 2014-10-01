@@ -106,10 +106,8 @@ public class Aurous {
 			}
 			s.close();
 			numScan.close();
-			System.out.println("fadgyv");
 			return false;
 		} catch (final FileNotFoundException e) {
-			System.out.println("fav");
 			return true;
 		}
 	}
@@ -134,22 +132,6 @@ public class Aurous {
 	}
 
 	private static void setup() {
-		if (!containsLine("Aurous 64.ini", "Virtual Machine Parameters")) {
-			try {
-
-				final List<String> lines = Files.readAllLines(
-						Paths.get("Aurous 64.ini"), StandardCharsets.UTF_8);
-				lines.add(
-						11,
-						"Virtual Machine Parameters=-XX:MinHeapFreeRatio=40 -XX:MaxHeapFreeRatio=70 -Xms3670k -Xmx256m -Dsun.java2d.noddraw=true -XX:+UseParallelGC");
-				Files.write(Paths.get("Aurous 64.ini"), lines,
-						StandardCharsets.UTF_8);
-
-			} catch (final IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 		if (!containsLine("Aurous.ini", "Virtual Machine Parameters")) {
 			try {
 
@@ -157,7 +139,7 @@ public class Aurous {
 						Paths.get("Aurous.ini"), StandardCharsets.UTF_8);
 				lines.add(
 						11,
-						"Virtual Machine Parameters=-XX:MinHeapFreeRatio=40 -XX:MaxHeapFreeRatio=70 -Xms3670k -Xmx256m -Dsun.java2d.noddraw=true -XX:+UseParallelGC");
+						"Virtual Machine Parameters=-XX:MinHeapFreeRatio=40 -XX:MaxHeapFreeRatio=70 -XX:MaxMetaspaceSize=128m -Xms3670k -Xmx256m -Dsun.java2d.noddraw=true -XX:+UseParallelGC");
 				Files.write(Paths.get("Aurous.ini"), lines,
 						StandardCharsets.UTF_8);
 				JOptionPane
