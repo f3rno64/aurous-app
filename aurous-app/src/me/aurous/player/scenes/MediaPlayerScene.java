@@ -41,7 +41,6 @@ public class MediaPlayerScene {
 		root.autosize();
 		MediaUtils.activeMedia = sourceURL;
 		final String trailer = MediaUtils.getMediaURL(sourceURL);
-
 		try {
 			media = new Media(trailer.trim());
 		} catch (final Exception e) {

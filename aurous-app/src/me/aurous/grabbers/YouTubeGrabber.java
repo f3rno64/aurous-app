@@ -60,6 +60,8 @@ public class YouTubeGrabber {
 		matcher = pattern.matcher(unescapedHtml);
 
 		while (matcher.find()) {
+			
+			
 			streams.add(URLDecoder.decode(matcher.group(3), "UTF-8"));
 
 		}
@@ -99,12 +101,12 @@ public class YouTubeGrabber {
 		String lowQualityMP4 = "null";
 		String highQualityMP4 = "null";
 		try {
-
+			
 			final List<String> list = extractURLS(html);
 			for (final String url : list) {
-				if (url.contains("itag=18")) {
+				if (url.contains("itag=5")) {
 					lowQualityMP4 = url;
-				} else if (url.contains("itag=22")) {
+				} else if (url.contains("itag=18")) {
 					highQualityMP4 = url;
 				}
 			}
