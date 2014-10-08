@@ -28,7 +28,7 @@ import javax.swing.JTable;
 import me.aurous.grabbers.SoundCloudGrabber;
 import me.aurous.grabbers.VKGrabber;
 import me.aurous.grabbers.YouTubeGrabber;
-import me.aurous.notifiers.NowPlayingNotification;
+import me.aurous.notifiers.NotificationHandler;
 import me.aurous.player.Settings;
 import me.aurous.player.functions.PlayerFunctions;
 import me.aurous.player.scenes.VisualizerScene;
@@ -41,6 +41,9 @@ import me.aurous.utils.Utils;
 import me.aurous.utils.playlist.YouTubeDataFetcher;
 
 import org.apache.commons.lang3.StringEscapeUtils;
+import org.nikkii.alertify4j.Alertify;
+import org.nikkii.alertify4j.AlertifyBuilder;
+import org.nikkii.alertify4j.AlertifyType;
 
 /**
  * @author Andrew
@@ -210,24 +213,28 @@ public class MediaUtils {
 		}
 
 		if (isOutOfFocus && Settings.isDisplayAlert()) {
+		//	ImageIcon albumArt = null;
 			final int row = table.getSelectedRow();
 			final String title = (String) table.getValueAt(row, 0);
 			final String artist = (String) table.getValueAt(row, 1);
-			final String albumArt = (String) table.getValueAt(row, 6);
-			try {
-
-				final NowPlayingNotification np = new NowPlayingNotification(
-						title, artist, albumArt);
-				np.displayAlert();
-			} catch (final MalformedURLException e) {
-				
-				e.printStackTrace();
-			} catch (final InterruptedException e) {
+		//	final String albumArtURL = (String) table.getValueAt(row, 6);
+			final String information = String.format(
+					"<html>Now Playing:<br><strong>%s</strong><br><em>%s</em></br></html>", title, artist);
+			/*try {
+				albumArt = new ImageIcon(new URL(albumArtURL));
+			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			}
+			if (albumArt != null) {
+				
+			//	Image image = albumArt.getImage();
+				//albumArt = new ImageIcon(image.getScaledInstance(64, 64, Image.SCALE_SMOOTH));*/
+			NotificationHandler.displayAlert(information, AlertifyType.LOG, 3000);
+			
 		}
 
 	}
+
 
 	public static void muteToggle() {
 		if (muted) {
