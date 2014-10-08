@@ -9,11 +9,9 @@ Aurous is an application I've been working on building over the last month on an
     
 The end goal of Aurous is to deliver the ability to import your playlist from various sources such as Vimeo, Soundcloud, Groove shark and more too prevent the need of going from one place or the other. Listen to what you love in a centralized manner. 
 
-## Beta 2.1.4
-
-Change log here http://blog.poptart.me/post/96531815913/2-1-4-changelog
-
-The actual decryption of video signatures is a completely scriptable sub system of the app, though it will be open source in latest releases; I decided to go ahead and make certain parts scriptable, Javascript is what is used, you can see the scripts in the /data/scripts/ folder.
+## Screenshots
+![](https://i.imgur.com/8JvaP3v.png)
+![](http://38.media.tumblr.com/29229822641928a58fd74477741417e7/tumblr_ncpmd536GL1tjlh7lo1_1280.gif)
 
 ```javascript
 function decryptSignature(decodeArray, sig) {
