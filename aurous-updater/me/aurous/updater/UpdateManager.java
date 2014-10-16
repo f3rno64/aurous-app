@@ -1,4 +1,4 @@
-package com.codeusa.aurous.updater;
+package me.aurous.updater;
 
 import java.io.InputStream;
 import java.io.RandomAccessFile;
@@ -237,7 +237,7 @@ public class UpdateManager extends Observable implements Runnable {
 					|| ((this.gUtils.checkForAppUpdates() == false) && this.path
 							.contains("scripts"))) {
 				this.frame.setVisible(false);
-				this.gUtils.runPopTartTime();
+				this.gUtils.runAurous();
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-package com.codeusa.aurous.updater;
+package me.aurous.updater;
 
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -17,7 +17,7 @@ import com.sun.javafx.Utils;
 
 import de.javasoft.plaf.synthetica.SyntheticaAluOxideLookAndFeel;
 
-public class UpdaterFrame {
+public class Updater {
 
 	/**
 	 * Launch the application.
@@ -32,7 +32,7 @@ public class UpdaterFrame {
 		}
 		EventQueue.invokeLater(() -> {
 			try {
-				final UpdaterFrame window = new UpdaterFrame();
+				final Updater window = new Updater();
 				window.updateFrame.setVisible(true);
 			} catch (final Exception e) {
 				e.printStackTrace();
@@ -48,7 +48,7 @@ public class UpdaterFrame {
 	/**
 	 * Create the application.
 	 */
-	public UpdaterFrame() {
+	public Updater() {
 		this.initialize();
 	}
 
@@ -87,7 +87,7 @@ public class UpdaterFrame {
 		if ((this.gUtils.checkForAppUpdates() == false)
 				&& (this.gUtils.checkForScriptUpdates() == false)) {
 			this.updateFrame.setVisible(false);
-			this.gUtils.runPopTartTime();
+			this.gUtils.runAurous();
 			return;
 		}
 		if (this.gUtils.checkForScriptUpdates() == true) {

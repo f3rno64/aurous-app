@@ -1,4 +1,4 @@
-package com.codeusa.aurous.updater;
+package me.aurous.updater;
 
 import java.awt.Desktop;
 import java.awt.GraphicsDevice;

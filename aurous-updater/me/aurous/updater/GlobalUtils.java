@@ -1,4 +1,4 @@
-package com.codeusa.aurous.updater;
+package me.aurous.updater;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -98,25 +98,29 @@ public class GlobalUtils {
 			in.close();
 			return str;
 		} catch (final MalformedURLException e) {
-			System.out.println("Dada");
 
 			return local;
 		} catch (final IOException e) {
-			System.out.println("da525");
+			System.out.println("Dada2");
 			return local;
 		}
 	}
 
-	public void runPopTartTime() {
+	public void runAurous() {
 		try {
-			final Process ps = Runtime.getRuntime().exec(
-					new String[] { "java", "-jar", "Aurous.jar" });
-			ps.waitFor();
-			final java.io.InputStream is = ps.getInputStream();
-			final byte b[] = new byte[is.available()];
-			is.read(b, 0, b.length);
-			System.out.println(new String(b));
-			System.exit(0);
+			if (Utils.getPlatform() == Utils.OperatingSystem.WINDOWS) {
+				Runtime.getRuntime().exec("AurousClient.exe").waitFor();
+				System.exit(0);
+			} else {
+				final Process ps = Runtime.getRuntime().exec(
+						new String[] { "java", "-jar", "Aurous.jar" });
+				ps.waitFor();
+				final java.io.InputStream is = ps.getInputStream();
+				final byte b[] = new byte[is.available()];
+				is.read(b, 0, b.length);
+				System.out.println(new String(b));
+				System.exit(0);
+			}
 		} catch (IOException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
