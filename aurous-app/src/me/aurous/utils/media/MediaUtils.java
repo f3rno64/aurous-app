@@ -2,6 +2,7 @@ package me.aurous.utils.media;
 
 import static com.sun.javafx.Utils.convertUnicode;
 
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Toolkit;
@@ -41,8 +42,6 @@ import me.aurous.utils.Utils;
 import me.aurous.utils.playlist.YouTubeDataFetcher;
 
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.nikkii.alertify4j.Alertify;
-import org.nikkii.alertify4j.AlertifyBuilder;
 import org.nikkii.alertify4j.AlertifyType;
 
 /**
@@ -201,40 +200,40 @@ public class MediaUtils {
 		}
 		if ((PlayerFunctions.repeat == false)
 				&& (PlayerFunctions.shuffle == false)) {
-		
+
 			PlayerFunctions.seekNext();
 		} else if (PlayerFunctions.repeat == true) {
-		
+
 			PlayerFunctions.repeat();
 		} else if (PlayerFunctions.shuffle == true) {
-			
+
 			PlayerFunctions.shuffle();
 
 		}
 
 		if (isOutOfFocus && Settings.isDisplayAlert()) {
-		//	ImageIcon albumArt = null;
+			// ImageIcon albumArt = null;
 			final int row = table.getSelectedRow();
 			final String title = (String) table.getValueAt(row, 0);
 			final String artist = (String) table.getValueAt(row, 1);
-		//	final String albumArtURL = (String) table.getValueAt(row, 6);
-			final String information = String.format(
-					"<html>Now Playing:<br><strong>%s</strong><br><em>%s</em></br></html>", title, artist);
-			/*try {
-				albumArt = new ImageIcon(new URL(albumArtURL));
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			}
-			if (albumArt != null) {
-				
-			//	Image image = albumArt.getImage();
-				//albumArt = new ImageIcon(image.getScaledInstance(64, 64, Image.SCALE_SMOOTH));*/
-			NotificationHandler.displayAlert(information, AlertifyType.LOG, 3000);
-			
+			final Font font = new Font("Dialog", Font.PLAIN, 13);
+			final String information = String
+					.format("<html>Now Playing:<br><strong>%s</strong><br><em>%s</em></br></html>",
+							title, artist);
+			/*
+			 * try { albumArt = new ImageIcon(new URL(albumArtURL)); } catch
+			 * (MalformedURLException e) { e.printStackTrace(); } if (albumArt
+			 * != null) {
+			 *
+			 * // Image image = albumArt.getImage(); //albumArt = new
+			 * ImageIcon(image.getScaledInstance(64, 64, Image.SCALE_SMOOTH));
+			 */
+			NotificationHandler.displayAlert(font, information,
+					AlertifyType.LOG, 3000);
+
 		}
 
 	}
-
 
 	public static void muteToggle() {
 		if (muted) {
@@ -283,6 +282,8 @@ public class MediaUtils {
 
 			if (Settings.isSavePlayBack()) {
 				try {
+					Files.delete(Paths.get(Constants.DATA_PATH
+							+ "livestream/art.jpg"));
 
 					final Image img = albumArt.getImage();
 
@@ -352,11 +353,15 @@ public class MediaUtils {
 				final String sourceURL = target.getName().equals("search") ? (String) target
 						.getValueAt(row, 3) : (String) target
 						.getValueAt(row, 7);
-						VisualizerScene visualScene = new VisualizerScene();
+						final VisualizerScene visualScene = new VisualizerScene();
 				if (UISession.getMediaPlayer() != null) {
 					UISession.getMediaPlayer().pause();
 					UISession.getMediaPlayer().stop();
-					UISession.getMediaPlayer().currentTimeProperty().removeListener(UISession.getMediaPlayerScene().progressChangeListener);
+					UISession
+							.getMediaPlayer()
+							.currentTimeProperty()
+							.removeListener(
+									UISession.getMediaPlayerScene().progressChangeListener);
 					UISession.getMediaPlayer().dispose();
 					UISession.getMediaPlayerScene().player = null; // getting
 					// desperate
@@ -383,11 +388,12 @@ public class MediaUtils {
 						&& UISession.getVisualFrame().isOpen()) {
 					UISession.getVisualFrame().panel.setScene(null);
 					UISession.getVisualFrame().scene = null;
-					UISession.getVisualFrame().scene = visualScene.createVisualScene();
+					UISession.getVisualFrame().scene = visualScene
+									.createVisualScene();
 					UISession.getVisualFrame().panel.setScene(UISession
 							.getVisualFrame().scene);
 				}
-		
+
 			} catch (final Throwable ei) {
 				ei.printStackTrace();
 			}

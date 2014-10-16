@@ -60,7 +60,7 @@ public class ModelUtils {
 			if (evt.getType() == TableModelEvent.UPDATE) {
 				final int column = evt.getColumn();
 				final int row = evt.getFirstRow();
-				//System.out.println("row: " + row + " column: " + column);
+				// System.out.println("row: " + row + " column: " + column);
 				table.setColumnSelectionInterval(column + 1, column + 1);
 				table.setRowSelectionInterval(row, row);
 
@@ -82,7 +82,8 @@ public class ModelUtils {
 						"Error loading playlist, corrupted or unfinished.",
 						"Error", JOptionPane.ERROR_MESSAGE);
 
-				ModelUtils.loadPlayList(Constants.DATA_PATH + "scripts/blank.plist");
+				ModelUtils.loadPlayList(Constants.DATA_PATH
+						+ "scripts/blank.plist");
 				PlayListPanel.canSetLast = false;
 				return;
 			} else {
@@ -104,7 +105,8 @@ public class ModelUtils {
 					ALBUMART_INDEX));
 
 		} catch (final FileNotFoundException e) {
-			ModelUtils.loadPlayList(Constants.DATA_PATH + "scripts/blank.plist");
+			ModelUtils
+			.loadPlayList(Constants.DATA_PATH + "scripts/blank.plist");
 		}
 	}
 
@@ -122,7 +124,8 @@ public class ModelUtils {
 						"Error Loading Search Results.", "Error",
 						JOptionPane.ERROR_MESSAGE);
 
-				ModelUtils.loadSearchResults(Constants.DATA_PATH + "search/search.blank");
+				ModelUtils.loadSearchResults(Constants.DATA_PATH
+						+ "search/search.blank");
 				return;
 			} else {
 
@@ -140,7 +143,8 @@ public class ModelUtils {
 			hiddenIDS.setCellRenderer(new InteractiveRenderer(4));
 
 		} catch (final FileNotFoundException e) {
-			ModelUtils.loadSearchResults(Constants.DATA_PATH + "search/search.blank");
+			ModelUtils.loadSearchResults(Constants.DATA_PATH
+					+ "search/search.blank");
 		}
 	}
 

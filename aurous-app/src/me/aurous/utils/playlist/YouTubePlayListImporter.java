@@ -35,8 +35,8 @@ public class YouTubePlayListImporter {
 					if (url.contains("playlist?")) {
 						// fsyprint("Fetching %s...", url);
 						String last = "";
-						final String out = Constants.DATA_PATH + "playlist/" + playListName
-								+ ".plist";
+						final String out = Constants.DATA_PATH + "playlist/"
+								+ playListName + ".plist";
 						final Document doc = Jsoup.connect(url).get();
 						final Elements links = doc.select("a[href]");
 						final File playListOut = new File(out);

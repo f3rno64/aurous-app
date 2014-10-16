@@ -14,8 +14,6 @@ import me.aurous.ui.UISession;
 import me.aurous.ui.panels.TabelPanel;
 import me.aurous.utils.media.MediaUtils;
 
-
-
 /**
  * @author Andrew
  *

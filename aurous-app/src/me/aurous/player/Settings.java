@@ -57,8 +57,8 @@ public class Settings {
 		BufferedReader br = null;
 		try {
 			String line;
-			br = new BufferedReader(new FileReader(
-					Constants.DATA_PATH + "settings/settings.json"));
+			br = new BufferedReader(new FileReader(Constants.DATA_PATH
+					+ "settings/settings.json"));
 			while ((line = br.readLine()) != null) {
 				jsonData += line + "\n";
 			}
@@ -121,8 +121,8 @@ public class Settings {
 
 		try {
 
-			final FileWriter file = new FileWriter(
-					Constants.DATA_PATH + "settings/settings.json");
+			final FileWriter file = new FileWriter(Constants.DATA_PATH
+					+ "settings/settings.json");
 			file.write(obj.toString());
 			file.flush();
 			file.close();

@@ -13,27 +13,15 @@ import me.aurous.ui.panels.ControlPanel;
 import me.aurous.utils.media.MediaUtils;
 
 public class MediaPlayerScene {
-	private void updateTime(final long currentTime,
-			final long totalDuration) {
-		final ControlPanel panel = UISession.getControlPanel();
-		final int percentage = (int) (((currentTime * 100.0) / totalDuration) + 0.5); // jesus
-		final double seconds = currentTime / 1000.0;
-		UISession.getControlPanel().seek().setValue(percentage);
-		panel.seek().setValue(percentage);
-		panel.current().setText(MediaUtils.calculateTime((int) seconds));
-
-	}
-
 	public ChangeListener<Duration> progressChangeListener;
 
 	private Media media;
 
-	// private static StreamFunctions sFunctions = new StreamFunctions();
-
 	public MediaPlayer player;
 
-	public MediaView view;
+	// private static StreamFunctions sFunctions = new StreamFunctions();
 
+	public MediaView view;
 
 	public Scene createScene(final String sourceURL) throws Throwable {
 		final ControlPanel panel = UISession.getControlPanel();
@@ -69,7 +57,7 @@ public class MediaPlayerScene {
 			} else {
 				player.play();
 			}
-		
+
 		});
 
 		progressChangeListener = (observableValue, oldValue, newValue) -> {
@@ -86,8 +74,7 @@ public class MediaPlayerScene {
 		player.setOnEndOfMedia(() -> {
 			player.currentTimeProperty().removeListener(progressChangeListener);
 			MediaUtils.handleEndOfStream();
-			
-		
+
 		});
 
 		UISession.setMediaPlayer(player);
@@ -95,6 +82,16 @@ public class MediaPlayerScene {
 		UISession.setMedia(media);
 
 		return (scene);
+	}
+
+	private void updateTime(final long currentTime, final long totalDuration) {
+		final ControlPanel panel = UISession.getControlPanel();
+		final int percentage = (int) (((currentTime * 100.0) / totalDuration) + 0.5); // jesus
+		final double seconds = currentTime / 1000.0;
+		UISession.getControlPanel().seek().setValue(percentage);
+		panel.seek().setValue(percentage);
+		panel.current().setText(MediaUtils.calculateTime((int) seconds));
+
 	}
 
 }

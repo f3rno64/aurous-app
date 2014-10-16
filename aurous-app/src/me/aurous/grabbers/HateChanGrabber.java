@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
@@ -23,34 +24,31 @@ import org.jsoup.select.Elements;
  * @author Andrew
  *
  */
-public class RedditGrabber {
-	private static String addQueryToURL(final String url) {
-		final String commentQueryURL = String.format(url + "%s", COMMENT_QUERY);
-		return commentQueryURL;
-	}
+public class HateChanGrabber {
 
-	public static void buildRedditPlayList(String url, final String playListName) {
-		if (url.contains("comments")) {
-			url = addQueryToURL(url);
-		}
+	public static void buildHatePlaylist(final String url,
+			final String playListName) {
 
-		scrapeReddit(url, playListName);
+		scrapeThread(url, playListName);
 
 	}
 
-	private static void scrapeReddit(final String url, final String playListName) {
+	private static void scrapeThread(final String url, final String playListName) {
 		final Thread thread = new Thread() {
 			@Override
 			public void run() {
 
 				try {
-					if (url.contains("reddit")) {
+					if (Pattern
+							.compile("8chan.co\\/(.*?)\\/(.*?)\\/(.*?).html")
+							.matcher(url).find()) {
 						// print("Fetching %s...", url);
 						String last = "";
 						final String out = Constants.DATA_PATH + "playlist/"
 								+ playListName + ".plist";
 						final Document doc = Jsoup.connect(url).get();
-						final Elements links = doc.select("a[href]");
+						final Elements links = doc.select("iframe");
+
 						final File playListOut = new File(out);
 						final FileOutputStream fos = new FileOutputStream(
 								playListOut);
@@ -70,22 +68,27 @@ public class RedditGrabber {
 									final int percent = (int) ((iterations * 100.0f) / links
 											.size());
 									UISession.getImporterWidget()
-											.getImportProgressBar()
-									.setValue(percent);
+									.getImportProgressBar()
+											.setValue(percent);
 									PlayListUtils.disableImporterInterface();
 								}
-								if (!link.attr("abs:href").equals(last)) {
+
+								if (!link.getElementsByTag("iframe")
+										.attr("src").equals(last)) {
 
 									final String mediaLine = MediaUtils
 											.getBuiltString(link
-													.attr("abs:href"));
+													.getElementsByTag("iframe")
+													.attr("src"));
 									if (!mediaLine.isEmpty()) {
 										bw.write(mediaLine);
 										bw.newLine();
-										last = link.attr("abs:href");
+										last = link.getElementsByTag("iframe")
+												.attr("src");
 									}
 
 								}
+
 							} else {
 
 								bw.close();
@@ -104,8 +107,10 @@ public class RedditGrabber {
 						}
 
 					} else {
-						JOptionPane.showMessageDialog(null,
-								"Invalid URL Detected, is this reddit?",
+						JOptionPane
+						.showMessageDialog(
+								null,
+								"Invalid URL Detected, make sure it is an 8chan thread.",
 								"Error", JOptionPane.ERROR_MESSAGE);
 						if (UISession.getImporterWidget()
 								.getImportProgressBar() != null) {
@@ -126,7 +131,5 @@ public class RedditGrabber {
 		thread.start();
 
 	}
-
-	private static String COMMENT_QUERY = "?limit=1000"; // is it 500 or 1000?
 
 }

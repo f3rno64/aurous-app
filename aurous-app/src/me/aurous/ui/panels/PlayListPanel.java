@@ -179,7 +179,6 @@ public class PlayListPanel extends JPanel implements ActionListener {
 
 					}
 
-					
 				}
 
 			}

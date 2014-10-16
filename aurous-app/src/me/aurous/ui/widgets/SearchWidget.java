@@ -139,8 +139,7 @@ public class SearchWidget implements ActionListener {
 			final String playListAddition = String.format(
 					"%s, %s, %s, %s, %s, %s, %s, %s", table.getValueAt(row, 0),
 					table.getValueAt(row, 1), table.getValueAt(row, 2), date,
-					Settings.getUserName(), "",
-					"https://aurous.me/bad.png",
+					Settings.getUserName(), "", "https://aurous.me/bad.png",
 					table.getValueAt(row, 4));
 			PlayListUtils.addUrlToPlayList(playListAddition);
 		case "Copy URL":
@@ -272,7 +271,8 @@ public class SearchWidget implements ActionListener {
 		this.scroller = new javax.swing.JScrollPane(searchTable);
 		scroller.setSize(445, 320);
 		scroller.setLocation(0, 33);
-		ModelUtils.loadSearchResults(Constants.DATA_PATH + "settings/search.blank");
+		ModelUtils.loadSearchResults(Constants.DATA_PATH
+				+ "settings/search.blank");
 
 		final TableColumn hiddenLink = searchTable.getColumnModel()
 				.getColumn(3);

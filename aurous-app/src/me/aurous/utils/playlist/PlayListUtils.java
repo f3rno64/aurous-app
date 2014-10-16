@@ -32,6 +32,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
+import me.aurous.grabbers.HateChanGrabber;
 import me.aurous.grabbers.RedditGrabber;
 import me.aurous.grabbers.SoundCloudGrabber;
 import me.aurous.player.Settings;
@@ -42,8 +43,6 @@ import me.aurous.ui.widgets.DiscoWidget;
 import me.aurous.ui.widgets.ImporterWidget;
 import me.aurous.utils.Constants;
 import me.aurous.utils.media.MediaUtils;
-
-
 
 /**
  * @author Andrew
@@ -127,8 +126,8 @@ public class PlayListUtils {
 			@Override
 			public void run() {
 				try {
-					final String name = Constants.DATA_PATH + "playlist/" + playListName
-							+ ".plist";
+					final String name = Constants.DATA_PATH + "playlist/"
+							+ playListName + ".plist";
 					final String header = "Title, Artist, Time, Date Added, User, Album, ALBUMART_INDEX, link";
 					final File file = new File(name);
 
@@ -184,9 +183,9 @@ public class PlayListUtils {
 			final File file = new File(path);
 
 			if (file.delete()) {
-			//	System.out.println(file.getName() + " is deleted!");
+				// System.out.println(file.getName() + " is deleted!");
 			} else {
-			//	System.out.println("Delete operation is failed.");
+				// System.out.println("Delete operation is failed.");
 			}
 
 		} catch (final Exception e) {
@@ -205,9 +204,9 @@ public class PlayListUtils {
 			final File file = new File(path);
 
 			if (file.delete()) {
-			//	System.out.println(file.getName() + " is deleted!");
+				// System.out.println(file.getName() + " is deleted!");
 			} else {
-				//System.out.println("Delete operation is failed.");
+				// System.out.println("Delete operation is failed.");
 			}
 
 		} catch (final Exception e) {
@@ -265,6 +264,8 @@ public class PlayListUtils {
 
 		} else if (sourceURL.contains("reddit")) {
 			RedditGrabber.buildRedditPlayList(sourceURL, playListName);
+		} else if (sourceURL.contains("8chan")) {
+			HateChanGrabber.buildHatePlaylist(sourceURL, playListName);
 
 		} else {
 			JOptionPane.showMessageDialog(null, "No importer found!", "Error",
@@ -306,7 +307,7 @@ public class PlayListUtils {
 		} else {
 
 		}
-		
+
 		return "";
 
 	}
@@ -441,7 +442,8 @@ public class PlayListUtils {
 								final DefaultListModel playListModel = new DefaultListModel();
 
 						final File[] playListFolder = new File(
-								Constants.DATA_PATH + "playlist/").listFiles();
+								Constants.DATA_PATH + "playlist/")
+						.listFiles();
 						if ((kind == ENTRY_CREATE)
 								|| ((kind == ENTRY_DELETE)
 										&& (playListModel != null) && (playListFolder != null))) {

@@ -65,8 +65,6 @@ public class Utils {
 	public static long currentTimeSeconds() {
 		return (System.currentTimeMillis() / 1000);
 	}
-	
-	
 
 	/**
 	 * Finds the first supported program in the list (for UNIX-like platforms

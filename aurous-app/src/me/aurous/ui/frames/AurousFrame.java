@@ -31,7 +31,6 @@ import me.aurous.utils.media.MediaUtils;
 import com.boxysystems.jgoogleanalytics.FocusPoint;
 import com.boxysystems.jgoogleanalytics.JGoogleAnalyticsTracker;
 
-
 /**
  * @author Andrew
  *

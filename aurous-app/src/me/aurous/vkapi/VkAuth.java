@@ -96,8 +96,8 @@ public class VkAuth extends Application {
 			} else {
 				try {
 
-					final PrintWriter out = new PrintWriter(Constants.DATA_PATH + 
-							"settings/vkauth.dat");
+					final PrintWriter out = new PrintWriter(Constants.DATA_PATH
+							+ "settings/vkauth.dat");
 					out.println(formData);
 					out.close();
 					Platform.exit();

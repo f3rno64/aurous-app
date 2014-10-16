@@ -18,7 +18,7 @@ public class VKGrabber {
 	private static String getVKStream(final String json) {
 		final JSONObject jsonObj = new JSONObject(json);
 		final JSONArray response = jsonObj.getJSONArray("response");
-		for (int i = 0; i < response.length();) {
+		for (final int i = 0; i < response.length();) {
 			final Object jsonObject = response.get(i);
 			final JSONObject jsonResults = new JSONObject(jsonObject.toString());
 			final String stream = jsonResults.getString("url");
@@ -33,8 +33,8 @@ public class VKGrabber {
 		String json = null;
 		final int pos = url.lastIndexOf("/");
 		final String ids = url.substring(pos + "/".length());
-		final String formData = Utils.readFile(Constants.DATA_PATH + "settings/vkauth.dat",
-				Charset.defaultCharset());
+		final String formData = Utils.readFile(Constants.DATA_PATH
+				+ "settings/vkauth.dat", Charset.defaultCharset());
 
 		final AudioApi api = new AudioApi(VkAuth.VK_APP_ID, formData.trim());
 		final String parameters = String.format("audios=%s", ids);
@@ -52,7 +52,7 @@ public class VKGrabber {
 			return "nil";
 		}
 		final String streamURL = getVKStream(json);
-		
+
 		return streamURL.trim();
 	}
 }

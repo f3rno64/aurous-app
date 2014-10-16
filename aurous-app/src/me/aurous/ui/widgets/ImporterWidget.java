@@ -62,6 +62,7 @@ public class ImporterWidget {
 	public JLabel importInstrucLabel;
 
 	public JLabel lblEnterAPlaylist;
+	private JButton hateChanServiceButton;
 
 	public ImporterWidget() {
 		initialize();
@@ -157,7 +158,7 @@ public class ImporterWidget {
 		youTubeServiceButton.setRolloverIcon(new ImageIcon(ImporterWidget.class
 				.getResource("/resources/w_youtube_h.png")));
 
-		youTubeServiceButton.setBounds(138, 11, 35, 35);
+		youTubeServiceButton.setBounds(122, 11, 35, 35);
 
 		servicePanel.add(youTubeServiceButton);
 
@@ -178,8 +179,28 @@ public class ImporterWidget {
 		redditServiceButton.setContentAreaFilled(false);
 		redditServiceButton.setBorderPainted(false);
 		redditServiceButton.setBorder(null);
-		redditServiceButton.setBounds(183, 11, 35, 35);
+		redditServiceButton.setBounds(167, 11, 35, 35);
 		servicePanel.add(redditServiceButton);
+
+		hateChanServiceButton = new JButton("");
+		hateChanServiceButton.setIcon(new ImageIcon(ImporterWidget.class
+				.getResource("/resources/8chan.png")));
+		hateChanServiceButton.setRolloverIcon(new ImageIcon(
+				ImporterWidget.class.getResource("/resources/8chan_h.png")));
+		hateChanServiceButton.setCursor(Cursor
+				.getPredefinedCursor(Cursor.HAND_CURSOR));
+		hateChanServiceButton.setMargin(new Insets(0, 0, 0, 0));
+		hateChanServiceButton.setContentAreaFilled(false);
+		hateChanServiceButton.setBorderPainted(false);
+		hateChanServiceButton.setBorder(null);
+		hateChanServiceButton.setBounds(212, 11, 35, 35);
+		hateChanServiceButton.addActionListener(e -> {
+			ImporterWidget.this.playListURL = PlayListUtils
+					.importPlayListPrompt();
+			playListURLLabel.setText(ImporterWidget.this.playListURL);
+
+		});
+		servicePanel.add(hateChanServiceButton);
 
 		final JLabel lblSelectAService = new JLabel("Select a Service");
 		lblSelectAService.setFont(new Font("Segoe UI", Font.PLAIN, 20));

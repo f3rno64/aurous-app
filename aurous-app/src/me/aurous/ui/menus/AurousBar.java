@@ -38,7 +38,7 @@ public class AurousBar extends JMenuBar {
 		final JMenuItem settingsItem = new JMenuItem("Settings");
 		fileMenu.add(settingsItem);
 		settingsItem.addActionListener(arg0 -> SettingsWidget.openSettings());
-		
+
 		final JMenuItem visualItem = new JMenuItem("Visual");
 		fileMenu.add(visualItem);
 		visualItem.addActionListener(arg0 -> VisualizerFrame.visualize());

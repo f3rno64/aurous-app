@@ -60,8 +60,7 @@ public class YouTubeGrabber {
 		matcher = pattern.matcher(unescapedHtml);
 
 		while (matcher.find()) {
-			
-			
+
 			streams.add(URLDecoder.decode(matcher.group(3), "UTF-8"));
 
 		}
@@ -101,7 +100,7 @@ public class YouTubeGrabber {
 		String lowQualityMP4 = "null";
 		String highQualityMP4 = "null";
 		try {
-			
+
 			final List<String> list = extractURLS(html);
 			for (final String url : list) {
 				if (url.contains("itag=5")) {
@@ -131,7 +130,8 @@ public class YouTubeGrabber {
 		try {
 			final ScriptEngine engine = new ScriptEngineManager()
 			.getEngineByName("nashorn");
-			engine.eval(new FileReader(Constants.DATA_PATH + "scripts/decrypt.js"));
+			engine.eval(new FileReader(Constants.DATA_PATH
+					+ "scripts/decrypt.js"));
 			final Invocable invocable = (Invocable) engine;
 
 			final Object result = invocable.invokeFunction("getWorkingVideo",

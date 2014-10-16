@@ -267,6 +267,9 @@ public class YouTubeDataFetcher {
 	 *
 	 */
 	public static String getYouTubeID(final String url) {
+		if (url.contains("embed")) {
+			return url.substring(url.lastIndexOf("/") + 1);
+		}
 		final String id = "";
 
 		final Pattern pattern = Pattern.compile(YOUTUBE_REGEX);

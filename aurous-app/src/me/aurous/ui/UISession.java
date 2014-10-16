@@ -71,6 +71,7 @@ public class UISession {
 	public static SettingsWidget getSettingsWidget() {
 		return settingsWidget;
 	}
+
 	public static VisualizerFrame getVisualFrame() {
 		return visualFrame;
 	}
@@ -129,6 +130,7 @@ public class UISession {
 	public static void setSettingsWidget(final SettingsWidget settingsWidget) {
 		UISession.settingsWidget = settingsWidget;
 	}
+
 	public static void setVisualFrame(final VisualizerFrame visualFrame) {
 		UISession.visualFrame = visualFrame;
 	}

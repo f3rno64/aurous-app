@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import me.aurous.vkapi.VkApi;
 
-
 public class AudioApi extends VkApi {
 
 	public AudioApi(final int applicationId, final String formData) {
@@ -19,11 +18,13 @@ public class AudioApi extends VkApi {
 		return submitQuery("audio.get", "");
 	}
 
+	public String searchAudioByIdJson(final String paramaters)
+			throws IOException {
+		return submitQuery("audio.getById", paramaters);
+	}
+
 	public String searchAudioJson(final String paramaters) throws IOException {
 		return submitQuery("audio.search", paramaters);
-	}
-	public String searchAudioByIdJson(final String paramaters) throws IOException {
-		return submitQuery("audio.getById", paramaters);
 	}
 
 }

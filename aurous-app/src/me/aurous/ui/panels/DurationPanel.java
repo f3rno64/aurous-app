@@ -58,7 +58,7 @@ public class DurationPanel extends JPanel {
 						final int value = ui.valueForXPosition(p.x);
 
 						setValue(value);
-				
+
 						PlayerFunctions.seek(value);
 					}
 
