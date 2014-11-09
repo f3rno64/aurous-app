@@ -74,7 +74,7 @@ public class AurousBar extends JMenuBar {
 
 		final JMenuItem discoItem = new JMenuItem("Disco Mode");
 		discoItem.addActionListener(arg0 -> DiscoWidget.openDisco());
-		toolsMenu.add(discoItem);
+		//toolsMenu.add(discoItem);
 
 		final JMenu helpMenu = new JMenu("Help");
 		add(helpMenu);

@@ -282,8 +282,12 @@ public class MediaUtils {
 
 			if (Settings.isSavePlayBack()) {
 				try {
+					File art = new File(Constants.DATA_PATH
+							+ "livestream/art.jpg");
+					if(art.exists() && !art.isDirectory()) {
 					Files.delete(Paths.get(Constants.DATA_PATH
 							+ "livestream/art.jpg"));
+					}
 
 					final Image img = albumArt.getImage();
 
