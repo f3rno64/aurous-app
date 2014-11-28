@@ -10,7 +10,6 @@ import me.aurous.player.Settings;
 import me.aurous.ui.frames.VisualizerFrame;
 import me.aurous.ui.widgets.AboutWidget;
 import me.aurous.ui.widgets.BuilderWidget;
-import me.aurous.ui.widgets.DiscoWidget;
 import me.aurous.ui.widgets.ImporterWidget;
 import me.aurous.ui.widgets.SearchWidget;
 import me.aurous.ui.widgets.SettingsWidget;
@@ -71,10 +70,6 @@ public class AurousBar extends JMenuBar {
 		final JMenuItem searchItem = new JMenuItem("Search");
 		searchItem.addActionListener(arg0 -> SearchWidget.openSearch());
 		toolsMenu.add(searchItem);
-
-		final JMenuItem discoItem = new JMenuItem("Disco Mode");
-		discoItem.addActionListener(arg0 -> DiscoWidget.openDisco());
-		//toolsMenu.add(discoItem);
 
 		final JMenu helpMenu = new JMenu("Help");
 		add(helpMenu);

@@ -135,7 +135,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		displayList.setFont(new Font("Calibri", Font.PLAIN, 14));
 
 		displayList
-				.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+		.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		displayList.setCellRenderer(new MyCellRenderer());
 		displayList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
 		displayList.setName("displayList");
@@ -197,9 +197,9 @@ public class PlayListPanel extends JPanel implements ActionListener {
 
 		final JScrollPane scrollPane = new JScrollPane(displayList);
 		scrollPane
-		.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane
-		.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setPreferredSize(new Dimension(200, getHeight()));
 
 		scrollPane.setBorder(new EtchedBorder());
@@ -211,8 +211,8 @@ public class PlayListPanel extends JPanel implements ActionListener {
 
 		setAlbumArt(new ImageIcon(
 				SettingsWidget.class
-						.getResource("/resources/album-placeholder.png"))
-				.getImage());
+				.getResource("/resources/album-placeholder.png"))
+		.getImage());
 
 		songInformation = new JLabel();
 		songInformation.setHorizontalAlignment(SwingConstants.LEFT);

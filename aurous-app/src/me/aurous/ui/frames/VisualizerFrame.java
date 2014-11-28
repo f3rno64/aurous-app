@@ -13,6 +13,7 @@ import javafx.scene.Scene;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.WindowConstants;
 
 import me.aurous.player.functions.PlayerFunctions;
 import me.aurous.player.scenes.VisualizerScene;
@@ -72,7 +73,7 @@ public class VisualizerFrame extends JFrame {
 		setAlwaysOnTop(true);
 		setExtendedState(Frame.MAXIMIZED_BOTH);
 		setUndecorated(true);
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
@@ -93,7 +94,7 @@ public class VisualizerFrame extends JFrame {
 								.play());
 					} else {
 						PlayerFunctions
-						.play(UISession.getControlPanel().play());
+								.play(UISession.getControlPanel().play());
 					}
 				} else if (c == KeyEvent.VK_SPACE) {
 					if (!isPaused) {
@@ -101,7 +102,7 @@ public class VisualizerFrame extends JFrame {
 								.play());
 					} else {
 						PlayerFunctions
-						.play(UISession.getControlPanel().play());
+								.play(UISession.getControlPanel().play());
 					}
 				} else if (c == KeyEvent.VK_ESCAPE) {
 					panel.setScene(null);

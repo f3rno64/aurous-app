@@ -10,7 +10,6 @@ import java.io.OutputStreamWriter;
 import javax.swing.JOptionPane;
 
 import me.aurous.ui.UISession;
-import me.aurous.ui.widgets.DiscoWidget;
 import me.aurous.ui.widgets.ImporterWidget;
 import me.aurous.utils.Constants;
 
@@ -48,27 +47,12 @@ public class YouTubePlayListImporter {
 						int iterations = 0;
 						final ImporterWidget importWidget = UISession
 								.getImporterWidget();
-						final DiscoWidget discoWidget = UISession
-								.getDiscoWidget();
 						bw.write(header);
 						bw.newLine();
 						for (final Element link : links) {
 							if (((importWidget != null) && importWidget
-									.isOpen())
-									|| ((discoWidget != null) && discoWidget
-											.isOpen())) {
-								if ((discoWidget != null)
-										&& (discoWidget.getDiscoProgressBar() != null)) {
-
-									iterations += 1;
-
-									final int percent = (int) ((iterations * 100.0f) / links
-											.size());
-
-									discoWidget.getDiscoProgressBar().setValue(
-											percent);
-									PlayListUtils.disableDiscoInterface();
-								} else if ((importWidget != null)
+									.isOpen())) {
+								if ((importWidget != null)
 										&& (importWidget.getImportProgressBar() != null)) {
 									iterations += 1;
 
@@ -76,7 +60,7 @@ public class YouTubePlayListImporter {
 											.size());
 
 									importWidget.getImportProgressBar()
-											.setValue(percent);
+									.setValue(percent);
 									PlayListUtils.disableImporterInterface();
 								}
 								if (link.attr("abs:href").contains("watch?v=")
@@ -102,8 +86,6 @@ public class YouTubePlayListImporter {
 								PlayListUtils.deletePlayList(out);
 								if (importWidget != null) {
 									PlayListUtils.resetImporterInterface();
-								} else if (discoWidget != null) {
-									PlayListUtils.resetDiscoInterface();
 								}
 								return;
 							}
@@ -111,8 +93,6 @@ public class YouTubePlayListImporter {
 						bw.close();
 						if (importWidget != null) {
 							PlayListUtils.resetImporterInterface();
-						} else if (discoWidget != null) {
-							PlayListUtils.resetDiscoInterface();
 						}
 
 					} else {
@@ -121,8 +101,6 @@ public class YouTubePlayListImporter {
 								"Error", JOptionPane.ERROR_MESSAGE);
 						if (UISession.getImporterWidget() != null) {
 							PlayListUtils.resetImporterInterface();
-						} else if (UISession.getDiscoWidget() != null) {
-							PlayListUtils.resetDiscoInterface();
 						}
 					}
 				} catch (HeadlessException | IOException e) {
@@ -130,8 +108,6 @@ public class YouTubePlayListImporter {
 							JOptionPane.ERROR_MESSAGE);
 					if (UISession.getImporterWidget() != null) {
 						PlayListUtils.resetImporterInterface();
-					} else if (UISession.getDiscoWidget() != null) {
-						PlayListUtils.resetDiscoInterface();
 					}
 					e.printStackTrace();
 				}

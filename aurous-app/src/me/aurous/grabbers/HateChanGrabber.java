@@ -68,8 +68,8 @@ public class HateChanGrabber {
 									final int percent = (int) ((iterations * 100.0f) / links
 											.size());
 									UISession.getImporterWidget()
-									.getImportProgressBar()
-											.setValue(percent);
+											.getImportProgressBar()
+									.setValue(percent);
 									PlayListUtils.disableImporterInterface();
 								}
 
@@ -108,10 +108,10 @@ public class HateChanGrabber {
 
 					} else {
 						JOptionPane
-						.showMessageDialog(
-								null,
-								"Invalid URL Detected, make sure it is an 8chan thread.",
-								"Error", JOptionPane.ERROR_MESSAGE);
+								.showMessageDialog(
+										null,
+										"Invalid URL Detected, make sure it is an 8chan thread.",
+										"Error", JOptionPane.ERROR_MESSAGE);
 						if (UISession.getImporterWidget()
 								.getImportProgressBar() != null) {
 							PlayListUtils.resetImporterInterface();

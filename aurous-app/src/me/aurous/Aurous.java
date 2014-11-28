@@ -143,10 +143,10 @@ public class Aurous {
 				Files.write(Paths.get("Aurous.ini"), lines,
 						StandardCharsets.UTF_8);
 				JOptionPane
-						.showMessageDialog(
-								null,
-								"Aurous has modified some core settings, application will exit. Please restart.",
-								"Don't worry!", JOptionPane.WARNING_MESSAGE);
+				.showMessageDialog(
+						null,
+						"Aurous has modified some core settings, application will exit. Please restart.",
+						"Don't worry!", JOptionPane.WARNING_MESSAGE);
 				System.exit(0);
 			} catch (final IOException e) {
 				// TODO Auto-generated catch block
@@ -160,10 +160,10 @@ public class Aurous {
 			final boolean success = data_path.mkdirs();
 			if (!success) {
 				JOptionPane
-				.showMessageDialog(
-						null,
-						"Unable to create data folder, try running as admin. Program will exit",
-						"Error", JOptionPane.ERROR_MESSAGE);
+						.showMessageDialog(
+								null,
+								"Unable to create data folder, try running as admin. Program will exit",
+								"Error", JOptionPane.ERROR_MESSAGE);
 				System.exit(1);
 			} else {
 				// move files to new data folder

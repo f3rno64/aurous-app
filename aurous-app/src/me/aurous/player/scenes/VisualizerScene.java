@@ -85,24 +85,24 @@ public class VisualizerScene {
 
 		vbox.setTranslateY(405 - 100);
 		UISession.getMediaPlayer()
-				.setAudioSpectrumListener(
-						(v, v1, mags, floats1) -> {
+		.setAudioSpectrumListener(
+				(v, v1, mags, floats1) -> {
 
-							for (int i = 0; i < rects.length; i++) {
-								final double h = mags[i] + 60;
-								if (h > 2) {
-									// nextInt is normally exclusive of the top
-									// value,
-									// so add 1 to make it inclusive
-									final int randomNum = rand
-											.nextInt((10 - 1) + 1) + 1;
-									rects[i].setHeight(h * 30);
-									rects[i].setFill(randomNum > 5 ? Color.GREY
-											: Color.DARKGRAY);
+					for (int i = 0; i < rects.length; i++) {
+						final double h = mags[i] + 60;
+						if (h > 2) {
+							// nextInt is normally exclusive of the top
+							// value,
+							// so add 1 to make it inclusive
+							final int randomNum = rand
+									.nextInt((10 - 1) + 1) + 1;
+							rects[i].setHeight(h * 30);
+							rects[i].setFill(randomNum > 5 ? Color.GREY
+									: Color.DARKGRAY);
 
-								}
-							}
-						});
+						}
+					}
+				});
 
 		return (scene);
 	}

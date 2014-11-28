@@ -70,8 +70,8 @@ public class RedditGrabber {
 									final int percent = (int) ((iterations * 100.0f) / links
 											.size());
 									UISession.getImporterWidget()
-											.getImportProgressBar()
-									.setValue(percent);
+									.getImportProgressBar()
+											.setValue(percent);
 									PlayListUtils.disableImporterInterface();
 								}
 								if (!link.attr("abs:href").equals(last)) {

@@ -10,7 +10,6 @@ import me.aurous.ui.frames.VisualizerFrame;
 import me.aurous.ui.panels.ControlPanel;
 import me.aurous.ui.widgets.AboutWidget;
 import me.aurous.ui.widgets.BuilderWidget;
-import me.aurous.ui.widgets.DiscoWidget;
 import me.aurous.ui.widgets.ImporterWidget;
 import me.aurous.ui.widgets.SearchWidget;
 import me.aurous.ui.widgets.SettingsWidget;
@@ -30,10 +29,6 @@ public class UISession {
 
 	public static ControlPanel getControlPanel() {
 		return controlPanel;
-	}
-
-	public static DiscoWidget getDiscoWidget() {
-		return discoWidget;
 	}
 
 	public static ImporterWidget getImporterWidget() {
@@ -86,10 +81,6 @@ public class UISession {
 
 	public static void setControlPanel(final ControlPanel controlPanel) {
 		UISession.controlPanel = controlPanel;
-	}
-
-	public static void setDiscoWidget(final DiscoWidget discoWidget) {
-		UISession.discoWidget = discoWidget;
 	}
 
 	public static void setImporterWidget(final ImporterWidget importerWidget) {
@@ -148,8 +139,6 @@ public class UISession {
 	private static BuilderWidget builderWidget;
 
 	private static ImporterWidget importerWidget;
-
-	private static DiscoWidget discoWidget;
 
 	private static MediaPlayer mediaPlayer;
 

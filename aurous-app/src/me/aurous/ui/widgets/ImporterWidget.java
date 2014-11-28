@@ -102,7 +102,7 @@ public class ImporterWidget {
 		importerWidget.getContentPane().setBackground(new Color(32, 33, 35));
 		importerWidget.setBounds(100, 100, 379, 372);
 		importerWidget
-				.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		importerWidget.getContentPane().setLayout(null);
 		importerWidget.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
@@ -233,7 +233,7 @@ public class ImporterWidget {
 		importPlayListButton.addActionListener(e -> {
 			if (!ImporterWidget.this.playListURL.trim().isEmpty()
 					&& !ImporterWidget.this.playListNameField.getText().trim()
-							.isEmpty()) {
+					.isEmpty()) {
 
 				importProgressBar.setVisible(true);
 

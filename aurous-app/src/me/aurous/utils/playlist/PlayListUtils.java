@@ -39,7 +39,6 @@ import me.aurous.player.Settings;
 import me.aurous.swinghacks.GhostText;
 import me.aurous.ui.UISession;
 import me.aurous.ui.listeners.ContextMenuMouseListener;
-import me.aurous.ui.widgets.DiscoWidget;
 import me.aurous.ui.widgets.ImporterWidget;
 import me.aurous.utils.Constants;
 import me.aurous.utils.media.MediaUtils;
@@ -156,13 +155,13 @@ public class PlayListUtils {
 					}
 					printWriter.close();
 					UISession.getBuilderWidget().getLoadingIcon()
-					.setVisible(false);
+							.setVisible(false);
 					UISession.getBuilderWidget().getPlayListTextArea()
-					.setEditable(true);
+							.setEditable(true);
 					UISession.getBuilderWidget().getBuildListButton()
-					.setEnabled(true);
+							.setEnabled(true);
 					UISession.getBuilderWidget().getPlayListNameTextField()
-					.setEditable(false);
+							.setEditable(false);
 
 				} catch (final FileNotFoundException e) {
 					// TODO Auto-generated catch block
@@ -216,15 +215,6 @@ public class PlayListUtils {
 		}
 	}
 
-	public static void disableDiscoInterface() {
-		final DiscoWidget widget = UISession.getDiscoWidget();
-
-		widget.getDiscoBuildButton().setEnabled(false);
-		widget.getQueryField().setEnabled(false);
-		widget.getTop100Button().setEnabled(false);
-
-	}
-
 	public static void disableImporterInterface() {
 
 		final ImporterWidget widget = UISession.getImporterWidget();
@@ -271,7 +261,7 @@ public class PlayListUtils {
 			JOptionPane.showMessageDialog(null, "No importer found!", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			UISession.getImporterWidget().getImportProgressBar()
-			.setVisible(false);
+					.setVisible(false);
 		}
 	}
 
@@ -387,19 +377,6 @@ public class PlayListUtils {
 
 	}
 
-	public static void resetDiscoInterface() {
-		final DiscoWidget widget = UISession.getDiscoWidget();
-		if (widget != null) {
-
-			widget.getDiscoBuildButton().setEnabled(true);
-			widget.getQueryField().setEnabled(true);
-			widget.getTop100Button().setEnabled(true);
-			widget.getDiscoProgressBar().setValue(0);
-			widget.getDiscoProgressBar().setVisible(false);
-		}
-
-	}
-
 	public static void resetImporterInterface() {
 		final ImporterWidget widget = UISession.getImporterWidget();
 		if (widget != null) {
@@ -436,25 +413,25 @@ public class PlayListUtils {
 					final WatchEvent.Kind<?> kind = event.kind();
 
 					java.awt.EventQueue
-							// i dont question the Java API, it works now.
-					.invokeLater(() -> {
+					// i dont question the Java API, it works now.
+							.invokeLater(() -> {
 
-								final DefaultListModel playListModel = new DefaultListModel();
+						final DefaultListModel playListModel = new DefaultListModel();
 
-						final File[] playListFolder = new File(
-								Constants.DATA_PATH + "playlist/")
-						.listFiles();
-						if ((kind == ENTRY_CREATE)
-								|| ((kind == ENTRY_DELETE)
-										&& (playListModel != null) && (playListFolder != null))) {
+								final File[] playListFolder = new File(
+										Constants.DATA_PATH + "playlist/")
+										.listFiles();
+								if ((kind == ENTRY_CREATE)
+										|| ((kind == ENTRY_DELETE)
+												&& (playListModel != null) && (playListFolder != null))) {
 
-							for (final File file : playListFolder) {
-								playListModel.addElement(file);
-							}
-							displayList.setModel(playListModel);
-									// / displayList.updateUI();
-						}
-					});
+									for (final File file : playListFolder) {
+										playListModel.addElement(file);
+									}
+									displayList.setModel(playListModel);
+							// / displayList.updateUI();
+								}
+							});
 
 				}
 

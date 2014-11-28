@@ -127,15 +127,18 @@ public class YouTubeGrabber {
 	}
 
 	private String signDecipher(final String signature, final String playercode) {
+		//System.out.println(signature);
 		try {
 			final ScriptEngine engine = new ScriptEngineManager()
-			.getEngineByName("nashorn");
-			engine.eval(new FileReader(Constants.DATA_PATH
+					.getEngineByName("nashorn");
+			engine.eval(new FileReader(Constants.LEGACY_DATA_PATH
 					+ "scripts/decrypt.js"));
 			final Invocable invocable = (Invocable) engine;
 
 			final Object result = invocable.invokeFunction("getWorkingVideo",
 					signature, playercode);
+	//		System.out.println((String) result);
+
 			return (String) result;
 		} catch (ScriptException | FileNotFoundException
 				| NoSuchMethodException e) {
