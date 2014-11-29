@@ -198,4 +198,5 @@ public class AurousFrame implements WindowListener {
 		MediaUtils.isOutOfFocus = false;
 
 	}
+
 }

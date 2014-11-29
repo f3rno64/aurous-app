@@ -12,7 +12,10 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.swing.ImageIcon;
@@ -35,6 +38,25 @@ public class Utils {
 	 */
 	public static enum OperatingSystem {
 		LINUX, SOLARIS, WINDOWS, MAC, UNKNOWN
+	}
+
+	public static boolean isNull(final Object obj) {
+		return obj == null;
+	}
+
+	/**
+	 * @author Andrew
+	 *
+	 *         Calculates a Spotify-like shorthand date
+	 *
+	 */
+	public static String getDate() {
+		final Date now = new Date();
+
+		final SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM d",
+				Locale.US);
+		final String asWeek = dateFormat.format(now);
+		return asWeek;
 	}
 
 	/**
@@ -149,6 +171,57 @@ public class Utils {
 	}
 
 	/**
+	 * Will take a url such as http://www.youtube.com and return www.youtube.com
+	 *
+	 * @param url
+	 * @return
+	 */
+	public static String getHost(final String url) {
+		if ((url == null) || (url.length() == 0)) {
+			return "";
+		}
+
+		int doubleslash = url.indexOf("//");
+		if (doubleslash == -1) {
+			doubleslash = 0;
+		} else {
+			doubleslash += 2;
+		}
+
+		int end = url.indexOf('/', doubleslash);
+		end = end >= 0 ? end : url.length();
+
+		final int port = url.indexOf(':', doubleslash);
+		end = ((port > 0) && (port < end)) ? port : end;
+
+		return url.substring(doubleslash, end);
+	}
+
+	/**
+	 * Get the base domain for a given host or url. E.g. cs4625.vk.me will
+	 * return vk.me
+	 * 
+	 * @param host
+	 * @return
+	 */
+	public static String getBaseDomain(final String url) {
+		final String host = getHost(url);
+
+		int startIndex = 0;
+		int nextIndex = host.indexOf('.');
+		final int lastIndex = host.lastIndexOf('.');
+		while (nextIndex < lastIndex) {
+			startIndex = nextIndex + 1;
+			nextIndex = host.indexOf('.', startIndex);
+		}
+		if (startIndex > 0) {
+			return host.substring(startIndex);
+		} else {
+			return host;
+		}
+	}
+
+	/**
 	 * Open a file using {@link Desktop} if supported, or a manual
 	 * platform-specific method if not.
 	 *
@@ -238,7 +311,7 @@ public class Utils {
 	 * @return The trimmed string
 	 */
 	public static String trim(String str, final char ch) {
-		if ((str == null) || str.isEmpty()) {
+		if ((Utils.isNull(str)) || str.isEmpty()) {
 			return str;
 		} else if (str.length() == 1) {
 			return str.charAt(0) == ch ? "" : str;

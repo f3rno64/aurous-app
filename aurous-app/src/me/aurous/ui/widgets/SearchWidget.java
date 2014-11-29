@@ -28,7 +28,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
-import me.aurous.grabbers.SoundCloudGrabber;
 import me.aurous.player.Settings;
 import me.aurous.searchers.VKEngine;
 import me.aurous.ui.UISession;
@@ -127,7 +126,7 @@ public class SearchWidget implements ActionListener {
 			MediaUtils.switchMedia(table);
 			break;
 		case "Add":
-			if ((Settings.getLastPlayList() == null)
+			if ((Utils.isNull(Settings.getLastPlayList()))
 					|| Settings.getLastPlayList().isEmpty()) {
 				JOptionPane.showMessageDialog(new JFrame(),
 						"You do not have any playlist loaded!", "Uh oh",
@@ -135,7 +134,7 @@ public class SearchWidget implements ActionListener {
 				return;
 			}
 			final int row = table.getSelectedRow();
-			final String date = SoundCloudGrabber.getDate();
+			final String date = Utils.getDate();
 			final String playListAddition = String.format(
 					"%s, %s, %s, %s, %s, %s, %s, %s", table.getValueAt(row, 0),
 					table.getValueAt(row, 1), table.getValueAt(row, 2), date,

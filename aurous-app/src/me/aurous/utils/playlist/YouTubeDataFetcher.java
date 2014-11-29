@@ -5,13 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import me.aurous.player.Settings;
+import me.aurous.utils.Utils;
 import me.aurous.utils.media.MediaUtils;
 
 import org.json.JSONArray;
@@ -53,7 +51,7 @@ public class YouTubeDataFetcher {
 		final String artist = (getArtist(JSON_DATA, youTubeTitle));
 		final String songTitle = (getSongtitle(youTubeTitle));
 		final String duration = getDuration(JSON_DATA);
-		final String date = getDate();
+		final String date = Utils.getDate();
 		final String user = Settings.getUserName();
 		final String line = String.format("%s, %s, %s, %s, %s, %s, %s, %s",
 				songTitle, artist, duration, date, user, "", thumbNail,
@@ -118,21 +116,6 @@ public class YouTubeDataFetcher {
 		}
 
 		return coverArt;
-	}
-
-	/**
-	 * @author Andrew
-	 *
-	 *         Calculates a Spotify-like shorthand date
-	 *
-	 */
-	public static String getDate() {
-		final Date now = new Date();
-
-		final SimpleDateFormat dateFormat = new SimpleDateFormat("EEE MMM d",
-				Locale.US);
-		final String asWeek = dateFormat.format(now);
-		return asWeek;
 	}
 
 	/**

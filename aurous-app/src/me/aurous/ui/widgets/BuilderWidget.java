@@ -30,6 +30,7 @@ import javax.swing.text.Element;
 import me.aurous.swinghacks.GhostText;
 import me.aurous.ui.UISession;
 import me.aurous.ui.listeners.ContextMenuMouseListener;
+import me.aurous.utils.Utils;
 import me.aurous.utils.playlist.PlayListUtils;
 
 /**
@@ -277,6 +278,6 @@ public class BuilderWidget {
 	}
 
 	public boolean isOpen() {
-		return builderWidget == null ? false : builderWidget.isVisible();
+		return Utils.isNull(builderWidget) ? false : builderWidget.isVisible();
 	}
 }

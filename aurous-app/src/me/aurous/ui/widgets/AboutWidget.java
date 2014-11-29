@@ -101,7 +101,7 @@ public class AboutWidget {
 			}
 		});
 
-		titleLabel = new JLabel("Aurous 2.5");
+		titleLabel = new JLabel("Aurous 2.8");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setForeground(Color.WHITE);
 		titleLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
@@ -267,7 +267,7 @@ public class AboutWidget {
 	}
 
 	public boolean isOpen() {
-		return aboutWidget == null ? false : aboutWidget.isVisible();
+		return Utils.isNull(aboutWidget) ? false : aboutWidget.isVisible();
 	}
 
 	public void setWidget(final JFrame aboutWidget) {

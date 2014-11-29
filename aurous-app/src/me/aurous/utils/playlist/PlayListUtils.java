@@ -34,13 +34,13 @@ import javax.swing.table.DefaultTableModel;
 
 import me.aurous.grabbers.HateChanGrabber;
 import me.aurous.grabbers.RedditGrabber;
-import me.aurous.grabbers.SoundCloudGrabber;
 import me.aurous.player.Settings;
 import me.aurous.swinghacks.GhostText;
 import me.aurous.ui.UISession;
 import me.aurous.ui.listeners.ContextMenuMouseListener;
 import me.aurous.ui.widgets.ImporterWidget;
 import me.aurous.utils.Constants;
+import me.aurous.utils.Utils;
 import me.aurous.utils.media.MediaUtils;
 
 /**
@@ -54,7 +54,7 @@ public class PlayListUtils {
 	 */
 	public static void additionToPlayListPrompt() {
 
-		if ((Settings.getLastPlayList() == null)
+		if ((Utils.isNull(Settings.getLastPlayList()))
 				|| Settings.getLastPlayList().isEmpty()) {
 			JOptionPane.showMessageDialog(new JFrame(),
 					"You do not have any playlist loaded!", "Uh oh",
@@ -235,7 +235,7 @@ public class PlayListUtils {
 
 		} else if (sourceURL.contains("soundcloud")) {
 
-			return SoundCloudGrabber.buildPlayListLine(sourceURL);
+			// return SoundCloudGrabber.buildPlayListLine(sourceURL);
 		} else {
 			JOptionPane.showMessageDialog(null, "No importer found!", "Error",
 					JOptionPane.ERROR_MESSAGE);
@@ -253,9 +253,13 @@ public class PlayListUtils {
 		} else if (sourceURL.contains("soundcloud")) {
 
 		} else if (sourceURL.contains("reddit")) {
-			RedditGrabber.buildRedditPlayList(sourceURL, playListName);
+			final RedditGrabber redditGrabber = new RedditGrabber(sourceURL,
+					playListName);
+			redditGrabber.buildPlayList();
 		} else if (sourceURL.contains("8chan")) {
-			HateChanGrabber.buildHatePlaylist(sourceURL, playListName);
+			final HateChanGrabber hateChanGrabber = new HateChanGrabber(
+					sourceURL, playListName);
+			hateChanGrabber.buildPlayList();
 
 		} else {
 			JOptionPane.showMessageDialog(null, "No importer found!", "Error",

@@ -22,6 +22,7 @@ import javax.swing.WindowConstants;
 
 import me.aurous.swinghacks.GhostText;
 import me.aurous.ui.UISession;
+import me.aurous.utils.Utils;
 import me.aurous.utils.playlist.PlayListUtils;
 
 /**
@@ -270,6 +271,7 @@ public class ImporterWidget {
 	}
 
 	public boolean isOpen() {
-		return importerWidget == null ? false : importerWidget.isVisible();
+		return Utils.isNull(importerWidget) ? false : importerWidget
+				.isVisible();
 	}
 }

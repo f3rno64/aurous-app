@@ -18,11 +18,12 @@ import javax.swing.WindowConstants;
 import me.aurous.player.functions.PlayerFunctions;
 import me.aurous.player.scenes.VisualizerScene;
 import me.aurous.ui.UISession;
+import me.aurous.utils.Utils;
 
 public class VisualizerFrame extends JFrame {
 
 	public static void visualize() {
-		if (UISession.getMediaPlayer() == null) {
+		if (Utils.isNull(UISession.getMediaPlayer())) {
 			return;
 		}
 		if ((UISession.getVisualFrame() != null)
@@ -126,7 +127,7 @@ public class VisualizerFrame extends JFrame {
 	}
 
 	public boolean isOpen() {
-		return UISession.getVisualFrame() == null ? false : UISession
+		return Utils.isNull(UISession.getVisualFrame()) ? false : UISession
 				.getVisualFrame().isVisible();
 	}
 }

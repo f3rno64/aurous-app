@@ -77,7 +77,7 @@ public class ModelUtils {
 			final FileReader fin = new FileReader(datafile);
 
 			tableModel = CSVTableModel.createTableModel(fin, null);
-			if (tableModel == null) {
+			if (Utils.isNull(tableModel)) {
 				JOptionPane.showMessageDialog(null,
 						"Error loading playlist, corrupted or unfinished.",
 						"Error", JOptionPane.ERROR_MESSAGE);
@@ -119,7 +119,7 @@ public class ModelUtils {
 			final FileReader fin = new FileReader(datafile);
 
 			tableModel = CSVTableModel.createTableModel(fin, null);
-			if (tableModel == null) {
+			if (Utils.isNull(tableModel)) {
 				JOptionPane.showMessageDialog(null,
 						"Error Loading Search Results.", "Error",
 						JOptionPane.ERROR_MESSAGE);

@@ -18,6 +18,7 @@ import javax.swing.WindowConstants;
 
 import me.aurous.player.Settings;
 import me.aurous.ui.UISession;
+import me.aurous.utils.Utils;
 
 /**
  * @author Andrew
@@ -246,7 +247,8 @@ public class SettingsWidget {
 	}
 
 	public boolean isOpen() {
-		return settingsWidget == null ? false : settingsWidget.isVisible();
+		return Utils.isNull(settingsWidget) ? false : settingsWidget
+				.isVisible();
 	}
 
 	public void setSettingsWidget(final JFrame settingsWidget) {

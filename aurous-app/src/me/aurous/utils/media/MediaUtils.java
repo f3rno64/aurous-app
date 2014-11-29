@@ -11,8 +11,6 @@ import java.awt.datatransfer.StringSelection;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.Normalizer;
@@ -23,10 +21,8 @@ import java.util.regex.Pattern;
 import javafx.application.Platform;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JTable;
 
-import me.aurous.grabbers.SoundCloudGrabber;
 import me.aurous.grabbers.VKGrabber;
 import me.aurous.grabbers.YouTubeGrabber;
 import me.aurous.notifiers.NotificationHandler;
@@ -98,11 +94,11 @@ public class MediaUtils {
 
 		final String link = target.getName().equals("search") ? (String) target
 				.getValueAt(row, 3) : (String) target.getValueAt(row, 7);
-				;
-				final StringSelection stringSelection = new StringSelection(link);
-				final Clipboard clpbrd = Toolkit.getDefaultToolkit()
-						.getSystemClipboard();
-				clpbrd.setContents(stringSelection, null);
+		;
+		final StringSelection stringSelection = new StringSelection(link);
+		final Clipboard clpbrd = Toolkit.getDefaultToolkit()
+				.getSystemClipboard();
+		clpbrd.setContents(stringSelection, null);
 	}
 
 	private static String escapeComma(final String str) {
@@ -148,10 +144,7 @@ public class MediaUtils {
 	 */
 	public static String getBuiltString(final String sourceURL) {
 		if (sourceURL.contains("youtube") || sourceURL.contains("youtu.be")) {
-
 			return YouTubeDataFetcher.buildPlayListLine(sourceURL);
-		} else if (sourceURL.contains("soundcloud")) {
-			return SoundCloudGrabber.buildPlayListLine(sourceURL);
 		} else {
 			return "";
 		}
@@ -163,25 +156,32 @@ public class MediaUtils {
 	 *         handles a given site and returns the stream url
 	 */
 	public static String getMediaURL(final String sourceURL) {
-		if (sourceURL == null) {
-			final YouTubeGrabber youTube = new YouTubeGrabber();
-			return youTube.getYouTubeStream(Internet
-					.text("https://www.youtube.com/watch?v=kGubD7KG9FQ"));
+		if (Utils.isNull(sourceURL)) {
+			final YouTubeGrabber youTube = new YouTubeGrabber(
+					"https://www.youtube.com/watch?v=kGubD7KG9FQ"); // default
+																	// video
+			youTube.grab();
+			return youTube.getStreamURL();
 		}
 		if (sourceURL.isEmpty()) {
-			return "";
+			return sourceURL;
 		}
-		if (sourceURL.contains("youtube")) {
-			final YouTubeGrabber youTube = new YouTubeGrabber();
-			return youTube.getYouTubeStream(Internet.text(sourceURL));
-		} else if (sourceURL.contains("soundcloud")) {
-			return SoundCloudGrabber.getCachedURL(sourceURL);
-		} else if (sourceURL.contains("vk.me")) {
+		final String domain = Utils.getBaseDomain(sourceURL);
+
+		switch (domain) {
+		case "youtube.com":
+			final YouTubeGrabber youTubeGrabber = new YouTubeGrabber(sourceURL);
+			youTubeGrabber.grab();
+
+			return youTubeGrabber.getStreamURL();
+		case "vk.me":
 			if (sourceURL.contains(".mp3")) {
 				return sourceURL;
 			}
-			return VKGrabber.grab(sourceURL);
-		} else {
+			final VKGrabber vkGrabber = new VKGrabber(sourceURL, "");
+			vkGrabber.grab();
+			return vkGrabber.getStreamURL();
+		default:
 			return sourceURL;
 		}
 
@@ -220,14 +220,6 @@ public class MediaUtils {
 			final String information = String
 					.format("<html>Now Playing:<br><strong>%s</strong><br><em>%s</em></br></html>",
 							title, artist);
-			/*
-			 * try { albumArt = new ImageIcon(new URL(albumArtURL)); } catch
-			 * (MalformedURLException e) { e.printStackTrace(); } if (albumArt
-			 * != null) {
-			 * 
-			 * // Image image = albumArt.getImage(); //albumArt = new
-			 * ImageIcon(image.getScaledInstance(64, 64, Image.SCALE_SMOOTH));
-			 */
 			NotificationHandler.displayAlert(font, information,
 					AlertifyType.LOG, 3000);
 
@@ -268,46 +260,40 @@ public class MediaUtils {
 	 *         switches the album cover
 	 */
 	private static void switchMediaCover(final JTable target) {
-		try {
-			final int row = target.getSelectedRow();
-			ImageIcon albumArt = null;
-			final String albumArtURL = target.getName().equals("search") ? "bad"
-					: (String) target.getValueAt(row, 6);
-			if (albumArtURL.contains("bad")) {
-				albumArt = Utils.loadIcon("bad.png");
-			} else {
-				albumArt = new ImageIcon(new URL(albumArtURL));
-			}
-			PlayListPanel.setAlbumArt(albumArt.getImage());
+		final int row = target.getSelectedRow();
+		Image albumArt = null;
+		final String albumArtURL = target.getName().equals("search") ? "bad"
+				: (String) target.getValueAt(row, 6);
+		if (albumArtURL.contains("bad")) {
+			albumArt = Utils.loadIcon("bad.png").getImage();
+		} else {
+			albumArt = Internet.image(albumArtURL);
+		}
+		PlayListPanel.setAlbumArt(albumArt);
 
-			if (Settings.isSavePlayBack()) {
-				try {
-					final File art = new File(Constants.DATA_PATH
-							+ "livestream/art.jpg");
-					if (art.exists() && !art.isDirectory()) {
-						Files.delete(Paths.get(Constants.DATA_PATH
-								+ "livestream/art.jpg"));
-					}
-
-					final Image img = albumArt.getImage();
-
-					final BufferedImage bi = new BufferedImage(
-							img.getWidth(null), img.getHeight(null),
-							BufferedImage.TYPE_INT_RGB);
-
-					final Graphics2D g2 = bi.createGraphics();
-					g2.drawImage(img, 0, 0, null);
-					g2.dispose();
-					ImageIO.write(bi, "jpg", new File(Constants.DATA_PATH
+		if (Settings.isSavePlayBack()) {
+			try {
+				final File art = new File(Constants.DATA_PATH
+						+ "livestream/art.jpg");
+				if (art.exists() && !art.isDirectory()) {
+					Files.delete(Paths.get(Constants.DATA_PATH
 							+ "livestream/art.jpg"));
-				} catch (final IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
 				}
 
+				final Image img = albumArt;
+
+				final BufferedImage bi = new BufferedImage(img.getWidth(null),
+						img.getHeight(null), BufferedImage.TYPE_INT_RGB);
+
+				final Graphics2D g2 = bi.createGraphics();
+				g2.drawImage(img, 0, 0, null);
+				g2.dispose();
+				ImageIO.write(bi, "jpg", new File(Constants.DATA_PATH
+						+ "livestream/art.jpg"));
+			} catch (final IOException e) {
+				e.printStackTrace();
 			}
-		} catch (final MalformedURLException e) {
-			e.printStackTrace();
+
 		}
 
 	}
@@ -357,46 +343,46 @@ public class MediaUtils {
 				final String sourceURL = target.getName().equals("search") ? (String) target
 						.getValueAt(row, 3) : (String) target
 						.getValueAt(row, 7);
-				final VisualizerScene visualScene = new VisualizerScene();
-						if (UISession.getMediaPlayer() != null) {
-							UISession.getMediaPlayer().pause();
-							UISession.getMediaPlayer().stop();
-							UISession
+						final VisualizerScene visualScene = new VisualizerScene();
+				if (UISession.getMediaPlayer() != null) {
+					UISession.getMediaPlayer().pause();
+					UISession.getMediaPlayer().stop();
+					UISession
 							.getMediaPlayer()
 							.currentTimeProperty()
 							.removeListener(
 									UISession.getMediaPlayerScene().progressChangeListener);
-							UISession.getMediaPlayer().dispose();
-							UISession.getMediaPlayerScene().player = null; // getting
-							// desperate
-							// finding
-							// out what
-							// causes
-							// memory
-							// spikes
-							UISession.getMediaPlayerScene().view = null;
-							UISession.getJFXPanel().setScene(null);
-							UISession.getPresenter().setScene(null);
-						}
+					UISession.getMediaPlayer().dispose();
+					UISession.getMediaPlayerScene().player = null; // getting
+					// desperate
+					// finding
+					// out what
+					// causes
+					// memory
+					// spikes
+					UISession.getMediaPlayerScene().view = null;
+					UISession.getJFXPanel().setScene(null);
+					UISession.getPresenter().setScene(null);
+				}
 
-						UISession.getPresenter().setScene(
-								UISession.getMediaPlayerScene().createScene(sourceURL));
+				UISession.getPresenter().setScene(
+						UISession.getMediaPlayerScene().createScene(sourceURL));
 
-						UISession.getJFXPanel().setScene(
-								UISession.getPresenter().getScene());
+				UISession.getJFXPanel().setScene(
+						UISession.getPresenter().getScene());
 
-						UISession.getMediaPlayer().setVolume(
-								((double) UISession.getControlPanel().volume()
-										.getValue() / 100));
-						if ((UISession.getVisualFrame() != null)
-								&& UISession.getVisualFrame().isOpen()) {
-							UISession.getVisualFrame().panel.setScene(null);
-							UISession.getVisualFrame().scene = null;
-							UISession.getVisualFrame().scene = visualScene
-							.createVisualScene();
-							UISession.getVisualFrame().panel.setScene(UISession
-									.getVisualFrame().scene);
-						}
+				UISession.getMediaPlayer().setVolume(
+						((double) UISession.getControlPanel().volume()
+								.getValue() / 100));
+				if ((UISession.getVisualFrame() != null)
+						&& UISession.getVisualFrame().isOpen()) {
+					UISession.getVisualFrame().panel.setScene(null);
+					UISession.getVisualFrame().scene = null;
+					UISession.getVisualFrame().scene = visualScene
+									.createVisualScene();
+					UISession.getVisualFrame().panel.setScene(UISession
+							.getVisualFrame().scene);
+				}
 
 			} catch (final Throwable ei) {
 				ei.printStackTrace();

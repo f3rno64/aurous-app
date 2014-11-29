@@ -12,6 +12,8 @@ import javax.swing.Action;
 import javax.swing.JPopupMenu;
 import javax.swing.text.JTextComponent;
 
+import me.aurous.utils.Utils;
+
 /**
  * @author Andrew
  *
@@ -137,8 +139,8 @@ public class ContextMenuMouseListener extends MouseAdapter {
 
 			final boolean enabled = this.textComponent.isEnabled();
 			final boolean editable = this.textComponent.isEditable();
-			final boolean nonempty = !((this.textComponent.getText() == null) || this.textComponent
-					.getText().equals(""));
+			final boolean nonempty = !((Utils.isNull(this.textComponent
+					.getText())) || this.textComponent.getText().equals(""));
 			final boolean marked = this.textComponent.getSelectedText() != null;
 
 			final boolean pasteAvailable = Toolkit.getDefaultToolkit()

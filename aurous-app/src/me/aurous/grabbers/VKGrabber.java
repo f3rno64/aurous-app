@@ -14,8 +14,19 @@ import me.aurous.vkapi.audio.AudioApi;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class VKGrabber {
-	private static String getVKStream(final String json) {
+public class VKGrabber extends AurousGrabber {
+
+	private final String contentURL;
+	private final String playListName;
+	private String streamURL;
+
+	public VKGrabber(final String contentURL, final String playListName) {
+		this.contentURL = contentURL;
+		this.playListName = playListName;
+
+	}
+
+	private String getVKStream(final String json) {
 		final JSONObject jsonObj = new JSONObject(json);
 		final JSONArray response = jsonObj.getJSONArray("response");
 		for (final int i = 0; i < response.length();) {
@@ -29,10 +40,19 @@ public class VKGrabber {
 
 	}
 
-	public static String grab(final String url) {
+	public String getStreamURL() {
+		return this.streamURL;
+	}
+
+	public String getPlayListName() {
+		return this.playListName;
+	}
+
+	@Override
+	public void grab() {
 		String json = null;
-		final int pos = url.lastIndexOf("/");
-		final String ids = url.substring(pos + "/".length());
+		final int pos = contentURL.lastIndexOf("/");
+		final String ids = contentURL.substring(pos + "/".length());
 		final String formData = Utils.readFile(Constants.DATA_PATH
 				+ "settings/vkauth.dat", Charset.defaultCharset());
 
@@ -49,10 +69,10 @@ public class VKGrabber {
 					.getWidget(), "No Stream Found!", "Error",
 					JOptionPane.ERROR_MESSAGE);
 
-			return "nil";
+			this.streamURL = "nil";
 		}
 		final String streamURL = getVKStream(json);
 
-		return streamURL.trim();
+		this.streamURL = streamURL.trim();
 	}
 }

@@ -5,4 +5,5 @@ public class Constants {
 			+ "\\.aurous_data\\";
 
 	public static String LEGACY_DATA_PATH = "./data/";
+	public static String HTML5_PLAYER_CODE = null;
 }

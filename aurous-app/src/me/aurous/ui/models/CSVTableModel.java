@@ -9,6 +9,8 @@ import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
 
+import me.aurous.utils.Utils;
+
 /**
  * @author Andrew
  *
@@ -45,7 +47,7 @@ public class CSVTableModel {
 
 				}
 
-				if (headers == null) {
+				if (Utils.isNull(headers)) {
 					headers = rows.remove(0);
 
 					model = new DefaultTableModel(rows, headers) {

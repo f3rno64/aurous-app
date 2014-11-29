@@ -17,34 +17,88 @@ import javax.script.ScriptException;
 import me.aurous.player.Settings;
 import me.aurous.utils.Constants;
 import me.aurous.utils.Internet;
+import me.aurous.utils.Utils;
 
 /**
  * @author Andrew
  *
  */
-public class YouTubeGrabber {
-	public static String staticPlayerCode = "";
+public class YouTubeGrabber extends AurousGrabber {
+	private String streamURL;
+	private final String SITE_HTML;
+	private final String contentURL;
+	private final String PLAYER_VERSION_REGEX = "\\\\/\\\\/s.ytimg.com\\\\/yts\\\\/jsbin\\\\/html5player-(.+?)\\.js";
+	private final String URL_ENCODE_REGEX = "\"url_encoded_fmt_stream_map\":\\s+\"(.+?)\"";
+	private final String URL_STREAMS_REGEX = "(^url=|(\\\\u0026url=|,url=))(.+?)(\\\\u0026|,|$)";
+	private final String STREAM_SIGNATURES_REGEX = "(^s=|(\\\\u0026s=|,s=))(.+?)(\\\\u0026|,|$)";
+
+	public YouTubeGrabber(final String contentURL) {
+		this.contentURL = contentURL;
+		this.SITE_HTML = Internet.text(this.contentURL);
+	}
+
+	@Override
+	public void buildMediaLink() {
+		grab();
+	}
+
+	@Override
+	public void grab() {
+		String lowQualityMP4 = null;
+		String highQualityMP4 = null;
+		try {
+			
+			final List<String> list = extractURLS(this.SITE_HTML);
+	
+	
+			for (final String url : list) {
+				if (url.contains("itag=5")) {
+					lowQualityMP4 = url;
+				} else if (url.contains("itag=18")) {
+					highQualityMP4 = url;
+				}
+			}
+			if (Settings.isStreamLowQuality() == true) {
+				this.streamURL = lowQualityMP4;
+			}
+			if (Utils.isNull(highQualityMP4)) {
+				this.streamURL = lowQualityMP4;
+			} else {
+				this.streamURL = highQualityMP4;
+			}
+
+		} catch (final UnsupportedEncodingException e) {
+
+			e.printStackTrace();
+		}
+		this.streamURL = highQualityMP4;
+	}
+
+	public String getStreamURL() {
+		return this.streamURL;
+	}
 
 	private List<String> extractURLS(final String html)
 			throws UnsupportedEncodingException {
+		
 		final List<String> streams = new ArrayList<String>();
 		final List<String> signatures = new ArrayList<String>();
 		String playerVersion = "";
-		Pattern pattern = Pattern
-				.compile("\\\\/\\\\/s.ytimg.com\\\\/yts\\\\/jsbin\\\\/html5player-(.+?)\\.js");
+		Pattern pattern = Pattern.compile(PLAYER_VERSION_REGEX);
 		Matcher matcher = pattern.matcher(html);
 		while (matcher.find()) {
 			playerVersion = matcher.group(1).toString();
-
+		}
+		if (Utils.isNull(Constants.HTML5_PLAYER_CODE)) { // grab once so we
+															// don't have to
+															// pull it down each
+															// time
+			Constants.HTML5_PLAYER_CODE = Internet
+					.text("http://s.ytimg.com/yts/jsbin/" + "html5player-"
+							+ playerVersion.replace("\\", "") + ".js");
 		}
 
-		if (staticPlayerCode.equals("")) {
-			staticPlayerCode = Internet.text("http://s.ytimg.com/yts/jsbin/"
-					+ "html5player-" + playerVersion.replace("\\", "") + ".js");
-		}
-
-		pattern = Pattern
-				.compile("\"url_encoded_fmt_stream_map\":\\s+\"(.+?)\"");
+		pattern = Pattern.compile(URL_ENCODE_REGEX);
 
 		matcher = pattern.matcher(html);
 		String unescapedHtml = "";
@@ -54,8 +108,7 @@ public class YouTubeGrabber {
 
 		}
 
-		pattern = Pattern
-				.compile("(^url=|(\\\\u0026url=|,url=))(.+?)(\\\\u0026|,|$)");
+		pattern = Pattern.compile(URL_STREAMS_REGEX);
 
 		matcher = pattern.matcher(unescapedHtml);
 
@@ -65,8 +118,7 @@ public class YouTubeGrabber {
 
 		}
 
-		pattern = Pattern
-				.compile("(^s=|(\\\\u0026s=|,s=))(.+?)(\\\\u0026|,|$)");
+		pattern = Pattern.compile(STREAM_SIGNATURES_REGEX);
 
 		matcher = pattern.matcher(unescapedHtml);
 
@@ -76,73 +128,41 @@ public class YouTubeGrabber {
 
 		}
 		final List<String> urls = new ArrayList<String>();
+		
 		for (int i = 0; i < (streams.size() - 1); i++) {
 			String URL = streams.get(i).toString();
 
 			if (signatures.size() > 0) {
-
 				final String Sign = signDecipher(signatures.get(i).toString(),
-						staticPlayerCode);
-
+						Constants.HTML5_PLAYER_CODE);
 				URL += "&signature=" + Sign;
-				// System.out.println(URL.trim());
+			
 			}
 
 			urls.add(URL.trim());
 
 		}
+	
 
 		return urls;
-
-	}
-
-	public String getYouTubeStream(final String html) {
-		String lowQualityMP4 = "null";
-		String highQualityMP4 = "null";
-		try {
-
-			final List<String> list = extractURLS(html);
-			for (final String url : list) {
-				if (url.contains("itag=5")) {
-					lowQualityMP4 = url;
-				} else if (url.contains("itag=18")) {
-					highQualityMP4 = url;
-				}
-			}
-			if (Settings.isStreamLowQuality() == true) {
-				return lowQualityMP4;
-			}
-			if (highQualityMP4.equals("null")) {
-				return lowQualityMP4;
-			} else {
-				return highQualityMP4;
-			}
-
-		} catch (final UnsupportedEncodingException e) {
-
-			e.printStackTrace();
-		}
-		return highQualityMP4;
+		
 
 	}
 
 	private String signDecipher(final String signature, final String playercode) {
-		//System.out.println(signature);
 		try {
+			
 			final ScriptEngine engine = new ScriptEngineManager()
-					.getEngineByName("nashorn");
+			.getEngineByName("nashorn");
 			engine.eval(new FileReader(Constants.LEGACY_DATA_PATH
 					+ "scripts/decrypt.js"));
 			final Invocable invocable = (Invocable) engine;
 
 			final Object result = invocable.invokeFunction("getWorkingVideo",
 					signature, playercode);
-	//		System.out.println((String) result);
-
 			return (String) result;
 		} catch (ScriptException | FileNotFoundException
 				| NoSuchMethodException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return "error";
