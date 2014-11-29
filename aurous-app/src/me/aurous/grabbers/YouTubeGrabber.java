@@ -15,6 +15,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import me.aurous.player.Settings;
+import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Constants;
 import me.aurous.utils.Internet;
 import me.aurous.utils.Utils;
@@ -47,10 +48,9 @@ public class YouTubeGrabber extends AurousGrabber {
 		String lowQualityMP4 = null;
 		String highQualityMP4 = null;
 		try {
-			
+
 			final List<String> list = extractURLS(this.SITE_HTML);
-	
-	
+
 			for (final String url : list) {
 				if (url.contains("itag=5")) {
 					lowQualityMP4 = url;
@@ -69,7 +69,9 @@ public class YouTubeGrabber extends AurousGrabber {
 
 		} catch (final UnsupportedEncodingException e) {
 
-			e.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e, ""));
+			eWidget.setVisible(true);
 		}
 		this.streamURL = highQualityMP4;
 	}
@@ -80,7 +82,7 @@ public class YouTubeGrabber extends AurousGrabber {
 
 	private List<String> extractURLS(final String html)
 			throws UnsupportedEncodingException {
-		
+
 		final List<String> streams = new ArrayList<String>();
 		final List<String> signatures = new ArrayList<String>();
 		String playerVersion = "";
@@ -90,9 +92,9 @@ public class YouTubeGrabber extends AurousGrabber {
 			playerVersion = matcher.group(1).toString();
 		}
 		if (Utils.isNull(Constants.HTML5_PLAYER_CODE)) { // grab once so we
-															// don't have to
-															// pull it down each
-															// time
+			// don't have to
+			// pull it down each
+			// time
 			Constants.HTML5_PLAYER_CODE = Internet
 					.text("http://s.ytimg.com/yts/jsbin/" + "html5player-"
 							+ playerVersion.replace("\\", "") + ".js");
@@ -128,7 +130,7 @@ public class YouTubeGrabber extends AurousGrabber {
 
 		}
 		final List<String> urls = new ArrayList<String>();
-		
+
 		for (int i = 0; i < (streams.size() - 1); i++) {
 			String URL = streams.get(i).toString();
 
@@ -136,24 +138,22 @@ public class YouTubeGrabber extends AurousGrabber {
 				final String Sign = signDecipher(signatures.get(i).toString(),
 						Constants.HTML5_PLAYER_CODE);
 				URL += "&signature=" + Sign;
-			
+
 			}
 
 			urls.add(URL.trim());
 
 		}
-	
 
 		return urls;
-		
 
 	}
 
 	private String signDecipher(final String signature, final String playercode) {
 		try {
-			
+
 			final ScriptEngine engine = new ScriptEngineManager()
-			.getEngineByName("nashorn");
+					.getEngineByName("nashorn");
 			engine.eval(new FileReader(Constants.LEGACY_DATA_PATH
 					+ "scripts/decrypt.js"));
 			final Invocable invocable = (Invocable) engine;
@@ -163,7 +163,9 @@ public class YouTubeGrabber extends AurousGrabber {
 			return (String) result;
 		} catch (ScriptException | FileNotFoundException
 				| NoSuchMethodException e) {
-			e.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e, ""));
+			eWidget.setVisible(true);
 		}
 		return "error";
 	}

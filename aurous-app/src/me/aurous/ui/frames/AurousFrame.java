@@ -25,6 +25,7 @@ import me.aurous.ui.menus.AurousBar;
 import me.aurous.ui.panels.ControlPanel;
 import me.aurous.ui.panels.PlayListPanel;
 import me.aurous.ui.panels.TabelPanel;
+import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Utils;
 import me.aurous.utils.media.MediaUtils;
 
@@ -67,8 +68,9 @@ public class AurousFrame implements WindowListener {
 			UISession.setMediaPlayerScene(mediaPlayerScene);
 			UISession.setJFXPanel(fxPanel);
 		} catch (final Throwable e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e, ""));
+			eWidget.setVisible(true);
 		}
 
 	}
@@ -112,8 +114,9 @@ public class AurousFrame implements WindowListener {
 			this.aurousFrame.getContentPane().add(mediaControlsPanel,
 					BorderLayout.SOUTH);
 		} catch (final IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e, ""));
+			eWidget.setVisible(true);
 		}
 
 		final JPanel playListPanel = new PlayListPanel();

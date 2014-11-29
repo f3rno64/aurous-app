@@ -10,6 +10,8 @@ import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import me.aurous.ui.UISession;
 import me.aurous.ui.panels.ControlPanel;
+import me.aurous.ui.widgets.ExceptionWidget;
+import me.aurous.utils.Utils;
 import me.aurous.utils.media.MediaUtils;
 
 public class MediaPlayerScene {
@@ -31,8 +33,12 @@ public class MediaPlayerScene {
 		final String trailer = MediaUtils.getMediaURL(sourceURL);
 		try {
 			media = new Media(trailer.trim());
+
 		} catch (final Exception e) {
-			MediaUtils.handleEndOfStream();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e, ""));
+			eWidget.setVisible(true);
+			return null;
 		}
 
 		player = new MediaPlayer(media);

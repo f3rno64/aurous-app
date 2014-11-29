@@ -9,6 +9,8 @@ import java.net.URLConnection;
 
 import javax.imageio.ImageIO;
 
+import me.aurous.ui.widgets.ExceptionWidget;
+
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -27,7 +29,9 @@ public class Internet {
 		try {
 			return conn.get();
 		} catch (final IOException e) {
-			e.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e, ""));
+			eWidget.setVisible(true);
 		}
 		return null;
 	}
@@ -36,7 +40,9 @@ public class Internet {
 		try {
 			return ImageIO.read(new URL(url));
 		} catch (final IOException e) {
-			e.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e, ""));
+			eWidget.setVisible(true);
 		}
 		return null;
 	}
@@ -47,14 +53,18 @@ public class Internet {
 		try {
 			conn = new URL(url).openConnection();
 		} catch (final IOException e) {
-			e.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e, ""));
+			eWidget.setVisible(true);
 		}
 		BufferedReader reader = null;
 		try {
 			reader = new BufferedReader(new InputStreamReader(
 					conn.getInputStream()));
 		} catch (final IOException e) {
-			e.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e, ""));
+			eWidget.setVisible(true);
 		}
 		String input;
 		try {
@@ -62,7 +72,9 @@ public class Internet {
 				builder.append(input);
 			}
 		} catch (final IOException e) {
-			e.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e, ""));
+			eWidget.setVisible(true);
 		}
 		return builder.toString();
 	}

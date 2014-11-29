@@ -43,7 +43,9 @@ public class AboutWidget {
 				UISession.setAboutWidget(window);
 				UISession.getAboutWidget().getWidget().setVisible(true);
 			} catch (final Exception e) {
-				e.printStackTrace();
+				final ExceptionWidget eWidget = new ExceptionWidget(Utils
+						.getStackTraceString(e, ""));
+				eWidget.setVisible(true);
 			}
 		});
 	}
@@ -205,7 +207,7 @@ public class AboutWidget {
 			}
 		});
 		faceBookButton
-				.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		faceBookButton.setIcon(new ImageIcon(AboutWidget.class
 				.getResource("/resources/facebook.png")));
 		faceBookButton.setMargin(new Insets(0, 0, 0, 0));
@@ -238,12 +240,12 @@ public class AboutWidget {
 
 		fokMeButton = new JButton();
 		fokMeButton
-				.addActionListener(e -> {
-					try {
-						Utils.openURL(new URL(
-								"https://github.com/Codeusa/aurous-app"));
-					} catch (final Exception e1) {
-						// TODO Auto-generated catch block
+		.addActionListener(e -> {
+			try {
+				Utils.openURL(new URL(
+						"https://github.com/Codeusa/aurous-app"));
+			} catch (final Exception e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});

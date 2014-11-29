@@ -33,6 +33,8 @@ import javax.swing.plaf.basic.BasicSliderUI;
 import me.aurous.player.Settings;
 import me.aurous.player.functions.PlayerFunctions;
 import me.aurous.ui.UISession;
+import me.aurous.ui.widgets.ExceptionWidget;
+import me.aurous.utils.Utils;
 import me.aurous.utils.media.MediaUtils;
 
 import com.alee.laf.button.WebButtonUI;
@@ -72,7 +74,9 @@ public class ControlPanel extends JPanel {
 		try {
 			ttfBase = Font.createFont(Font.TRUETYPE_FONT, in);
 		} catch (final FontFormatException e1) {
-			e1.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e1, ""));
+			eWidget.setVisible(true);
 		}
 
 		fontAwesome = ttfBase.deriveFont(Font.PLAIN, 24);

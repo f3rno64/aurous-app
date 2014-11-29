@@ -106,7 +106,7 @@ public class ModelUtils {
 
 		} catch (final FileNotFoundException e) {
 			ModelUtils
-					.loadPlayList(Constants.DATA_PATH + "scripts/blank.plist");
+			.loadPlayList(Constants.DATA_PATH + "scripts/blank.plist");
 		}
 	}
 

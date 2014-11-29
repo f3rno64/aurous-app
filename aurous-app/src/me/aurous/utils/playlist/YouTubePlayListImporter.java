@@ -10,8 +10,10 @@ import java.io.OutputStreamWriter;
 import javax.swing.JOptionPane;
 
 import me.aurous.ui.UISession;
+import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.ui.widgets.ImporterWidget;
 import me.aurous.utils.Constants;
+import me.aurous.utils.Utils;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -60,7 +62,7 @@ public class YouTubePlayListImporter {
 											.size());
 
 									importWidget.getImportProgressBar()
-									.setValue(percent);
+											.setValue(percent);
 									PlayListUtils.disableImporterInterface();
 								}
 								if (link.attr("abs:href").contains("watch?v=")
@@ -104,12 +106,13 @@ public class YouTubePlayListImporter {
 						}
 					}
 				} catch (HeadlessException | IOException e) {
-					JOptionPane.showMessageDialog(null, e.toString(), "Error",
-							JOptionPane.ERROR_MESSAGE);
+
 					if (UISession.getImporterWidget() != null) {
 						PlayListUtils.resetImporterInterface();
 					}
-					e.printStackTrace();
+					final ExceptionWidget eWidget = new ExceptionWidget(
+							Utils.getStackTraceString(e, ""));
+					eWidget.setVisible(true);
 				}
 			}
 		};

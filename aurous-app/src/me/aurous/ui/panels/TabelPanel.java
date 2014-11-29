@@ -98,7 +98,7 @@ public class TabelPanel extends JPanel implements ActionListener {
 		if (Settings.getLastPlayList().isEmpty()) {
 
 			ModelUtils
-					.loadPlayList(Constants.DATA_PATH + "scripts/blank.plist");
+			.loadPlayList(Constants.DATA_PATH + "scripts/blank.plist");
 		} else {
 			ModelUtils.loadPlayList(Settings.getLastPlayList());
 		}

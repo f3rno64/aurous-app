@@ -38,6 +38,7 @@ import me.aurous.player.Settings;
 import me.aurous.swinghacks.GhostText;
 import me.aurous.ui.UISession;
 import me.aurous.ui.listeners.ContextMenuMouseListener;
+import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.ui.widgets.ImporterWidget;
 import me.aurous.utils.Constants;
 import me.aurous.utils.Utils;
@@ -113,7 +114,9 @@ public class PlayListUtils {
 				fw.close();
 
 			} catch (final IOException ioe) {
-				System.err.println("IOException: " + ioe);
+				final ExceptionWidget eWidget = new ExceptionWidget(
+						Utils.getStackTraceString(ioe, ""));
+				eWidget.setVisible(true);
 			}
 		}
 
@@ -155,17 +158,18 @@ public class PlayListUtils {
 					}
 					printWriter.close();
 					UISession.getBuilderWidget().getLoadingIcon()
-							.setVisible(false);
+					.setVisible(false);
 					UISession.getBuilderWidget().getPlayListTextArea()
-							.setEditable(true);
+					.setEditable(true);
 					UISession.getBuilderWidget().getBuildListButton()
-							.setEnabled(true);
+					.setEnabled(true);
 					UISession.getBuilderWidget().getPlayListNameTextField()
-							.setEditable(false);
+					.setEditable(false);
 
 				} catch (final FileNotFoundException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					final ExceptionWidget eWidget = new ExceptionWidget(
+							Utils.getStackTraceString(e, ""));
+					eWidget.setVisible(true);
 				}
 			}
 		};
@@ -189,7 +193,9 @@ public class PlayListUtils {
 
 		} catch (final Exception e) {
 
-			e.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e, ""));
+			eWidget.setVisible(true);
 
 		}
 	}
@@ -210,8 +216,9 @@ public class PlayListUtils {
 
 		} catch (final Exception e) {
 
-			e.printStackTrace();
-
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e, ""));
+			eWidget.setVisible(true);
 		}
 	}
 
@@ -265,7 +272,7 @@ public class PlayListUtils {
 			JOptionPane.showMessageDialog(null, "No importer found!", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			UISession.getImporterWidget().getImportProgressBar()
-					.setVisible(false);
+			.setVisible(false);
 		}
 	}
 
@@ -357,9 +364,13 @@ public class PlayListUtils {
 			}
 			// loadPlayList(PlayerUtils.currentPlayList);
 		} catch (final FileNotFoundException ex) {
-			ex.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(ex, ""));
+			eWidget.setVisible(true);
 		} catch (final IOException ex) {
-			ex.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(ex, ""));
+			eWidget.setVisible(true);
 		}
 	}
 
@@ -417,25 +428,25 @@ public class PlayListUtils {
 					final WatchEvent.Kind<?> kind = event.kind();
 
 					java.awt.EventQueue
-					// i dont question the Java API, it works now.
-							.invokeLater(() -> {
+							// i dont question the Java API, it works now.
+					.invokeLater(() -> {
 
-						final DefaultListModel playListModel = new DefaultListModel();
+								final DefaultListModel playListModel = new DefaultListModel();
 
-								final File[] playListFolder = new File(
-										Constants.DATA_PATH + "playlist/")
-										.listFiles();
-								if ((kind == ENTRY_CREATE)
-										|| ((kind == ENTRY_DELETE)
-												&& (playListModel != null) && (playListFolder != null))) {
+						final File[] playListFolder = new File(
+								Constants.DATA_PATH + "playlist/")
+						.listFiles();
+						if ((kind == ENTRY_CREATE)
+								|| ((kind == ENTRY_DELETE)
+										&& (playListModel != null) && (playListFolder != null))) {
 
-									for (final File file : playListFolder) {
-										playListModel.addElement(file);
-									}
-									displayList.setModel(playListModel);
-							// / displayList.updateUI();
-								}
-							});
+							for (final File file : playListFolder) {
+								playListModel.addElement(file);
+							}
+							displayList.setModel(playListModel);
+									// / displayList.updateUI();
+						}
+					});
 
 				}
 
@@ -446,7 +457,9 @@ public class PlayListUtils {
 			}
 
 		} catch (final IOException ex) {
-			System.err.println(ex);
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(ex, ""));
+			eWidget.setVisible(true);
 		}
 
 	}

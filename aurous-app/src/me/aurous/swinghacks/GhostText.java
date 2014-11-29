@@ -24,7 +24,7 @@ import javax.swing.text.JTextComponent;
  *
  */
 public class GhostText extends JLabel implements FocusListener,
-		DocumentListener {
+DocumentListener {
 	public enum Show {
 		ALWAYS, FOCUS_GAINED, FOCUS_LOST;
 	}

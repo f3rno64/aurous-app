@@ -194,7 +194,7 @@ public class SearchWidget implements ActionListener {
 
 		comboBox.getEditor().getEditorComponent().setBackground(Color.YELLOW);
 		((JTextField) comboBox.getEditor().getEditorComponent())
-				.setBackground(Color.YELLOW);
+		.setBackground(Color.YELLOW);
 		comboBox.setBackground(Color.YELLOW);
 		comboBox.setBounds(303, 1, 130, 25);
 		for (final String option : options) {

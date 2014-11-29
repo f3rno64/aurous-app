@@ -10,7 +10,9 @@ import java.io.OutputStreamWriter;
 import javax.swing.JOptionPane;
 
 import me.aurous.ui.UISession;
+import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Constants;
+import me.aurous.utils.Utils;
 import me.aurous.utils.media.MediaUtils;
 import me.aurous.utils.playlist.PlayListUtils;
 
@@ -58,8 +60,8 @@ public class RedditGrabber extends AurousGrabber {
 									.ignoreContentType(true)
 									.userAgent(
 											"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36")
-									.referrer("http://www.google.com")
-									.timeout(12000).followRedirects(true).get();
+											.referrer("http://www.google.com")
+											.timeout(12000).followRedirects(true).get();
 							final Elements links = doc.select(TAG_TYPE);
 							final File playListOut = new File(out);
 							final FileOutputStream fos = new FileOutputStream(
@@ -80,10 +82,10 @@ public class RedditGrabber extends AurousGrabber {
 										final int percent = (int) ((iterations * 100.0f) / links
 												.size());
 										UISession.getImporterWidget()
-										.getImportProgressBar()
-										.setValue(percent);
+												.getImportProgressBar()
+												.setValue(percent);
 										PlayListUtils
-										.disableImporterInterface();
+												.disableImporterInterface();
 									}
 									if (!link.attr(ATTRIBUTE_TYPE).equals(last)) {
 
@@ -124,9 +126,9 @@ public class RedditGrabber extends AurousGrabber {
 							}
 						}
 					} catch (HeadlessException | IOException e) {
-						JOptionPane.showMessageDialog(null,
-								"HTTP client error, please try again.",
-								"Error", JOptionPane.ERROR_MESSAGE);
+						final ExceptionWidget eWidget = new ExceptionWidget(
+								Utils.getStackTraceString(e, ""));
+						eWidget.setVisible(true);
 						if (UISession.getImporterWidget()
 								.getImportProgressBar() != null) {
 							PlayListUtils.resetImporterInterface();

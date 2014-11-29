@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import me.aurous.player.Settings;
+import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Utils;
 import me.aurous.utils.media.MediaUtils;
 
@@ -137,7 +138,9 @@ public class YouTubeDataFetcher {
 					.getString("seconds"));
 			return MediaUtils.calculateTime(total_duration_seconds);
 		} catch (final JSONException e) {
-			e.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e, ""));
+			eWidget.setVisible(true);
 		}
 
 		return duration;
@@ -176,7 +179,9 @@ public class YouTubeDataFetcher {
 
 			return username;
 		} catch (final JSONException e) {
-			e.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e, ""));
+			eWidget.setVisible(true);
 		}
 
 		return duration;
@@ -237,7 +242,9 @@ public class YouTubeDataFetcher {
 			title = MediaUtils.cleanString(title);
 			return title;
 		} catch (final JSONException e) {
-			e.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e, ""));
+			eWidget.setVisible(true);
 		}
 
 		return title;

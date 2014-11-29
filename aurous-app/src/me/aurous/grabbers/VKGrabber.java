@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import javax.swing.JOptionPane;
 
 import me.aurous.ui.UISession;
+import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Constants;
 import me.aurous.utils.Utils;
 import me.aurous.vkapi.VkAuth;
@@ -62,7 +63,9 @@ public class VKGrabber extends AurousGrabber {
 		try {
 			json = api.searchAudioByIdJson(parameters);
 		} catch (final IOException e) {
-			e.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e, ""));
+			eWidget.setVisible(true);
 		}
 		if (json.contains("\"response\":[0]")) {
 			JOptionPane.showMessageDialog(UISession.getSearchWidget()

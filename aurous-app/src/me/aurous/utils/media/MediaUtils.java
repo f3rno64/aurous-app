@@ -32,6 +32,7 @@ import me.aurous.player.scenes.VisualizerScene;
 import me.aurous.ui.UISession;
 import me.aurous.ui.panels.PlayListPanel;
 import me.aurous.ui.panels.TabelPanel;
+import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Constants;
 import me.aurous.utils.Internet;
 import me.aurous.utils.Utils;
@@ -94,11 +95,11 @@ public class MediaUtils {
 
 		final String link = target.getName().equals("search") ? (String) target
 				.getValueAt(row, 3) : (String) target.getValueAt(row, 7);
-		;
-		final StringSelection stringSelection = new StringSelection(link);
-		final Clipboard clpbrd = Toolkit.getDefaultToolkit()
-				.getSystemClipboard();
-		clpbrd.setContents(stringSelection, null);
+				;
+				final StringSelection stringSelection = new StringSelection(link);
+				final Clipboard clpbrd = Toolkit.getDefaultToolkit()
+						.getSystemClipboard();
+				clpbrd.setContents(stringSelection, null);
 	}
 
 	private static String escapeComma(final String str) {
@@ -159,7 +160,7 @@ public class MediaUtils {
 		if (Utils.isNull(sourceURL)) {
 			final YouTubeGrabber youTube = new YouTubeGrabber(
 					"https://www.youtube.com/watch?v=kGubD7KG9FQ"); // default
-																	// video
+			// video
 			youTube.grab();
 			return youTube.getStreamURL();
 		}
@@ -291,7 +292,9 @@ public class MediaUtils {
 				ImageIO.write(bi, "jpg", new File(Constants.DATA_PATH
 						+ "livestream/art.jpg"));
 			} catch (final IOException e) {
-				e.printStackTrace();
+				final ExceptionWidget eWidget = new ExceptionWidget(
+						Utils.getStackTraceString(e, ""));
+				eWidget.setVisible(true);
 			}
 
 		}
@@ -323,8 +326,9 @@ public class MediaUtils {
 						Paths.get(Constants.DATA_PATH + "livestream/title.txt"),
 						title.getBytes());
 			} catch (final IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				final ExceptionWidget eWidget = new ExceptionWidget(
+						Utils.getStackTraceString(e, ""));
+				eWidget.setVisible(true);
 			}
 		}
 
@@ -343,49 +347,51 @@ public class MediaUtils {
 				final String sourceURL = target.getName().equals("search") ? (String) target
 						.getValueAt(row, 3) : (String) target
 						.getValueAt(row, 7);
-						final VisualizerScene visualScene = new VisualizerScene();
-				if (UISession.getMediaPlayer() != null) {
-					UISession.getMediaPlayer().pause();
-					UISession.getMediaPlayer().stop();
-					UISession
+				final VisualizerScene visualScene = new VisualizerScene();
+						if (UISession.getMediaPlayer() != null) {
+							UISession.getMediaPlayer().pause();
+							UISession.getMediaPlayer().stop();
+							UISession
 							.getMediaPlayer()
 							.currentTimeProperty()
 							.removeListener(
 									UISession.getMediaPlayerScene().progressChangeListener);
-					UISession.getMediaPlayer().dispose();
-					UISession.getMediaPlayerScene().player = null; // getting
-					// desperate
-					// finding
-					// out what
-					// causes
-					// memory
-					// spikes
-					UISession.getMediaPlayerScene().view = null;
-					UISession.getJFXPanel().setScene(null);
-					UISession.getPresenter().setScene(null);
-				}
+							UISession.getMediaPlayer().dispose();
+							UISession.getMediaPlayerScene().player = null; // getting
+							// desperate
+							// finding
+							// out what
+							// causes
+							// memory
+							// spikes
+							UISession.getMediaPlayerScene().view = null;
+							UISession.getJFXPanel().setScene(null);
+							UISession.getPresenter().setScene(null);
+						}
 
-				UISession.getPresenter().setScene(
-						UISession.getMediaPlayerScene().createScene(sourceURL));
+						UISession.getPresenter().setScene(
+								UISession.getMediaPlayerScene().createScene(sourceURL));
 
-				UISession.getJFXPanel().setScene(
-						UISession.getPresenter().getScene());
+						UISession.getJFXPanel().setScene(
+								UISession.getPresenter().getScene());
 
-				UISession.getMediaPlayer().setVolume(
-						((double) UISession.getControlPanel().volume()
-								.getValue() / 100));
-				if ((UISession.getVisualFrame() != null)
-						&& UISession.getVisualFrame().isOpen()) {
-					UISession.getVisualFrame().panel.setScene(null);
-					UISession.getVisualFrame().scene = null;
-					UISession.getVisualFrame().scene = visualScene
-									.createVisualScene();
-					UISession.getVisualFrame().panel.setScene(UISession
-							.getVisualFrame().scene);
-				}
+						UISession.getMediaPlayer().setVolume(
+								((double) UISession.getControlPanel().volume()
+										.getValue() / 100));
+						if ((UISession.getVisualFrame() != null)
+								&& UISession.getVisualFrame().isOpen()) {
+							UISession.getVisualFrame().panel.setScene(null);
+							UISession.getVisualFrame().scene = null;
+							UISession.getVisualFrame().scene = visualScene
+							.createVisualScene();
+							UISession.getVisualFrame().panel.setScene(UISession
+									.getVisualFrame().scene);
+						}
 
 			} catch (final Throwable ei) {
-				ei.printStackTrace();
+				final ExceptionWidget eWidget = new ExceptionWidget(Utils
+						.getStackTraceString(ei, ""));
+				eWidget.setVisible(true);
 			}
 
 		});

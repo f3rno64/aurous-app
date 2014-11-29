@@ -6,6 +6,7 @@ import java.nio.charset.Charset;
 import javax.swing.JOptionPane;
 
 import me.aurous.ui.UISession;
+import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Constants;
 import me.aurous.utils.ModelUtils;
 import me.aurous.utils.Utils;
@@ -19,7 +20,7 @@ import org.json.JSONObject;
 public class VKEngine {
 	public static String buildSearchCSV(final String json) {
 		final StringBuilder csv = new StringBuilder()
-		.append("Title, Artist, Duration, URL, id");
+				.append("Title, Artist, Duration, URL, id");
 		csv.append(System.getProperty("line.separator"));
 		final JSONObject mainObject = new JSONObject(json);
 		final JSONArray response = mainObject.getJSONArray("response");
@@ -86,7 +87,9 @@ public class VKEngine {
 					+ "search/vkcache.dat");
 			isSearching = false;
 		} catch (final IOException e) {
-			e.printStackTrace();
+			final ExceptionWidget eWidget = new ExceptionWidget(
+					Utils.getStackTraceString(e, ""));
+			eWidget.setVisible(true);
 		}
 
 	}

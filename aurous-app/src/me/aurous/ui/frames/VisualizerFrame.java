@@ -18,6 +18,7 @@ import javax.swing.WindowConstants;
 import me.aurous.player.functions.PlayerFunctions;
 import me.aurous.player.scenes.VisualizerScene;
 import me.aurous.ui.UISession;
+import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Utils;
 
 public class VisualizerFrame extends JFrame {
@@ -38,7 +39,9 @@ public class VisualizerFrame extends JFrame {
 				UISession.setVisualFrame(frame);
 				frame.setVisible(true);
 			} catch (final Exception e) {
-				e.printStackTrace();
+				final ExceptionWidget eWidget = new ExceptionWidget(Utils
+						.getStackTraceString(e, ""));
+				eWidget.setVisible(true);
 			}
 		});
 	}
@@ -95,7 +98,7 @@ public class VisualizerFrame extends JFrame {
 								.play());
 					} else {
 						PlayerFunctions
-								.play(UISession.getControlPanel().play());
+						.play(UISession.getControlPanel().play());
 					}
 				} else if (c == KeyEvent.VK_SPACE) {
 					if (!isPaused) {
@@ -103,7 +106,7 @@ public class VisualizerFrame extends JFrame {
 								.play());
 					} else {
 						PlayerFunctions
-								.play(UISession.getControlPanel().play());
+						.play(UISession.getControlPanel().play());
 					}
 				} else if (c == KeyEvent.VK_ESCAPE) {
 					panel.setScene(null);

@@ -17,7 +17,9 @@ import javax.swing.JOptionPane;
 
 import me.aurous.ui.UISession;
 import me.aurous.ui.frames.AurousFrame;
+import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Constants;
+import me.aurous.utils.Utils;
 
 import com.alee.global.StyleConstants;
 import com.alee.laf.WebLookAndFeel;
@@ -113,7 +115,6 @@ public class Aurous {
 	}
 
 	public static void main(final String[] args) {
-
 		configureWebLAF();
 		setup();
 		WebLookAndFeel.install();
@@ -125,7 +126,9 @@ public class Aurous {
 				window.aurousFrame.setVisible(true);
 
 			} catch (final Exception e) {
-				e.printStackTrace();
+				final ExceptionWidget eWidget = new ExceptionWidget(Utils
+						.getStackTraceString(e, ""));
+				eWidget.setVisible(true);
 			}
 		});
 
@@ -143,14 +146,15 @@ public class Aurous {
 				Files.write(Paths.get("Aurous.ini"), lines,
 						StandardCharsets.UTF_8);
 				JOptionPane
-				.showMessageDialog(
-						null,
-						"Aurous has modified some core settings, application will exit. Please restart.",
-						"Don't worry!", JOptionPane.WARNING_MESSAGE);
+						.showMessageDialog(
+								null,
+								"Aurous has modified some core settings, application will exit. Please restart.",
+								"Don't worry!", JOptionPane.WARNING_MESSAGE);
 				System.exit(0);
 			} catch (final IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				final ExceptionWidget eWidget = new ExceptionWidget(
+						Utils.getStackTraceString(e, ""));
+				eWidget.setVisible(true);
 			}
 		}
 		final File data_path = new File(Constants.DATA_PATH);
@@ -160,10 +164,10 @@ public class Aurous {
 			final boolean success = data_path.mkdirs();
 			if (!success) {
 				JOptionPane
-						.showMessageDialog(
-								null,
-								"Unable to create data folder, try running as admin. Program will exit",
-								"Error", JOptionPane.ERROR_MESSAGE);
+				.showMessageDialog(
+						null,
+						"Unable to create data folder, try running as admin. Program will exit",
+						"Error", JOptionPane.ERROR_MESSAGE);
 				System.exit(1);
 			} else {
 				// move files to new data folder

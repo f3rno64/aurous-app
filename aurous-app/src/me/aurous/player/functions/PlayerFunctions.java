@@ -131,6 +131,7 @@ public class PlayerFunctions {
 					table.setRowSelectionInterval(0, idx + 1);
 					MediaUtils.switchMedia(table);
 				} catch (final Exception e) {
+
 					table.setRowSelectionInterval(0, 0);
 					MediaUtils.switchMedia(table);
 				}

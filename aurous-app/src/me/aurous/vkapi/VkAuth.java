@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -19,7 +17,9 @@ import javafx.stage.Stage;
 
 import javax.swing.JOptionPane;
 
+import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Constants;
+import me.aurous.utils.Utils;
 
 public class VkAuth extends Application {
 
@@ -49,8 +49,9 @@ public class VkAuth extends Application {
 						Url.substring(Url.indexOf(LOGIN_SUCCESS_PAGE)
 								+ LOGIN_SUCCESS_PAGE.length()), "UTF-8");
 			} catch (final UnsupportedEncodingException ex) {
-				Logger.getLogger(VkAuth.class.getName()).log(Level.SEVERE,
-						null, ex);
+				final ExceptionWidget eWidget = new ExceptionWidget(
+						Utils.getStackTraceString(ex, ""));
+				eWidget.setVisible(true);
 			}
 		}
 	}
@@ -77,13 +78,13 @@ public class VkAuth extends Application {
 		final WebEngine engine = view.getEngine();
 		engine.load(VK_AUTH_URL);
 		engine.getLoadWorker()
-				.stateProperty()
-				.addListener(
-						(ChangeListener<State>) (ov, oldState, newState) -> {
-							if (newState == State.SUCCEEDED) {
-								changeState(engine.getLocation());
-							}
-						});
+		.stateProperty()
+		.addListener(
+				(ChangeListener<State>) (ov, oldState, newState) -> {
+					if (newState == State.SUCCEEDED) {
+						changeState(engine.getLocation());
+					}
+				});
 		primaryStage.setScene(new Scene(view));
 		primaryStage.show();
 
@@ -103,8 +104,9 @@ public class VkAuth extends Application {
 					Platform.exit();
 
 				} catch (final IOException ex) {
-					Logger.getLogger(VkAuth.class.getName()).log(Level.SEVERE,
-							null, ex);
+					final ExceptionWidget eWidget = new ExceptionWidget(
+							Utils.getStackTraceString(ex, ""));
+					eWidget.setVisible(true);
 				}
 			}
 		}).start();
