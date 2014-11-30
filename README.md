@@ -74,13 +74,13 @@ Or follow [the official blog](http://blog.aurous.me) to see all the updates and 
 
 
 ##Dependencies
-- [Alertify4J](https://github.com/nikkiii/Alertify4J)
+- [Alertify4J](https://github.com/Codeusa/aurous-app/releases/tag/1.0)
 
 - [JSoup](http://jsoup.org/)
 
-- [Apple Java Extensions](http://search.maven.org/#search%7Cga%7C1%7CAppleJavaExtensions)
+- [Apple Java Extensions](https://github.com/Codeusa/aurous-app/releases/tag/1.0)
 
-- [Web Look and Feel](http://weblookandfeel.com/)
+- [Web Look and Feel](https://github.com/Codeusa/aurous-app/releases/tag/1.0)
 
 - [JGoogle Analytics](https://code.google.com/p/jgoogleanalytics/)
 
