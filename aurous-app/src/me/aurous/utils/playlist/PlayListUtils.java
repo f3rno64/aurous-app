@@ -32,9 +32,9 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
-import me.aurous.grabbers.HateChanGrabber;
-import me.aurous.grabbers.RedditGrabber;
 import me.aurous.player.Settings;
+import me.aurous.services.impl.HateChanService;
+import me.aurous.services.impl.RedditService;
 import me.aurous.swinghacks.GhostText;
 import me.aurous.ui.UISession;
 import me.aurous.ui.listeners.ContextMenuMouseListener;
@@ -260,11 +260,11 @@ public class PlayListUtils {
 		} else if (sourceURL.contains("soundcloud")) {
 
 		} else if (sourceURL.contains("reddit")) {
-			final RedditGrabber redditGrabber = new RedditGrabber(sourceURL,
+			final RedditService redditGrabber = new RedditService(sourceURL,
 					playListName);
 			redditGrabber.buildPlayList();
 		} else if (sourceURL.contains("8chan")) {
-			final HateChanGrabber hateChanGrabber = new HateChanGrabber(
+			final HateChanService hateChanGrabber = new HateChanService(
 					sourceURL, playListName);
 			hateChanGrabber.buildPlayList();
 

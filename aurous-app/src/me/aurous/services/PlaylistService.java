@@ -1,6 +1,6 @@
-package me.aurous.grabbers;
+package me.aurous.services;
 
-public abstract class AurousGrabber {
+public abstract class PlaylistService {
 
 	public void grab() {
 

@@ -1,4 +1,4 @@
-package me.aurous.grabbers;
+package me.aurous.services.impl;
 
 import java.awt.HeadlessException;
 import java.io.BufferedWriter;
@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
 
+import me.aurous.services.PlaylistService;
 import me.aurous.ui.UISession;
 import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Constants;
@@ -26,14 +27,14 @@ import org.jsoup.select.Elements;
  * @author Andrew
  *
  */
-public class HateChanGrabber extends AurousGrabber {
+public class HateChanService extends PlaylistService {
 
 	private final String contentURL;
 	private final String playListName;
 	private final String TAG_TYPE = "a[href]";
 	private final String ATTRIBUTE_TYPE = "abs:href";
 
-	public HateChanGrabber(final String contentURL, final String playListName) {
+	public HateChanService(final String contentURL, final String playListName) {
 		this.contentURL = contentURL;
 		this.playListName = playListName;
 

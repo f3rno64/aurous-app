@@ -1,10 +1,11 @@
-package me.aurous.grabbers;
+package me.aurous.services.impl;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
 
 import javax.swing.JOptionPane;
 
+import me.aurous.services.PlaylistService;
 import me.aurous.ui.UISession;
 import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Constants;
@@ -15,13 +16,13 @@ import me.aurous.vkapi.audio.AudioApi;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class VKGrabber extends AurousGrabber {
+public class VKService extends PlaylistService {
 
 	private final String contentURL;
 	private final String playListName;
 	private String streamURL;
 
-	public VKGrabber(final String contentURL, final String playListName) {
+	public VKService(final String contentURL, final String playListName) {
 		this.contentURL = contentURL;
 		this.playListName = playListName;
 

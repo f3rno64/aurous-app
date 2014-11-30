@@ -1,4 +1,4 @@
-package me.aurous.grabbers;
+package me.aurous.services.impl;
 
 import java.awt.HeadlessException;
 import java.io.BufferedWriter;
@@ -9,6 +9,7 @@ import java.io.OutputStreamWriter;
 
 import javax.swing.JOptionPane;
 
+import me.aurous.services.PlaylistService;
 import me.aurous.ui.UISession;
 import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Constants;
@@ -21,14 +22,14 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-public class RedditGrabber extends AurousGrabber {
+public class RedditService extends PlaylistService {
 	private final String COMMENT_QUERY = "?limit=500"; // is it 500 or 1000?
 	private String contentURL;
 	private final String playListName;
 	private final String TAG_TYPE = "a[href]";
 	private final String ATTRIBUTE_TYPE = "abs:href";
 
-	public RedditGrabber(final String contentURL, final String playListName) {
+	public RedditService(final String contentURL, final String playListName) {
 		this.contentURL = contentURL;
 		this.playListName = playListName;
 

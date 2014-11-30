@@ -23,13 +23,13 @@ import javafx.application.Platform;
 import javax.imageio.ImageIO;
 import javax.swing.JTable;
 
-import me.aurous.grabbers.VKGrabber;
-import me.aurous.grabbers.YouTubeGrabber;
 import me.aurous.notifiers.NotificationHandler;
 import me.aurous.notifiers.SkypeHandler;
 import me.aurous.player.Settings;
 import me.aurous.player.functions.PlayerFunctions;
 import me.aurous.player.scenes.VisualizerScene;
+import me.aurous.services.impl.VKService;
+import me.aurous.services.impl.YouTubeService;
 import me.aurous.ui.UISession;
 import me.aurous.ui.panels.PlayListPanel;
 import me.aurous.ui.panels.TabelPanel;
@@ -159,7 +159,7 @@ public class MediaUtils {
 	 */
 	public static String getMediaURL(final String sourceURL) {
 		if (Utils.isNull(sourceURL)) {
-			final YouTubeGrabber youTube = new YouTubeGrabber(
+			final YouTubeService youTube = new YouTubeService(
 					"https://www.youtube.com/watch?v=kGubD7KG9FQ"); // default
 			// video
 			youTube.grab();
@@ -172,7 +172,7 @@ public class MediaUtils {
 
 		switch (domain) {
 		case "youtube.com":
-			final YouTubeGrabber youTubeGrabber = new YouTubeGrabber(sourceURL);
+			final YouTubeService youTubeGrabber = new YouTubeService(sourceURL);
 			youTubeGrabber.grab();
 
 			return youTubeGrabber.getStreamURL();
@@ -180,7 +180,7 @@ public class MediaUtils {
 			if (sourceURL.contains(".mp3")) {
 				return sourceURL;
 			}
-			final VKGrabber vkGrabber = new VKGrabber(sourceURL, "");
+			final VKService vkGrabber = new VKService(sourceURL, "");
 			vkGrabber.grab();
 			return vkGrabber.getStreamURL();
 		default:

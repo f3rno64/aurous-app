@@ -1,4 +1,4 @@
-package me.aurous.grabbers;
+package me.aurous.services.impl;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -15,6 +15,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
 import me.aurous.player.Settings;
+import me.aurous.services.PlaylistService;
 import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Constants;
 import me.aurous.utils.Internet;
@@ -24,7 +25,7 @@ import me.aurous.utils.Utils;
  * @author Andrew
  *
  */
-public class YouTubeGrabber extends AurousGrabber {
+public class YouTubeService extends PlaylistService {
 	private String streamURL;
 	private final String SITE_HTML;
 	private final String contentURL;
@@ -33,7 +34,7 @@ public class YouTubeGrabber extends AurousGrabber {
 	private final String URL_STREAMS_REGEX = "(^url=|(\\\\u0026url=|,url=))(.+?)(\\\\u0026|,|$)";
 	private final String STREAM_SIGNATURES_REGEX = "(^s=|(\\\\u0026s=|,s=))(.+?)(\\\\u0026|,|$)";
 
-	public YouTubeGrabber(final String contentURL) {
+	public YouTubeService(final String contentURL) {
 		this.contentURL = contentURL;
 		this.SITE_HTML = Internet.text(this.contentURL);
 	}
