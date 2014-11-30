@@ -71,6 +71,8 @@ public class SettingsWidget {
 	private JButton exitFrameButton;
 	private JLabel lblIfYouWant;
 	public JCheckBox savePlayBackCheckBox;
+	private JLabel skypeLabel;
+	private JCheckBox updateSkypeCheckbox;
 
 	/**
 	 * Create the application.
@@ -203,15 +205,16 @@ public class SettingsWidget {
 			Settings.setDisplayAlert(showPlayBackAlertCheckbox.isSelected());
 			Settings.setStreamLowQuality(lowQualityCheckBox.isSelected());
 			Settings.setSavePlayBack(savePlayBackCheckBox.isSelected());
+			Settings.setSkypeUpdate(updateSkypeCheckbox.isSelected());
 			Settings.saveSettings(false);
 		});
-		saveSettingsButton.setForeground(Color.WHITE);
+		saveSettingsButton.setForeground(Color.BLACK);
 		saveSettingsButton.setBounds(323, 425, 89, 23);
 		settingsWidget.getContentPane().add(saveSettingsButton);
 
 		exitFrameButton = new JButton("CANCEL");
 		exitFrameButton.addActionListener(e -> settingsWidget.dispose());
-		exitFrameButton.setForeground(Color.WHITE);
+		exitFrameButton.setForeground(Color.BLACK);
 		exitFrameButton.setBounds(422, 425, 89, 23);
 		settingsWidget.getContentPane().add(exitFrameButton);
 
@@ -244,6 +247,20 @@ public class SettingsWidget {
 		lowQualityCheckBox.setSelected(Settings.isStreamLowQuality());
 		savePlayBackCheckBox.setSelected(Settings.isSavePlayBack());
 		userNameField.setText(Settings.getUserName());
+		
+		skypeLabel = new JLabel("Update Skype status with current song");
+		skypeLabel.setForeground(Color.WHITE);
+		skypeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+		skypeLabel.setBounds(242, 218, 222, 24);
+		settingsWidget.getContentPane().add(skypeLabel);
+		
+		updateSkypeCheckbox = new JCheckBox("Update Skype");
+		updateSkypeCheckbox.setSelected(Settings.isUpdateSkype());
+		updateSkypeCheckbox.setForeground(Color.WHITE);
+		updateSkypeCheckbox.setFont(new Font("Segoe UI", Font.PLAIN, 11));
+		updateSkypeCheckbox.setBackground(new Color(49, 49, 49));
+		updateSkypeCheckbox.setBounds(242, 241, 98, 23);
+		settingsWidget.getContentPane().add(updateSkypeCheckbox);
 	}
 
 	public boolean isOpen() {

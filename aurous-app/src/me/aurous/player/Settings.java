@@ -19,6 +19,7 @@ import org.json.JSONObject;
  *
  */
 public class Settings {
+
 	public static String getAvatarURL() {
 		return avatarURL;
 	}
@@ -51,6 +52,10 @@ public class Settings {
 		return streamLowQuality;
 	}
 
+	public static boolean isUpdateSkype() {
+		return updateSkype;
+	}
+
 	public static void loadSettings() {
 
 		String jsonData = "";
@@ -63,6 +68,7 @@ public class Settings {
 				jsonData += line + "\n";
 			}
 		} catch (final IOException e) {
+			
 			saveSettings(true);
 			return;
 		} finally {
@@ -89,13 +95,18 @@ public class Settings {
 			final boolean savePlayBack = json.getBoolean("display_alert");
 			setSavePlayBack(savePlayBack);
 
-			final String lastPlayListLocal = json.getString("save_playback");
+			final String lastPlayListLocal = json.getString("last_playlist");
 			setLastPlayList(lastPlayListLocal);
 
 			final int volume = json.getInt("volume");
 			setVolume(volume);
 			UISession.getControlPanel().volume().setValue(getVolume());
+
+			final boolean skypeUpdate = json.getBoolean("skype_update");
+			setSkypeUpdate(skypeUpdate);
+
 		} catch (final JSONException e) {
+	
 			saveSettings(false);
 
 		}
@@ -118,6 +129,7 @@ public class Settings {
 		obj.put("username", new String(getUserName()));
 		obj.put("last_playlist", new String(getLastPlayList()));
 		obj.put("save_playback", isSavePlayBack());
+		obj.put("skype_update", isUpdateSkype());
 
 		try {
 
@@ -169,6 +181,10 @@ public class Settings {
 		Settings.volume = volume;
 	}
 
+	public static void setSkypeUpdate(final boolean update) {
+		Settings.updateSkype = update;
+	}
+
 	private static String avatarURL = "todo";
 
 	private static String userName = "Aurous User";
@@ -184,4 +200,6 @@ public class Settings {
 	private static String lastPlayList = ""; // done
 
 	private static boolean savePlayBack = false;
+
+	private static boolean updateSkype = false;
 }

@@ -18,6 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
+import me.aurous.notifiers.SkypeHandler;
 import me.aurous.player.Settings;
 import me.aurous.player.scenes.MediaPlayerScene;
 import me.aurous.ui.UISession;
@@ -140,6 +141,13 @@ public class AurousFrame implements WindowListener {
 			@Override
 			public void windowClosing(
 					final java.awt.event.WindowEvent windowEvent) {
+				if (Settings.isUpdateSkype()) {
+
+					final SkypeHandler skype = new SkypeHandler("", "");
+					if (skype.isRunning()) {
+						skype.disposeSkypeSong();
+					}
+				}
 				Settings.saveSettings(false);
 
 			}

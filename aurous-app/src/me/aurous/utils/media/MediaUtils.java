@@ -26,6 +26,7 @@ import javax.swing.JTable;
 import me.aurous.grabbers.VKGrabber;
 import me.aurous.grabbers.YouTubeGrabber;
 import me.aurous.notifiers.NotificationHandler;
+import me.aurous.notifiers.SkypeHandler;
 import me.aurous.player.Settings;
 import me.aurous.player.functions.PlayerFunctions;
 import me.aurous.player.scenes.VisualizerScene;
@@ -329,6 +330,15 @@ public class MediaUtils {
 				final ExceptionWidget eWidget = new ExceptionWidget(
 						Utils.getStackTraceString(e, ""));
 				eWidget.setVisible(true);
+			}
+		}
+		if (Settings.isUpdateSkype()) {
+
+			final SkypeHandler skype = new SkypeHandler(artist, title);
+			if (skype.isRunning()) {
+
+				skype.setSkypeSong();
+
 			}
 		}
 
