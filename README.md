@@ -68,9 +68,9 @@ http://aurous.me/downloads/lib.zip
 - An internet connection
 
 ##Downloads and Notes
-Head over to [the official site](http://poptart.me) to get the official app.
+Head over to [the official site](http://aurous.me) to get the official app.
 
-Or follow [the official blog](http://blog.poptart.me) to see all the updates and whats to come. 
+Or follow [the official blog](http://blog.aurous.me) to see all the updates and whats to come. 
 
 
 ##Dependencies
