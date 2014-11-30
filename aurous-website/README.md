@@ -1,1 +1,0 @@
-All credits for this website go to the Popcorn time team and their repo.
