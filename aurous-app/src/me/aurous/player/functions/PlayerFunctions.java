@@ -15,11 +15,13 @@ import me.aurous.ui.panels.TabelPanel;
 import me.aurous.utils.media.MediaUtils;
 
 /**
- * @author Andrew
- *
+ * @author Andrew A class that contains player functions
  */
 public class PlayerFunctions {
 
+	/**
+	 * Handle the shuffle/repeat buttons
+	 */
 	public static void handleSpecialLabels(final boolean isRepeat) {
 		final JLabel repeatStatusLabel = UISession.getControlPanel().repeat();
 		final JLabel shuffleStatusLabel = UISession.getControlPanel().shuffle();
@@ -56,6 +58,9 @@ public class PlayerFunctions {
 		}
 	}
 
+	/**
+	 * Pause the current song and set the state.
+	 */
 	public static void pause(final JButton mediaStateButton) {
 
 		if (UISession.getMediaPlayer() != null) {
@@ -68,6 +73,9 @@ public class PlayerFunctions {
 
 	}
 
+	/**
+	 * Unpause the current song and set the state.
+	 */
 	public static void play(final JButton mediaStateButton) {
 
 		if (UISession.getMediaPlayer() != null) {
@@ -84,6 +92,9 @@ public class PlayerFunctions {
 
 	}
 
+	/**
+	 * Repeat a song
+	 */
 	public static void repeat() {
 		final JTable table = TabelPanel.table;
 		if (table != null) {
@@ -98,6 +109,9 @@ public class PlayerFunctions {
 
 	}
 
+	/**
+	 * Seek a time on the player.
+	 */
 	public static void seek(final int value) {
 		final MediaPlayer player = UISession.getMediaPlayer();
 		if (player != null) {
@@ -108,6 +122,9 @@ public class PlayerFunctions {
 		}
 	}
 
+	/**
+	 * Skip forward one song.
+	 */
 	public static void seekNext() {
 		final JTable table = TabelPanel.table;
 		if (table != null) {
@@ -141,6 +158,9 @@ public class PlayerFunctions {
 
 	}
 
+	/**
+	 * Skip back one song.
+	 */
 	public static void seekPrevious() {
 		final JTable table = TabelPanel.table;
 		if (table != null) {
@@ -171,6 +191,9 @@ public class PlayerFunctions {
 		}
 	}
 
+	/**
+	 * Plays a random song.
+	 */
 	public static void shuffle() {
 
 		final JTable table = TabelPanel.table;

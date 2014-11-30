@@ -10,7 +10,7 @@ import me.aurous.ui.UISession;
 import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Constants;
 import me.aurous.utils.Utils;
-import me.aurous.vkapi.VkAuth;
+import me.aurous.vkapi.VKAuth;
 import me.aurous.vkapi.audio.AudioApi;
 
 import org.json.JSONArray;
@@ -58,7 +58,7 @@ public class VKService extends PlaylistService {
 		final String formData = Utils.readFile(Constants.DATA_PATH
 				+ "settings/vkauth.dat", Charset.defaultCharset());
 
-		final AudioApi api = new AudioApi(VkAuth.VK_APP_ID, formData.trim());
+		final AudioApi api = new AudioApi(VKAuth.VK_APP_ID, formData.trim());
 		final String parameters = String.format("audios=%s", ids);
 
 		try {

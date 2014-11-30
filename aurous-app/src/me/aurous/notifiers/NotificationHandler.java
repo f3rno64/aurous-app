@@ -9,8 +9,7 @@ import org.nikkii.alertify4j.AlertifyBuilder;
 import org.nikkii.alertify4j.AlertifyType;
 
 /**
- * @author Andrew
- *
+ * @author Andrew This class handles building alerts for the Alertify4J library
  */
 public class NotificationHandler {
 	public static void displayAlert(final Font font, final Icon icon,

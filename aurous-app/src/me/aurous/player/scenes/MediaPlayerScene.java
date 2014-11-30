@@ -21,11 +21,12 @@ public class MediaPlayerScene {
 
 	public MediaPlayer player;
 
-	// private static StreamFunctions sFunctions = new StreamFunctions();
-
 	public MediaView view;
 
-	public Scene createScene(final String sourceURL) throws Throwable {
+	/**
+	 * Create a JFX media player scene.
+	 */
+	public Scene createMediaPlayer(final String sourceURL) throws Throwable {
 		final ControlPanel panel = UISession.getControlPanel();
 		final Group root = new Group();
 		root.autosize();
@@ -50,7 +51,7 @@ public class MediaPlayerScene {
 
 		// System.out.println("media.width: "+media.getWidth());
 
-		final Scene scene = new Scene(root, 1, 1, Color.BLACK);
+		final Scene mediaPlayer = new Scene(root, 1, 1, Color.BLACK);
 
 		// player.play();
 
@@ -87,7 +88,7 @@ public class MediaPlayerScene {
 		UISession.setMediaView(view);
 		UISession.setMedia(media);
 
-		return (scene);
+		return (mediaPlayer);
 	}
 
 	private void updateTime(final long currentTime, final long totalDuration) {

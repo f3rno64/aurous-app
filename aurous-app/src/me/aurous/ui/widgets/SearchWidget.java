@@ -29,7 +29,7 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
 import me.aurous.player.Settings;
-import me.aurous.searchers.VKEngine;
+import me.aurous.searchengines.impl.VKEngine;
 import me.aurous.ui.UISession;
 import me.aurous.ui.models.ForcedListSelectionModel;
 import me.aurous.utils.Constants;
@@ -37,7 +37,7 @@ import me.aurous.utils.ModelUtils;
 import me.aurous.utils.Utils;
 import me.aurous.utils.media.MediaUtils;
 import me.aurous.utils.playlist.PlayListUtils;
-import me.aurous.vkapi.VkAuth;
+import me.aurous.vkapi.VKAuth;
 
 import com.alee.extended.image.WebImage;
 import com.alee.laf.text.WebTextField;
@@ -74,7 +74,7 @@ public class SearchWidget implements ActionListener {
 
 			if (dialogResult == JOptionPane.YES_OPTION) {
 
-				VkAuth.main(args);
+				VKAuth.main(args);
 
 			} else {
 				return;
@@ -177,7 +177,6 @@ public class SearchWidget implements ActionListener {
 		searchWidget.getContentPane().setLayout(null);
 
 		searchBar = new WebTextField(0);
-		searchBar.addActionListener(e -> VKEngine.search());
 		searchBar.setInputPrompt("Lana Del Ray...");
 
 		searchBar.setBackground(new Color(35, 35, 35));
@@ -302,7 +301,13 @@ public class SearchWidget implements ActionListener {
 		searchTable.setFont(new Font("Calibri", Font.PLAIN, 14));
 		searchWidget.setLocationRelativeTo(UISession.getPresenter()
 				.getAurousFrame());
+		setSearchEngine();
 
+	}
+	
+	private void setSearchEngine() {
+		VKEngine searchEngine = new VKEngine(100);
+		searchBar.addActionListener(e -> searchEngine.search());
 	}
 
 	public boolean isOpen() {

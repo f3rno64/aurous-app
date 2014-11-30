@@ -5,4 +5,4 @@
  * @author Andrew
  *
  */
-package me.aurous.searchers;
+package me.aurous.searchengines;

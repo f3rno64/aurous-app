@@ -380,7 +380,7 @@ public class MediaUtils {
 						}
 
 						UISession.getPresenter().setScene(
-								UISession.getMediaPlayerScene().createScene(sourceURL));
+								UISession.getMediaPlayerScene().createMediaPlayer(sourceURL));
 
 						UISession.getJFXPanel().setScene(
 								UISession.getPresenter().getScene());

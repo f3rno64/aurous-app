@@ -6,13 +6,13 @@ import java.util.regex.Pattern;
 
 import me.aurous.utils.Internet;
 
-public class VkApi {
+public class VKApi {
 
 	public static final String VK_API_PREFIX = "https://api.vk.com/method/";
 	protected int applicationId, userId;
 	protected String accessToken;
 
-	public VkApi(final int applicationId, final String formData) {
+	public VKApi(final int applicationId, final String formData) {
 		this.applicationId = applicationId;
 		final Pattern accessTokenPattern = Pattern
 				.compile("access_token\\=([^\\&]*)\\&");
@@ -26,7 +26,7 @@ public class VkApi {
 				.indexOf("user_id=") + "user_id=".length()));
 	}
 
-	public VkApi(final VkApi api) {
+	public VKApi(final VKApi api) {
 		this.applicationId = api.applicationId;
 		this.userId = api.userId;
 		this.accessToken = new String(api.accessToken);

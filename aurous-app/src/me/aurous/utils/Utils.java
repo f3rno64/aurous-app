@@ -5,6 +5,7 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.URL;
@@ -17,6 +18,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -42,6 +44,37 @@ public class Utils {
 
 	public static boolean isNull(final Object obj) {
 		return obj == null;
+	}
+	
+	/**
+	 * @author Andrew
+	 *  Simple method to check if a laine is contained in a file
+	 */
+	public static boolean containsLine(final String fileName,
+			final String lineStop) {
+		try {
+			final Scanner s = new Scanner(System.in);
+
+			final File f = new File(fileName);
+			final Scanner numScan = new Scanner(f);
+
+			String line;
+
+			while (numScan.hasNext()) {
+				line = numScan.nextLine();
+				if (line.contains(lineStop)) {
+
+					s.close();
+					numScan.close();
+					return true;
+				}
+			}
+			s.close();
+			numScan.close();
+			return false;
+		} catch (final FileNotFoundException e) {
+			return true;
+		}
 	}
 
 	/**

@@ -5,13 +5,11 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Insets;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
@@ -36,8 +34,13 @@ import com.alee.utils.FileUtils;
  * @author Andrew
  *
  */
+
 public class Aurous {
 
+	/**
+	 * @author Andrew Sets the properties of WEBLAF for our custom Look and
+	 *         Feel.
+	 */
 	private static void configureWebLAF() {
 		System.setProperty("awt.useSystemAAFontSettings", "on");
 		System.setProperty("swing.aatext", "true"); // enable System aa
@@ -87,33 +90,9 @@ public class Aurous {
 
 	}
 
-	private static boolean containsLine(final String fileName,
-			final String lineStop) {
-		try {
-			final Scanner s = new Scanner(System.in);
-
-			final File f = new File(fileName);
-			final Scanner numScan = new Scanner(f);
-
-			String line;
-
-			while (numScan.hasNext()) {
-				line = numScan.nextLine();
-				if (line.contains(lineStop)) {
-
-					s.close();
-					numScan.close();
-					return true;
-				}
-			}
-			s.close();
-			numScan.close();
-			return false;
-		} catch (final FileNotFoundException e) {
-			return true;
-		}
-	}
-
+	/**
+	 * @author Andrew Entry point alpha
+	 */
 	public static void main(final String[] args) {
 		configureWebLAF();
 		setup();
@@ -134,8 +113,13 @@ public class Aurous {
 
 	}
 
+	/**
+	 * @author Andrew
+	 * @Deprecated For legacy users, adds the missing JVM params to the
+	 *             aurous.ini on Windows.
+	 */
 	private static void setup() {
-		if (!containsLine("Aurous.ini", "Virtual Machine Parameters")) {
+		if (!Utils.containsLine("Aurous.ini", "Virtual Machine Parameters")) {
 			try {
 
 				final List<String> lines = Files.readAllLines(
@@ -146,10 +130,10 @@ public class Aurous {
 				Files.write(Paths.get("Aurous.ini"), lines,
 						StandardCharsets.UTF_8);
 				JOptionPane
-						.showMessageDialog(
-								null,
-								"Aurous has modified some core settings, application will exit. Please restart.",
-								"Don't worry!", JOptionPane.WARNING_MESSAGE);
+				.showMessageDialog(
+						null,
+						"Aurous has modified some core settings, application will exit. Please restart.",
+						"Don't worry!", JOptionPane.WARNING_MESSAGE);
 				System.exit(0);
 			} catch (final IOException e) {
 				final ExceptionWidget eWidget = new ExceptionWidget(
@@ -164,10 +148,10 @@ public class Aurous {
 			final boolean success = data_path.mkdirs();
 			if (!success) {
 				JOptionPane
-				.showMessageDialog(
-						null,
-						"Unable to create data folder, try running as admin. Program will exit",
-						"Error", JOptionPane.ERROR_MESSAGE);
+						.showMessageDialog(
+								null,
+								"Unable to create data folder, try running as admin. Program will exit",
+								"Error", JOptionPane.ERROR_MESSAGE);
 				System.exit(1);
 			} else {
 				// move files to new data folder

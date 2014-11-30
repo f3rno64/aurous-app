@@ -21,7 +21,7 @@ import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Constants;
 import me.aurous.utils.Utils;
 
-public class VkAuth extends Application {
+public class VKAuth extends Application {
 
 	public static void main(final String[] args) {
 		launch(args);

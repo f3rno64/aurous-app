@@ -16,7 +16,7 @@ import org.json.JSONObject;
 
 /**
  * @author Andrew
- *
+ * This class handles anything related to application settings.
  */
 public class Settings {
 
@@ -56,6 +56,11 @@ public class Settings {
 		return updateSkype;
 	}
 
+	
+	/**
+	 * Attempts to load the settings, if a new setting has been added yet is missing; 
+	 * it will rewrite the user settings.
+	 */
 	public static void loadSettings() {
 
 		String jsonData = "";
@@ -112,13 +117,20 @@ public class Settings {
 		}
 
 	}
-
+	/**
+	 * @author Andrew
+	 * Reads a file
+	 */
 	static String readFile(final String path, final Charset encoding)
 			throws IOException {
 		final byte[] encoded = Files.readAllBytes(Paths.get(path));
 		return new String(encoded, encoding);
 	}
 
+	/**
+	 * @author Andrew
+	 * Overwrite current settings with updated user set ones. 
+	 */
 	public static void saveSettings(final boolean reload) {
 		final JSONObject obj = new JSONObject();
 		obj.put("low_quality", isStreamLowQuality());

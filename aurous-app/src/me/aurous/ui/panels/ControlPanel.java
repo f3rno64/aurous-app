@@ -258,7 +258,7 @@ public class ControlPanel extends JPanel {
 			} else {
 				mute.setText("\uF026");
 			}
-			System.out.println(mute.getHeight());
+			System.out.println(volume.getValue());
 		});
 
 		volume.setValue(Settings.getVolume());

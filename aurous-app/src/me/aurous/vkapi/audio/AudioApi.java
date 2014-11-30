@@ -2,15 +2,15 @@ package me.aurous.vkapi.audio;
 
 import java.io.IOException;
 
-import me.aurous.vkapi.VkApi;
+import me.aurous.vkapi.VKApi;
 
-public class AudioApi extends VkApi {
+public class AudioApi extends VKApi {
 
 	public AudioApi(final int applicationId, final String formData) {
 		super(applicationId, formData);
 	}
 
-	public AudioApi(final VkApi api) {
+	public AudioApi(final VKApi api) {
 		super(api);
 	}
 

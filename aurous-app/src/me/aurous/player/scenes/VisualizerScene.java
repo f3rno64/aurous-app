@@ -26,6 +26,9 @@ public class VisualizerScene {
 				.getMaximumWindowBounds().width;
 	}
 
+	/**
+	 * Creates a Javafx based visualizer.
+	 */
 	public Scene createVisualScene() {
 		final int screenHeight = GetScreenWorkingHeight();
 		final int screenWidth = GetScreenWorkingWidth();
@@ -69,7 +72,7 @@ public class VisualizerScene {
 		vbox.setMaxWidth(screenWidth);
 
 		hbox.setTranslateY(translatLocation);
-		final Scene scene = new Scene(root, screenWidth, screenHeight,
+		final Scene visaulizer = new Scene(root, screenWidth, screenHeight,
 				Color.rgb(35, 35, 35));
 		hbox.setMinWidth(screenWidth);
 		final int bandWidth = screenWidth / rects.length;
@@ -104,7 +107,7 @@ public class VisualizerScene {
 							}
 						});
 
-		return (scene);
+		return (visaulizer);
 	}
 
 }
