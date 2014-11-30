@@ -71,3 +71,19 @@ http://aurous.me/downloads/lib.zip
 Head over to [the official site](http://poptart.me) to get the official app.
 
 Or follow [the official blog](http://blog.poptart.me) to see all the updates and whats to come. 
+
+
+##Dependencies
+- [Alertify4J](https://github.com/nikkiii/Alertify4J)
+
+- [JSoup](http://jsoup.org/)
+
+- [Apple Java Extensions](http://search.maven.org/#search%7Cga%7C1%7CAppleJavaExtensions)
+
+- [Web Look and Feel](http://weblookandfeel.com/)
+
+- [JGoogle Analytics](https://code.google.com/p/jgoogleanalytics/)
+
+-  [Commons Lang3](https://commons.apache.org/proper/commons-lang/index.html)
+
+-  [Skype Java API](https://github.com/taksan/skype-java-api)
