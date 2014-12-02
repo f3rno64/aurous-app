@@ -1,8 +1,11 @@
 package me.aurous.ui.models;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 import java.io.Writer;
+import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.Vector;
@@ -10,6 +13,9 @@ import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
 import me.aurous.utils.Utils;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author Andrew
@@ -28,15 +34,56 @@ public class CSVTableModel {
 	 *
 	 * @return A DefaultTableModel containing the CSV values as type String
 	 */
-	public static DefaultTableModel createTableModel(final Reader in,
+	public static DefaultTableModel createTableModel(File playList, Reader in,
 			Vector<Object> headers) {
-		DefaultTableModel model = null;
 		Scanner s = null;
+		StringBuilder convertedPlayList = null;
+		final String jsonList = Utils.readFile(playList.getAbsolutePath(),
+				Charset.defaultCharset());
+		if (Utils.isJSONValid(jsonList)) { // if in new format, build to CSV for
+											// now. Need to create a new table model structure
+			convertedPlayList = new StringBuilder(
+					String.format(
+							"Title, Artist, Time, Date Added, User, Album, ALBUMART_INDEX, link %s",
+							System.lineSeparator()));
+
+			JSONArray json = new JSONArray(jsonList);
+			for (int i = 0; i < json.length(); i++) {
+				JSONObject obj = json.getJSONObject(i);
+
+				String title = obj.getString("Title").trim();
+				String artist = obj.getString("Artist").trim();
+				String time = obj.getString("Time").trim();
+				String date = obj.getString("Date Added").trim();
+				String user = obj.getString("User").trim();
+				String album = obj.getString("Album").trim();
+				String album_art = obj.getString("ALBUMART_INDEX").trim();
+				String link = obj.getString("link").trim();
+				convertedPlayList.append(String.format(
+						"%s, %s, %s, %s, %s, %s, %s, %s %s", title, artist,
+						time, date, user, album, album_art, link,
+						System.lineSeparator()));
+			}
+
+			s = new Scanner(new StringReader(convertedPlayList.toString()
+					.trim()));
+			try {
+				in.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+
+		DefaultTableModel model = null;
 
 		try {
 			try {
 				final Vector<Vector<Object>> rows = new Vector<Vector<Object>>();
-				s = new Scanner(in);
+				if (Utils.isNull(s)) {
+					s = new Scanner(in);
+				}
 				if (!s.hasNext()) {
 					return null;
 				}
@@ -81,7 +128,7 @@ public class CSVTableModel {
 						}
 					};
 				}
-
+				in.close();
 				return model;
 			} catch (final Exception e) {
 				return null;

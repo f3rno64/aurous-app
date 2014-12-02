@@ -41,7 +41,7 @@ public class ShareWidget extends JFrame {
 		setTitle("Share Playlist");
 		setAlwaysOnTop(true);
 		setType(Type.UTILITY);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 151);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(35, 35, 35));

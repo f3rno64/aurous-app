@@ -2,6 +2,7 @@ package me.aurous.utils;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 
@@ -74,9 +75,11 @@ public class ModelUtils {
 			table = TabelPanel.table;
 			DefaultTableModel tableModel = TabelPanel.tableModel;
 			final String datafile = fileLocation;
+			File playList = new File(datafile);
 			final FileReader fin = new FileReader(datafile);
+			
 
-			tableModel = CSVTableModel.createTableModel(fin, null);
+			tableModel = CSVTableModel.createTableModel(playList, fin, null);
 			if (Utils.isNull(tableModel)) {
 				JOptionPane.showMessageDialog(null,
 						"Error loading playlist, corrupted or unfinished.",
@@ -116,9 +119,11 @@ public class ModelUtils {
 			final JTable table = SearchWidget.getSearchTable();
 			DefaultTableModel tableModel = SearchWidget.getTableModel();
 			final String datafile = searchResults;
-			final FileReader fin = new FileReader(datafile);
+			File playList = new File(datafile);
+			
+			final FileReader fin = new FileReader(playList);
 
-			tableModel = CSVTableModel.createTableModel(fin, null);
+			tableModel = CSVTableModel.createTableModel(playList, fin, null);
 			if (Utils.isNull(tableModel)) {
 				JOptionPane.showMessageDialog(null,
 						"Error Loading Search Results.", "Error",

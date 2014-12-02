@@ -23,6 +23,10 @@ import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  *
  * @author https://github.com/nikkiii
@@ -439,7 +443,18 @@ public class Utils {
 			e.printStackTrace();
 		}
 	}
-
+	public static boolean isJSONValid(String test) {
+		try {
+			new JSONObject(test);
+		} catch (JSONException ex) {
+			try {
+				new JSONArray(test);
+			} catch (JSONException ex1) {
+				return false;
+			}
+		}
+		return true;
+	}
 	/**
 	 * icons cache.
 	 */

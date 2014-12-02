@@ -30,6 +30,9 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import me.aurous.apis.impl.webapi.WebPlaylistSubmit;
 import me.aurous.player.Settings;
 import me.aurous.player.functions.PlayerFunctions;
@@ -285,8 +288,34 @@ public class PlayListPanel extends JPanel implements ActionListener {
 			try {
 				final String playListName = Utils.stripExtension(new File(
 						playlist).getName());
-				final String content = new String(Files.readAllBytes(Paths
+				String content = new String(Files.readAllBytes(Paths
 						.get(playlist)));
+				
+				if (Utils.isJSONValid(content)) {
+					StringBuilder convertedPlayList = new StringBuilder(
+							String.format(
+									"Title, Artist, Time, Date Added, User, Album, ALBUMART_INDEX, link %s",
+									System.lineSeparator()));
+					JSONArray json = new JSONArray(content);
+					for (int i = 0; i < json.length(); i++) {
+						JSONObject obj = json.getJSONObject(i);
+
+						String title = obj.getString("Title").trim();
+						String artist = obj.getString("Artist").trim();
+						String time = obj.getString("Time").trim();
+						String date = obj.getString("Date Added").trim();
+						String user = obj.getString("User").trim();
+						String album = obj.getString("Album").trim();
+						String album_art = obj.getString("ALBUMART_INDEX").trim();
+						String link = obj.getString("link").trim();
+						convertedPlayList.append(String.format(
+								"%s, %s, %s, %s, %s, %s, %s, %s %s", title, artist,
+								time, date, user, album, album_art, link,
+								System.lineSeparator()));
+					}
+					content = convertedPlayList.toString();
+				}
+				
 				final WebPlaylistSubmit sharePlaylist = new WebPlaylistSubmit(
 						content, playListName);
 				sharePlaylist.submitPlaylist();
