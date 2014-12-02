@@ -20,6 +20,10 @@ import me.aurous.utils.Utils;
 
 public class ShareWidget extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7944915132167953389L;
 	private final JPanel contentPane;
 	private final JTextField shareLinkArea;
 	private final String message;

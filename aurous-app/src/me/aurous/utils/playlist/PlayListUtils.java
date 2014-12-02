@@ -33,6 +33,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import me.aurous.player.Settings;
+import me.aurous.services.impl.AurousService;
 import me.aurous.services.impl.HateChanService;
 import me.aurous.services.impl.RedditService;
 import me.aurous.swinghacks.GhostText;
@@ -258,6 +259,10 @@ public class PlayListUtils {
 					playListName);
 
 		} else if (sourceURL.contains("soundcloud")) {
+			
+		} else if (sourceURL.contains("aurous")) {
+			AurousService aurousService = new AurousService(sourceURL, playListName);
+			aurousService.buildPlayList();
 
 		} else if (sourceURL.contains("reddit")) {
 			final RedditService redditGrabber = new RedditService(sourceURL,

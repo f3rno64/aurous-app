@@ -24,6 +24,8 @@ import me.aurous.swinghacks.GhostText;
 import me.aurous.ui.UISession;
 import me.aurous.utils.Utils;
 import me.aurous.utils.playlist.PlayListUtils;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * @author Andrew
@@ -159,7 +161,7 @@ public class ImporterWidget {
 		youTubeServiceButton.setRolloverIcon(new ImageIcon(ImporterWidget.class
 				.getResource("/resources/w_youtube_h.png")));
 
-		youTubeServiceButton.setBounds(122, 11, 35, 35);
+		youTubeServiceButton.setBounds(145, 11, 35, 35);
 
 		servicePanel.add(youTubeServiceButton);
 
@@ -180,7 +182,7 @@ public class ImporterWidget {
 		redditServiceButton.setContentAreaFilled(false);
 		redditServiceButton.setBorderPainted(false);
 		redditServiceButton.setBorder(null);
-		redditServiceButton.setBounds(167, 11, 35, 35);
+		redditServiceButton.setBounds(190, 11, 35, 35);
 		servicePanel.add(redditServiceButton);
 
 		hateChanServiceButton = new JButton("");
@@ -194,7 +196,7 @@ public class ImporterWidget {
 		hateChanServiceButton.setContentAreaFilled(false);
 		hateChanServiceButton.setBorderPainted(false);
 		hateChanServiceButton.setBorder(null);
-		hateChanServiceButton.setBounds(212, 11, 35, 35);
+		hateChanServiceButton.setBounds(235, 11, 35, 35);
 		hateChanServiceButton.addActionListener(e -> {
 			ImporterWidget.this.playListURL = PlayListUtils
 					.importPlayListPrompt();
@@ -202,6 +204,26 @@ public class ImporterWidget {
 
 		});
 		servicePanel.add(hateChanServiceButton);
+		
+		JButton aurousServiceButton = new JButton("");
+		aurousServiceButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				ImporterWidget.this.playListURL = PlayListUtils
+						.importPlayListPrompt();
+				playListURLLabel.setText(ImporterWidget.this.playListURL);
+			}
+		});
+		aurousServiceButton.setIcon(new ImageIcon(ImporterWidget.class.getResource("/resources/aurousimporticon.png")));
+		aurousServiceButton.setRolloverIcon(new ImageIcon(ImporterWidget.class.getResource("/resources/aurousimporticon_h.png")));
+		aurousServiceButton.setMargin(new Insets(0, 0, 0, 0));
+		aurousServiceButton.setContentAreaFilled(false);
+		aurousServiceButton.setBorderPainted(false);
+		aurousServiceButton.setCursor(Cursor
+				.getPredefinedCursor(Cursor.HAND_CURSOR));
+		aurousServiceButton.setOpaque(false);
+		aurousServiceButton.setBorder(null);
+		aurousServiceButton.setBounds(100, 11, 35, 35);
+		servicePanel.add(aurousServiceButton);
 
 		final JLabel lblSelectAService = new JLabel("Select a Service");
 		lblSelectAService.setFont(new Font("Segoe UI", Font.PLAIN, 20));
