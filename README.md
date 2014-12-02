@@ -87,3 +87,5 @@ Or follow [the official blog](http://blog.aurous.me) to see all the updates and 
 -  [Commons Lang3](https://commons.apache.org/proper/commons-lang/index.html)
 
 -  [Skype Java API](https://github.com/taksan/skype-java-api)
+-  
+-  [HTTP Client and Friends](https://hc.apache.org/httpclient-3.x/)
