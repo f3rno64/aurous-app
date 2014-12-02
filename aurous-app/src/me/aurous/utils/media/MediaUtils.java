@@ -96,11 +96,11 @@ public class MediaUtils {
 
 		final String link = target.getName().equals("search") ? (String) target
 				.getValueAt(row, 3) : (String) target.getValueAt(row, 7);
-				;
-				final StringSelection stringSelection = new StringSelection(link);
-				final Clipboard clpbrd = Toolkit.getDefaultToolkit()
-						.getSystemClipboard();
-				clpbrd.setContents(stringSelection, null);
+		;
+		final StringSelection stringSelection = new StringSelection(link);
+		final Clipboard clpbrd = Toolkit.getDefaultToolkit()
+				.getSystemClipboard();
+		clpbrd.setContents(stringSelection, null);
 	}
 
 	private static String escapeComma(final String str) {
@@ -357,46 +357,47 @@ public class MediaUtils {
 				final String sourceURL = target.getName().equals("search") ? (String) target
 						.getValueAt(row, 3) : (String) target
 						.getValueAt(row, 7);
-				final VisualizerScene visualScene = new VisualizerScene();
-						if (UISession.getMediaPlayer() != null) {
-							UISession.getMediaPlayer().pause();
-							UISession.getMediaPlayer().stop();
-							UISession
+						final VisualizerScene visualScene = new VisualizerScene();
+				if (UISession.getMediaPlayer() != null) {
+					UISession.getMediaPlayer().pause();
+					UISession.getMediaPlayer().stop();
+					UISession
 							.getMediaPlayer()
 							.currentTimeProperty()
 							.removeListener(
 									UISession.getMediaPlayerScene().progressChangeListener);
-							UISession.getMediaPlayer().dispose();
-							UISession.getMediaPlayerScene().player = null; // getting
-							// desperate
-							// finding
-							// out what
-							// causes
-							// memory
-							// spikes
-							UISession.getMediaPlayerScene().view = null;
-							UISession.getJFXPanel().setScene(null);
-							UISession.getPresenter().setScene(null);
-						}
+					UISession.getMediaPlayer().dispose();
+					UISession.getMediaPlayerScene().player = null; // getting
+					// desperate
+					// finding
+					// out what
+					// causes
+					// memory
+					// spikes
+					UISession.getMediaPlayerScene().view = null;
+					UISession.getJFXPanel().setScene(null);
+					UISession.getPresenter().setScene(null);
+				}
 
-						UISession.getPresenter().setScene(
-								UISession.getMediaPlayerScene().createMediaPlayer(sourceURL));
+				UISession.getPresenter().setScene(
+						UISession.getMediaPlayerScene().createMediaPlayer(
+								sourceURL));
 
-						UISession.getJFXPanel().setScene(
-								UISession.getPresenter().getScene());
+				UISession.getJFXPanel().setScene(
+						UISession.getPresenter().getScene());
 
-						UISession.getMediaPlayer().setVolume(
-								((double) UISession.getControlPanel().volume()
-										.getValue() / 100));
-						if ((UISession.getVisualFrame() != null)
-								&& UISession.getVisualFrame().isOpen()) {
-							UISession.getVisualFrame().panel.setScene(null);
-							UISession.getVisualFrame().scene = null;
-							UISession.getVisualFrame().scene = visualScene
-							.createVisualScene();
-							UISession.getVisualFrame().panel.setScene(UISession
-									.getVisualFrame().scene);
-						}
+				UISession.getMediaPlayer().setVolume(
+						((double) UISession.getControlPanel().volume()
+								.getValue() / 100));
+				if ((UISession.getVisualFrame() != null)
+						&& UISession.getVisualFrame().isOpen()) {
+					UISession.getVisualFrame().panel.setScene(null);
+					UISession.getVisualFrame().scene = null;
+					UISession.getVisualFrame().scene = visualScene
+									.createVisualScene();
+					UISession.getVisualFrame().panel.setScene(UISession
+							.getVisualFrame().scene);
+				}
 
 			} catch (final Throwable ei) {
 				final ExceptionWidget eWidget = new ExceptionWidget(Utils

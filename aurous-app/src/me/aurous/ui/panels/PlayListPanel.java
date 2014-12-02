@@ -13,6 +13,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -28,11 +30,15 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
+import me.aurous.apis.impl.webapi.WebPlaylistSubmit;
 import me.aurous.player.Settings;
 import me.aurous.player.functions.PlayerFunctions;
+import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.ui.widgets.SettingsWidget;
+import me.aurous.ui.widgets.ShareWidget;
 import me.aurous.utils.Constants;
 import me.aurous.utils.ModelUtils;
+import me.aurous.utils.Utils;
 import me.aurous.utils.media.MediaUtils;
 import me.aurous.utils.playlist.PlayListUtils;
 
@@ -251,6 +257,11 @@ public class PlayListPanel extends JPanel implements ActionListener {
 
 	}
 
+	public static String stripExtension(final String s) {
+		return (s != null) && (s.lastIndexOf(".") > 0) ? s.substring(0,
+				s.lastIndexOf(".")) : s;
+	}
+
 	@Override
 	public void actionPerformed(final ActionEvent e) {
 		final Component c = (Component) e.getSource();
@@ -271,7 +282,24 @@ public class PlayListPanel extends JPanel implements ActionListener {
 
 			break;
 		case "Share":
-			// System.out.println("Sharing");
+			try {
+				final String playListName = Utils.stripExtension(new File(
+						playlist).getName());
+				final String content = new String(Files.readAllBytes(Paths
+						.get(playlist)));
+				final WebPlaylistSubmit sharePlaylist = new WebPlaylistSubmit(
+						content, playListName);
+				sharePlaylist.submitPlaylist();
+				final ShareWidget shareWidget = new ShareWidget(
+						sharePlaylist.getSubmitMessage());
+				shareWidget.setVisible(true);
+
+			} catch (final Exception e1) {
+
+				final ExceptionWidget eWidget = new ExceptionWidget(
+						Utils.getStackTraceString(e1, ""));
+				eWidget.setVisible(true);
+			}
 			break;
 		}
 		// System.out.println(searchTable.getSelectedRow() + " : " +

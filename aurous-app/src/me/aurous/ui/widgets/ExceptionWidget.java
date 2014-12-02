@@ -46,7 +46,7 @@ public class ExceptionWidget extends JFrame {
 		exceptionText.setBackground(Color.DARK_GRAY);
 		exceptionText.setText(exception);
 		exceptionText.setEditable(false);
-		exceptionText.setFont(new Font("Source Code Pro", Font.PLAIN, 11));
+		exceptionText.setFont(new Font("Open Sans", Font.PLAIN, 11));
 		exceptionText.setBounds(10, 90, 407, 276);
 		getContentPane().add(exceptionText);
 		exceptionText.setColumns(50);
@@ -78,7 +78,7 @@ public class ExceptionWidget extends JFrame {
 		final JLabel warningMessage = new JLabel(
 				"<html><strong>Uh oh!</strong> Looks like Aurous ran into a slight issue. Please copy the below text and report it on the Github! This can help us prevent it ever again.</html>");
 		warningMessage.setForeground(Color.WHITE);
-		warningMessage.setFont(new Font("Consolas", Font.PLAIN, 13));
+		warningMessage.setFont(new Font("Open Sans", Font.PLAIN, 13));
 		warningMessage.setBounds(84, 11, 323, 78);
 		getContentPane().add(warningMessage);
 	}

@@ -62,7 +62,7 @@ public class YouTubePlayListImporter {
 											.size());
 
 									importWidget.getImportProgressBar()
-											.setValue(percent);
+									.setValue(percent);
 									PlayListUtils.disableImporterInterface();
 								}
 								if (link.attr("abs:href").contains("watch?v=")

@@ -1,4 +1,4 @@
-package me.aurous.vkapi;
+package me.aurous.apis.impl.vkapi;
 
 import java.io.File;
 import java.io.IOException;
@@ -78,13 +78,13 @@ public class VKAuth extends Application {
 		final WebEngine engine = view.getEngine();
 		engine.load(VK_AUTH_URL);
 		engine.getLoadWorker()
-		.stateProperty()
-		.addListener(
-				(ChangeListener<State>) (ov, oldState, newState) -> {
-					if (newState == State.SUCCEEDED) {
-						changeState(engine.getLocation());
-					}
-				});
+				.stateProperty()
+				.addListener(
+						(ChangeListener<State>) (ov, oldState, newState) -> {
+							if (newState == State.SUCCEEDED) {
+								changeState(engine.getLocation());
+							}
+						});
 		primaryStage.setScene(new Scene(view));
 		primaryStage.show();
 

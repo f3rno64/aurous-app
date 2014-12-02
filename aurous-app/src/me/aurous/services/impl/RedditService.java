@@ -61,8 +61,8 @@ public class RedditService extends PlaylistService {
 									.ignoreContentType(true)
 									.userAgent(
 											"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36")
-											.referrer("http://www.google.com")
-											.timeout(12000).followRedirects(true).get();
+									.referrer("http://www.google.com")
+									.timeout(12000).followRedirects(true).get();
 							final Elements links = doc.select(TAG_TYPE);
 							final File playListOut = new File(out);
 							final FileOutputStream fos = new FileOutputStream(
@@ -83,10 +83,10 @@ public class RedditService extends PlaylistService {
 										final int percent = (int) ((iterations * 100.0f) / links
 												.size());
 										UISession.getImporterWidget()
-												.getImportProgressBar()
-												.setValue(percent);
+										.getImportProgressBar()
+										.setValue(percent);
 										PlayListUtils
-												.disableImporterInterface();
+										.disableImporterInterface();
 									}
 									if (!link.attr(ATTRIBUTE_TYPE).equals(last)) {
 

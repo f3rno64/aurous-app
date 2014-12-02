@@ -5,6 +5,8 @@ import java.nio.charset.Charset;
 
 import javax.swing.JOptionPane;
 
+import me.aurous.apis.impl.vkapi.VKAuth;
+import me.aurous.apis.impl.vkapi.audio.AudioApi;
 import me.aurous.searchengines.SearchEngine;
 import me.aurous.ui.UISession;
 import me.aurous.ui.widgets.ExceptionWidget;
@@ -12,25 +14,22 @@ import me.aurous.utils.Constants;
 import me.aurous.utils.ModelUtils;
 import me.aurous.utils.Utils;
 import me.aurous.utils.media.MediaUtils;
-import me.aurous.vkapi.VKAuth;
-import me.aurous.vkapi.audio.AudioApi;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class VKEngine extends SearchEngine {
-	private int RESULT_LIMIT; // to do settings, max is 300
+	private final int RESULT_LIMIT; // to do settings, max is 300
 	private int PERFORMER_ONLY;
-	
-	public VKEngine(int resultLimit) {
+
+	public VKEngine(final int resultLimit) {
 		this.RESULT_LIMIT = resultLimit;
 	}
 
-
 	public String buildSearchCSV(final String json) {
-		
+
 		final StringBuilder csv = new StringBuilder()
-				.append("Title, Artist, Duration, URL, id");
+		.append("Title, Artist, Duration, URL, id");
 		csv.append(System.getProperty("line.separator"));
 		final JSONObject mainObject = new JSONObject(json);
 		final JSONArray response = mainObject.getJSONArray("response");
@@ -70,7 +69,7 @@ public class VKEngine extends SearchEngine {
 		Constants.IS_SEARCHING = true;
 		this.PERFORMER_ONLY = UISession.getSearchWidget().getComboBox()
 				.getSelectedItem().toString().equals("by title") ? 0 : 1;
-		
+
 		String query = UISession.getSearchWidget().getSearchBar().getText();
 		query = query.replace(" ", "%20");
 
@@ -84,7 +83,7 @@ public class VKEngine extends SearchEngine {
 
 		try {
 			final String searchJSON = api.searchAudioJson(parameters);
-			if (searchJSON.contains("\"response\":[0]")) { 
+			if (searchJSON.contains("\"response\":[0]")) {
 				JOptionPane.showMessageDialog(UISession.getSearchWidget()
 						.getWidget(), "No results found!", "Error",
 						JOptionPane.ERROR_MESSAGE);
@@ -92,7 +91,8 @@ public class VKEngine extends SearchEngine {
 				return;
 			}
 			final String searchCSV = buildSearchCSV(searchJSON);
-			Utils.writeFile(searchCSV, Constants.DATA_PATH + "search/vkcache.dat");
+			Utils.writeFile(searchCSV, Constants.DATA_PATH
+					+ "search/vkcache.dat");
 			ModelUtils.loadSearchResults(Constants.DATA_PATH
 					+ "search/vkcache.dat");
 			Constants.IS_SEARCHING = false;
@@ -103,6 +103,5 @@ public class VKEngine extends SearchEngine {
 		}
 
 	}
-
 
 }

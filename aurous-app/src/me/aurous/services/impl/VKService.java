@@ -5,13 +5,13 @@ import java.nio.charset.Charset;
 
 import javax.swing.JOptionPane;
 
+import me.aurous.apis.impl.vkapi.VKAuth;
+import me.aurous.apis.impl.vkapi.audio.AudioApi;
 import me.aurous.services.PlaylistService;
 import me.aurous.ui.UISession;
 import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Constants;
 import me.aurous.utils.Utils;
-import me.aurous.vkapi.VKAuth;
-import me.aurous.vkapi.audio.AudioApi;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

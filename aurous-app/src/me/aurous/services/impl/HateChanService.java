@@ -55,7 +55,7 @@ public class HateChanService extends PlaylistService {
 						if (Pattern
 								.compile(
 										"8chan.co\\/(.*?)\\/(.*?)\\/(.*?).html")
-								.matcher(contentURL).find()) {
+										.matcher(contentURL).find()) {
 							String last = "";
 							final String out = Constants.DATA_PATH
 									+ "playlist/" + playListName + ".plist";
@@ -64,8 +64,8 @@ public class HateChanService extends PlaylistService {
 									.ignoreContentType(true)
 									.userAgent(
 											"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36")
-									.referrer("http://www.google.com")
-									.timeout(12000).followRedirects(true).get();
+											.referrer("http://www.google.com")
+											.timeout(12000).followRedirects(true).get();
 							final Elements links = doc.select(TAG_TYPE);
 
 							final File playListOut = new File(out);
@@ -87,10 +87,10 @@ public class HateChanService extends PlaylistService {
 										final int percent = (int) ((iterations * 100.0f) / links
 												.size());
 										UISession.getImporterWidget()
-												.getImportProgressBar()
-												.setValue(percent);
+										.getImportProgressBar()
+										.setValue(percent);
 										PlayListUtils
-												.disableImporterInterface();
+										.disableImporterInterface();
 									}
 
 									if (!link.attr(ATTRIBUTE_TYPE).equals(last)) {
@@ -125,10 +125,10 @@ public class HateChanService extends PlaylistService {
 
 						} else {
 							JOptionPane
-									.showMessageDialog(
-											null,
-											"Invalid URL Detected, make sure it is an 8chan thread.",
-											"Error", JOptionPane.ERROR_MESSAGE);
+							.showMessageDialog(
+									null,
+									"Invalid URL Detected, make sure it is an 8chan thread.",
+									"Error", JOptionPane.ERROR_MESSAGE);
 							if (UISession.getImporterWidget()
 									.getImportProgressBar() != null) {
 								PlayListUtils.resetImporterInterface();

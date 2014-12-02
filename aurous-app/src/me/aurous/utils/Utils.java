@@ -45,10 +45,9 @@ public class Utils {
 	public static boolean isNull(final Object obj) {
 		return obj == null;
 	}
-	
+
 	/**
-	 * @author Andrew
-	 *  Simple method to check if a laine is contained in a file
+	 * @author Andrew Simple method to check if a laine is contained in a file
 	 */
 	public static boolean containsLine(final String fileName,
 			final String lineStop) {
@@ -75,6 +74,11 @@ public class Utils {
 		} catch (final FileNotFoundException e) {
 			return true;
 		}
+	}
+
+	public static String stripExtension(final String s) {
+		return (s != null) && (s.lastIndexOf(".") > 0) ? s.substring(0,
+				s.lastIndexOf(".")) : s;
 	}
 
 	/**
@@ -196,9 +200,9 @@ public class Utils {
 		final String key = Utils.class.getCanonicalName() + ":" + path;
 		if (!iconsCache.containsKey(key)) {
 			iconsCache
-			.put(key,
-					new ImageIcon(Utils.class.getResource("/resources/"
-							+ path)));
+					.put(key,
+							new ImageIcon(Utils.class.getResource("/resources/"
+									+ path)));
 		}
 		return iconsCache.get(key);
 	}
@@ -266,23 +270,23 @@ public class Utils {
 	public static void openFile(final File file) throws Exception {
 		final Desktop desktop = Desktop.isDesktopSupported() ? Desktop
 				.getDesktop() : null;
-				if ((desktop != null) && desktop.isSupported(Desktop.Action.OPEN)) {
-					desktop.open(file);
-				} else {
-					final OperatingSystem system = Utils.getPlatform();
-					switch (system) {
-					case MAC:
-					case WINDOWS:
-						Utils.openURL(file.toURI().toURL());
-						break;
-					default:
-						final String fileManager = Utils.findSupportedProgram(
-								"file manager", Utils.FILE_MANAGERS);
-						Runtime.getRuntime().exec(
-								new String[] { fileManager, file.getAbsolutePath() });
-						break;
-					}
-				}
+		if ((desktop != null) && desktop.isSupported(Desktop.Action.OPEN)) {
+			desktop.open(file);
+		} else {
+			final OperatingSystem system = Utils.getPlatform();
+			switch (system) {
+			case MAC:
+			case WINDOWS:
+				Utils.openURL(file.toURI().toURL());
+				break;
+			default:
+				final String fileManager = Utils.findSupportedProgram(
+						"file manager", Utils.FILE_MANAGERS);
+				Runtime.getRuntime().exec(
+						new String[] { fileManager, file.getAbsolutePath() });
+				break;
+			}
+		}
 	}
 
 	public static String getStackTraceString(final Throwable e,
@@ -332,30 +336,30 @@ public class Utils {
 	public static void openURL(final URL url) throws Exception {
 		final Desktop desktop = Desktop.isDesktopSupported() ? Desktop
 				.getDesktop() : null;
-		if ((desktop != null) && desktop.isSupported(Desktop.Action.BROWSE)) {
-			desktop.browse(url.toURI());
-		} else {
-			final OperatingSystem system = Utils.getPlatform();
-			switch (system) {
-			case MAC:
-				Class.forName("com.apple.eio.FileManager")
+				if ((desktop != null) && desktop.isSupported(Desktop.Action.BROWSE)) {
+					desktop.browse(url.toURI());
+				} else {
+					final OperatingSystem system = Utils.getPlatform();
+					switch (system) {
+					case MAC:
+						Class.forName("com.apple.eio.FileManager")
 						.getDeclaredMethod("openURL",
 								new Class[] { String.class })
-						.invoke(null, new Object[] { url.toString() });
-				break;
-			case WINDOWS:
-				Runtime.getRuntime()
+								.invoke(null, new Object[] { url.toString() });
+						break;
+					case WINDOWS:
+						Runtime.getRuntime()
 						.exec(new String[] { "rundll32",
 								"url.dll,FileProtocolHandler", url.toString() });
-				break;
-			default:
-				final String browser = Utils.findSupportedProgram("browser",
-						Utils.BROWSERS);
-				Runtime.getRuntime().exec(
-						new String[] { browser, url.toString() });
-				break;
-			}
-		}
+						break;
+					default:
+						final String browser = Utils.findSupportedProgram("browser",
+								Utils.BROWSERS);
+						Runtime.getRuntime().exec(
+								new String[] { browser, url.toString() });
+						break;
+					}
+				}
 	}
 
 	public static String readFile(final String path, final Charset encoding) {
@@ -469,8 +473,8 @@ public class Utils {
 	 * {browser = b, url}); if (browser == null) throw new
 	 * Exception(Arrays.toString(BROWSERS)); } } catch (Exception e) {
 	 * JOptionPane.showMessageDialog(null, errMsg + "\n" + e.toString()); } }
-	 * 
-	 * 
+	 *
+	 *
 	 * }
 	 */// bad codei s bad,
 
@@ -483,13 +487,13 @@ public class Utils {
 	 * A list of popular file managers
 	 */
 	private static final String[] FILE_MANAGERS = new String[] { "xdg-open",
-		"nautilus", "dolphin", "thunar", "pcmanfm", "konqueror" };
+			"nautilus", "dolphin", "thunar", "pcmanfm", "konqueror" };
 
 	/**
 	 * A list of popular browsers
 	 */
 	private static final String[] BROWSERS = new String[] { "xdg-open",
-		"google-chrome", "chromium", "firefox", "opera", "epiphany",
-		"konqueror", "conkeror", "midori", "kazehakase", "mozilla" };
+			"google-chrome", "chromium", "firefox", "opera", "epiphany",
+			"konqueror", "conkeror", "midori", "kazehakase", "mozilla" };
 
 }

@@ -154,7 +154,7 @@ public class YouTubeService extends PlaylistService {
 		try {
 
 			final ScriptEngine engine = new ScriptEngineManager()
-					.getEngineByName("nashorn");
+			.getEngineByName("nashorn");
 			engine.eval(new FileReader(Constants.LEGACY_DATA_PATH
 					+ "scripts/decrypt.js"));
 			final Invocable invocable = (Invocable) engine;

@@ -41,7 +41,7 @@ public class SettingsWidget {
 				final SettingsWidget window = new SettingsWidget();
 				UISession.setSettingsWidget(window);
 				UISession.getSettingsWidget().getSettingsWidget()
-				.setVisible(true);
+						.setVisible(true);
 			} catch (final Exception e) {
 				e.printStackTrace();
 			}
@@ -225,7 +225,7 @@ public class SettingsWidget {
 		settingsWidget.setType(Type.UTILITY);
 		settingsWidget.setBounds(100, 100, 533, 484);
 		settingsWidget
-		.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+				.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 		lblIfYouWant = new JLabel("If you want to show a song on twitch");
 		lblIfYouWant.setForeground(Color.WHITE);
@@ -247,13 +247,13 @@ public class SettingsWidget {
 		lowQualityCheckBox.setSelected(Settings.isStreamLowQuality());
 		savePlayBackCheckBox.setSelected(Settings.isSavePlayBack());
 		userNameField.setText(Settings.getUserName());
-		
+
 		skypeLabel = new JLabel("Update Skype status with current song");
 		skypeLabel.setForeground(Color.WHITE);
 		skypeLabel.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		skypeLabel.setBounds(242, 218, 222, 24);
 		settingsWidget.getContentPane().add(skypeLabel);
-		
+
 		updateSkypeCheckbox = new JCheckBox("Update Skype");
 		updateSkypeCheckbox.setSelected(Settings.isUpdateSkype());
 		updateSkypeCheckbox.setForeground(Color.WHITE);

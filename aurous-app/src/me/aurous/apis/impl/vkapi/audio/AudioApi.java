@@ -1,8 +1,8 @@
-package me.aurous.vkapi.audio;
+package me.aurous.apis.impl.vkapi.audio;
 
 import java.io.IOException;
 
-import me.aurous.vkapi.VKApi;
+import me.aurous.apis.impl.vkapi.VKApi;
 
 public class AudioApi extends VKApi {
 

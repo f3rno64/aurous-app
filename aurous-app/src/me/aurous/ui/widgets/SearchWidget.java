@@ -28,6 +28,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 
+import me.aurous.apis.impl.vkapi.VKAuth;
 import me.aurous.player.Settings;
 import me.aurous.searchengines.impl.VKEngine;
 import me.aurous.ui.UISession;
@@ -37,7 +38,6 @@ import me.aurous.utils.ModelUtils;
 import me.aurous.utils.Utils;
 import me.aurous.utils.media.MediaUtils;
 import me.aurous.utils.playlist.PlayListUtils;
-import me.aurous.vkapi.VKAuth;
 
 import com.alee.extended.image.WebImage;
 import com.alee.laf.text.WebTextField;
@@ -193,7 +193,7 @@ public class SearchWidget implements ActionListener {
 
 		comboBox.getEditor().getEditorComponent().setBackground(Color.YELLOW);
 		((JTextField) comboBox.getEditor().getEditorComponent())
-		.setBackground(Color.YELLOW);
+				.setBackground(Color.YELLOW);
 		comboBox.setBackground(Color.YELLOW);
 		comboBox.setBounds(303, 1, 130, 25);
 		for (final String option : options) {
@@ -304,9 +304,9 @@ public class SearchWidget implements ActionListener {
 		setSearchEngine();
 
 	}
-	
+
 	private void setSearchEngine() {
-		VKEngine searchEngine = new VKEngine(100);
+		final VKEngine searchEngine = new VKEngine(100);
 		searchBar.addActionListener(e -> searchEngine.search());
 	}
 

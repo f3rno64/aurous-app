@@ -1,4 +1,4 @@
-package me.aurous.vkapi;
+package me.aurous.apis.impl.vkapi;
 
 import java.io.IOException;
 import java.util.regex.Matcher;

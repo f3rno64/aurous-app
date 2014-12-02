@@ -158,13 +158,13 @@ public class PlayListUtils {
 					}
 					printWriter.close();
 					UISession.getBuilderWidget().getLoadingIcon()
-					.setVisible(false);
+							.setVisible(false);
 					UISession.getBuilderWidget().getPlayListTextArea()
-					.setEditable(true);
+							.setEditable(true);
 					UISession.getBuilderWidget().getBuildListButton()
-					.setEnabled(true);
+							.setEnabled(true);
 					UISession.getBuilderWidget().getPlayListNameTextField()
-					.setEditable(false);
+							.setEditable(false);
 
 				} catch (final FileNotFoundException e) {
 					final ExceptionWidget eWidget = new ExceptionWidget(
@@ -272,7 +272,7 @@ public class PlayListUtils {
 			JOptionPane.showMessageDialog(null, "No importer found!", "Error",
 					JOptionPane.ERROR_MESSAGE);
 			UISession.getImporterWidget().getImportProgressBar()
-			.setVisible(false);
+					.setVisible(false);
 		}
 	}
 
@@ -326,7 +326,7 @@ public class PlayListUtils {
 			final File inFile = new File(file);
 
 			if (!inFile.isFile()) {
-				System.out.println("Parameter is not an existing file");
+				// System.out.println("Parameter is not an existing file");
 				return;
 			}
 
@@ -354,13 +354,13 @@ public class PlayListUtils {
 
 			// Delete the original file
 			if (!inFile.delete()) {
-				System.out.println("Could not delete file");
+				// System.out.println("Could not delete file");
 				return;
 			}
 
 			// Rename the new file to the filename the original file had.
 			if (!tempFile.renameTo(inFile)) {
-				System.out.println("Could not rename file");
+				// System.out.println("Could not rename file");
 			}
 			// loadPlayList(PlayerUtils.currentPlayList);
 		} catch (final FileNotFoundException ex) {
@@ -413,8 +413,8 @@ public class PlayListUtils {
 			final Path dir = Paths.get(Constants.DATA_PATH + "playlist/");
 			dir.register(watcher, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY);
 
-			System.out.println("Watch Service registered for dir: "
-					+ dir.getFileName());
+			// System.out.println("Watch Service registered for dir: "
+			// + dir.getFileName());
 
 			while (true) {
 				WatchKey key;
@@ -428,25 +428,25 @@ public class PlayListUtils {
 					final WatchEvent.Kind<?> kind = event.kind();
 
 					java.awt.EventQueue
-							// i dont question the Java API, it works now.
-					.invokeLater(() -> {
+					// i dont question the Java API, it works now.
+							.invokeLater(() -> {
 
-								final DefaultListModel playListModel = new DefaultListModel();
+						final DefaultListModel playListModel = new DefaultListModel();
 
-						final File[] playListFolder = new File(
-								Constants.DATA_PATH + "playlist/")
-						.listFiles();
-						if ((kind == ENTRY_CREATE)
-								|| ((kind == ENTRY_DELETE)
-										&& (playListModel != null) && (playListFolder != null))) {
+								final File[] playListFolder = new File(
+										Constants.DATA_PATH + "playlist/")
+										.listFiles();
+								if ((kind == ENTRY_CREATE)
+										|| ((kind == ENTRY_DELETE)
+												&& (playListModel != null) && (playListFolder != null))) {
 
-							for (final File file : playListFolder) {
-								playListModel.addElement(file);
-							}
-							displayList.setModel(playListModel);
-									// / displayList.updateUI();
-						}
-					});
+									for (final File file : playListFolder) {
+										playListModel.addElement(file);
+									}
+									displayList.setModel(playListModel);
+							// / displayList.updateUI();
+								}
+							});
 
 				}
 

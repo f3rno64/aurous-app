@@ -47,7 +47,7 @@ public class ContextMenuMouseListener extends MouseAdapter {
 			public void actionPerformed(final ActionEvent ae) {
 				ContextMenuMouseListener.this.textComponent.setText("");
 				ContextMenuMouseListener.this.textComponent
-				.replaceSelection(ContextMenuMouseListener.this.savedString);
+						.replaceSelection(ContextMenuMouseListener.this.savedString);
 
 				ContextMenuMouseListener.this.lastActionSelected = Actions.UNDO;
 			}
@@ -148,9 +148,9 @@ public class ContextMenuMouseListener extends MouseAdapter {
 					.isDataFlavorSupported(DataFlavor.stringFlavor);
 
 			this.undoAction
-			.setEnabled(enabled
-					&& editable
-					&& ((this.lastActionSelected == Actions.CUT) || (this.lastActionSelected == Actions.PASTE)));
+					.setEnabled(enabled
+							&& editable
+							&& ((this.lastActionSelected == Actions.CUT) || (this.lastActionSelected == Actions.PASTE)));
 			this.cutAction.setEnabled(enabled && editable && marked);
 			this.copyAction.setEnabled(enabled && marked);
 			this.pasteAction.setEnabled(enabled && editable && pasteAvailable);

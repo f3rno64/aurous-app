@@ -15,8 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * @author Andrew
- * This class handles anything related to application settings.
+ * @author Andrew This class handles anything related to application settings.
  */
 public class Settings {
 
@@ -56,10 +55,9 @@ public class Settings {
 		return updateSkype;
 	}
 
-	
 	/**
-	 * Attempts to load the settings, if a new setting has been added yet is missing; 
-	 * it will rewrite the user settings.
+	 * Attempts to load the settings, if a new setting has been added yet is
+	 * missing; it will rewrite the user settings.
 	 */
 	public static void loadSettings() {
 
@@ -73,7 +71,7 @@ public class Settings {
 				jsonData += line + "\n";
 			}
 		} catch (final IOException e) {
-			
+
 			saveSettings(true);
 			return;
 		} finally {
@@ -111,15 +109,15 @@ public class Settings {
 			setSkypeUpdate(skypeUpdate);
 
 		} catch (final JSONException e) {
-	
+
 			saveSettings(false);
 
 		}
 
 	}
+
 	/**
-	 * @author Andrew
-	 * Reads a file
+	 * @author Andrew Reads a file
 	 */
 	static String readFile(final String path, final Charset encoding)
 			throws IOException {
@@ -128,8 +126,7 @@ public class Settings {
 	}
 
 	/**
-	 * @author Andrew
-	 * Overwrite current settings with updated user set ones. 
+	 * @author Andrew Overwrite current settings with updated user set ones.
 	 */
 	public static void saveSettings(final boolean reload) {
 		final JSONObject obj = new JSONObject();

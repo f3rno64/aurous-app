@@ -98,7 +98,7 @@ public class VisualizerFrame extends JFrame {
 								.play());
 					} else {
 						PlayerFunctions
-						.play(UISession.getControlPanel().play());
+								.play(UISession.getControlPanel().play());
 					}
 				} else if (c == KeyEvent.VK_SPACE) {
 					if (!isPaused) {
@@ -106,7 +106,7 @@ public class VisualizerFrame extends JFrame {
 								.play());
 					} else {
 						PlayerFunctions
-						.play(UISession.getControlPanel().play());
+								.play(UISession.getControlPanel().play());
 					}
 				} else if (c == KeyEvent.VK_ESCAPE) {
 					panel.setScene(null);
