@@ -14,6 +14,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.Charset;
 import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -45,6 +46,7 @@ import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.ui.widgets.ImporterWidget;
 import me.aurous.utils.Constants;
 import me.aurous.utils.Internet;
+import me.aurous.utils.ModelUtils;
 import me.aurous.utils.Utils;
 import me.aurous.utils.media.MediaUtils;
 
@@ -102,9 +104,10 @@ public class PlayListUtils {
 			return;
 		} else {
 			try {
-				final String filename = Settings.getLastPlayList();
-
-				final FileWriter fw = new FileWriter(filename, true); // the
+				final String playListLocation = Settings.getLastPlayList();
+				
+				
+				final FileWriter fw = new FileWriter(playListLocation, true); // the
 				String data = "";
 				// true
 				if (url.contains("vk.me/")) {
@@ -116,7 +119,11 @@ public class PlayListUtils {
 				fw.write("\n" + data);// appends
 
 				fw.close();
-
+				String playList = Utils.readFile(playListLocation, Charset.defaultCharset()); //load altered new playlist
+				Utils.writeFile(playList.replaceAll("(?m)^\\s", ""), playListLocation); //remove any white space and rewrite it
+				
+				ModelUtils.loadPlayList(playListLocation);
+				
 			} catch (final IOException ioe) {
 				final ExceptionWidget eWidget = new ExceptionWidget(
 						Utils.getStackTraceString(ioe, ""));
