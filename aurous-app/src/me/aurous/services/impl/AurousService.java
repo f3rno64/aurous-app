@@ -37,10 +37,10 @@ public class AurousService extends PlaylistService {
 	private CloseableHttpClient httpClient;
 	private int NOT_FOUND = 404;
 
-	public AurousService(String contentURL, String playlistName) {
+	public AurousService(String contentURL, String playlistName, String playlistID) {
 		this.contentURL = contentURL;
 		this.playlistName = playlistName;
-		this.SHARE_URL = "https://aurous.me/api/playlist/";
+		this.SHARE_URL = "https://aurous.me/api/playlist/share/" + playlistID;
 	}
 
 	@Override
@@ -131,13 +131,9 @@ public class AurousService extends PlaylistService {
 	private String fetchPlaylist(final BasicCookieStore cookieStore,
 			final CloseableHttpClient httpclient) throws URISyntaxException,
 			IOException, ClientProtocolException {
-		final String playlistHash = this.contentURL.substring(this.contentURL
-				.lastIndexOf("=") + 1);
 
 		final HttpUriRequest playlistGET = RequestBuilder.get()
-				.setUri(new URI(this.SHARE_URL))
-				.addParameter("share", playlistHash)
-				.addHeader("User-Agent", this.USER_AGENT).build();
+				.setUri(new URI(this.SHARE_URL)).build();
 
 		final CloseableHttpResponse fetchResponse = httpclient
 				.execute(playlistGET);

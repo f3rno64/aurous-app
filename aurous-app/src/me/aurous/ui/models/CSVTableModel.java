@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 import me.aurous.utils.Utils;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -51,8 +52,8 @@ public class CSVTableModel {
 			for (int i = 0; i < json.length(); i++) {
 				JSONObject obj = json.getJSONObject(i);
 
-				String title = obj.getString("Title").trim();
-				String artist = obj.getString("Artist").trim();
+				String title = StringEscapeUtils.unescapeJava(obj.getString("Title").trim());
+				String artist = StringEscapeUtils.unescapeJava(obj.getString("Artist").trim());
 				String time = obj.getString("Time").trim();
 				String date = obj.getString("Date Added").trim();
 				String user = obj.getString("User").trim();
@@ -63,8 +64,11 @@ public class CSVTableModel {
 						"%s, %s, %s, %s, %s, %s, %s, %s %s", title, artist,
 						time, date, user, album, album_art, link,
 						System.lineSeparator()));
+				
 			}
-
+			Utils.writeFile(convertedPlayList.toString(), playList.getAbsolutePath());
+			
+			
 			s = new Scanner(new StringReader(convertedPlayList.toString()
 					.trim()));
 			try {
