@@ -13,5 +13,9 @@ public abstract class PlaylistService {
 	public void buildMediaLink() {
 
 	}
+	
+	public void importPlayList(String playListName) {
+		
+	}
 
 }

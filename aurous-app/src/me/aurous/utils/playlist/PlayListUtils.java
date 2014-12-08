@@ -33,15 +33,18 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 
 import me.aurous.player.Settings;
+import me.aurous.services.fetchers.impl.YouTubeFetcher;
 import me.aurous.services.impl.AurousService;
 import me.aurous.services.impl.HateChanService;
 import me.aurous.services.impl.RedditService;
+import me.aurous.services.impl.YouTubeService;
 import me.aurous.swinghacks.GhostText;
 import me.aurous.ui.UISession;
 import me.aurous.ui.listeners.ContextMenuMouseListener;
 import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.ui.widgets.ImporterWidget;
 import me.aurous.utils.Constants;
+import me.aurous.utils.Internet;
 import me.aurous.utils.Utils;
 import me.aurous.utils.media.MediaUtils;
 
@@ -131,7 +134,7 @@ public class PlayListUtils {
 				try {
 					final String name = Constants.DATA_PATH + "playlist/"
 							+ playListName + ".plist";
-					final String header = "Title, Artist, Time, Date Added, User, Album, ALBUMART_INDEX, link";
+					final String header = "Title,Artist,Time,DateAdded,User,Album,Art,Link";
 					final File file = new File(name);
 
 					final PrintWriter printWriter = new PrintWriter(file);
@@ -237,8 +240,9 @@ public class PlayListUtils {
 	public static String getaddRules(final String sourceURL) {
 		if (sourceURL.contains("youtube")) {
 
-			final String tubeLine = YouTubeDataFetcher
-					.buildPlayListLine(sourceURL);
+			YouTubeFetcher youTubeFetcher = new YouTubeFetcher(sourceURL, Internet.text(sourceURL));
+			
+			final String tubeLine = youTubeFetcher.buildLine();
 			return tubeLine;
 
 		} else if (sourceURL.contains("soundcloud")) {
@@ -254,9 +258,8 @@ public class PlayListUtils {
 	public static void getImportRules(final String sourceURL,
 			final String playListName) {
 		if (sourceURL.contains("youtube")) {
-
-			YouTubePlayListImporter.importYoutubePlayList(sourceURL,
-					playListName);
+			YouTubeService youTube = new YouTubeService(sourceURL);
+			youTube.importPlayList(playListName);
 
 		} else if (sourceURL.contains("soundcloud")) {
 			

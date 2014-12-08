@@ -63,8 +63,9 @@ public class SkypeHandler {
 			final ExceptionWidget eWidget = new ExceptionWidget(
 					Utils.getStackTraceString(e, ""));
 			eWidget.setVisible(true);
+			return false;
 		}
-		return false;
+		
 	}
 
 	/**

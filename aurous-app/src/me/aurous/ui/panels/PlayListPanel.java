@@ -290,11 +290,12 @@ public class PlayListPanel extends JPanel implements ActionListener {
 						playlist).getName());
 				String content = new String(Files.readAllBytes(Paths
 						.get(playlist)));
+				content = content.replace("ALBUMART_INDEX", "Art").replace("link", "Link"); //for old playlist
 				
 				if (Utils.isJSONValid(content)) {
 					StringBuilder convertedPlayList = new StringBuilder(
 							String.format(
-									"Title, Artist, Time, Date Added, User, Album, ALBUMART_INDEX, link %s",
+									"Title,Artist,Time,Date Added,User,Album,Art,Link%s",
 									System.lineSeparator()));
 					JSONArray json = new JSONArray(content);
 					for (int i = 0; i < json.length(); i++) {
@@ -306,10 +307,10 @@ public class PlayListPanel extends JPanel implements ActionListener {
 						String date = obj.getString("Date Added").trim();
 						String user = obj.getString("User").trim();
 						String album = obj.getString("Album").trim();
-						String album_art = obj.getString("ALBUMART_INDEX").trim();
-						String link = obj.getString("link").trim();
+						String album_art = obj.getString("Art").trim();
+						String link = obj.getString("Link").trim();
 						convertedPlayList.append(String.format(
-								"%s, %s, %s, %s, %s, %s, %s, %s %s", title, artist,
+								"%s,%s,%s,%s,%s,%s,%s,%s%s", title, artist,
 								time, date, user, album, album_art, link,
 								System.lineSeparator()));
 					}

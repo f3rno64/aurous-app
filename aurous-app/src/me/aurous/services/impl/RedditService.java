@@ -69,7 +69,7 @@ public class RedditService extends PlaylistService {
 									playListOut);
 							final BufferedWriter bw = new BufferedWriter(
 									new OutputStreamWriter(fos));
-							final String header = "Title, Artist, Time, Date Added, User, Album, ALBUMART_INDEX, link";
+							final String header = "Title,Artist,Time,DateAdded,User,Album,Art,Link";
 							bw.write(header);
 							bw.newLine();
 							int iterations = 0;

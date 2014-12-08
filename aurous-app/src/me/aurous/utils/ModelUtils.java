@@ -100,12 +100,12 @@ public class ModelUtils {
 			hiddenLink.setMaxWidth(0);
 			hiddenLink.setCellRenderer(new InteractiveRenderer(LINK_INDEX));
 			final TableColumn hiddenAlbumArt = table.getColumnModel()
-					.getColumn(ALBUMART_INDEX);
+					.getColumn(ART_INDEX);
 			hiddenAlbumArt.setMinWidth(0);
 			hiddenAlbumArt.setPreferredWidth(0);
 			hiddenAlbumArt.setMaxWidth(0);
 			hiddenAlbumArt.setCellRenderer(new InteractiveRenderer(
-					ALBUMART_INDEX));
+					ART_INDEX));
 
 		} catch (final FileNotFoundException e) {
 			ModelUtils
@@ -156,7 +156,7 @@ public class ModelUtils {
 	public static final int TITLE_INDEX = 0;
 	public static final int ARTIST_INDEX = 1;
 	public static final int ALBUM_INDEX = 5;
-	public static final int ALBUMART_INDEX = 6;
+	public static final int ART_INDEX = 6;
 	public static final int TIME_INDEX = 2;
 	public static final int DATE_INDEX = 3;
 	public static final int OWNER_INDEX = 4;

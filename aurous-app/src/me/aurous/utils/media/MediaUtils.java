@@ -28,6 +28,7 @@ import me.aurous.notifiers.SkypeHandler;
 import me.aurous.player.Settings;
 import me.aurous.player.functions.PlayerFunctions;
 import me.aurous.player.scenes.VisualizerScene;
+import me.aurous.services.fetchers.impl.YouTubeFetcher;
 import me.aurous.services.impl.VKService;
 import me.aurous.services.impl.YouTubeService;
 import me.aurous.ui.UISession;
@@ -37,7 +38,6 @@ import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Constants;
 import me.aurous.utils.Internet;
 import me.aurous.utils.Utils;
-import me.aurous.utils.playlist.YouTubeDataFetcher;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.nikkii.alertify4j.AlertifyType;
@@ -146,7 +146,8 @@ public class MediaUtils {
 	 */
 	public static String getBuiltString(final String sourceURL) {
 		if (sourceURL.contains("youtube") || sourceURL.contains("youtu.be")) {
-			return YouTubeDataFetcher.buildPlayListLine(sourceURL);
+			YouTubeFetcher youTube = new YouTubeFetcher(sourceURL, Internet.text(sourceURL));
+			return youTube.buildLine();
 		} else {
 			return "";
 		}

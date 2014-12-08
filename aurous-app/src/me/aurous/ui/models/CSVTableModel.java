@@ -44,7 +44,7 @@ public class CSVTableModel {
 											// now. Need to create a new table model structure
 			convertedPlayList = new StringBuilder(
 					String.format(
-							"Title, Artist, Time, Date Added, User, Album, ALBUMART_INDEX, link %s",
+							"Title,Artist,Time,Date Added,User,Album,Art,Link%s",
 							System.lineSeparator()));
 
 			JSONArray json = new JSONArray(jsonList);
@@ -57,8 +57,8 @@ public class CSVTableModel {
 				String date = obj.getString("Date Added").trim();
 				String user = obj.getString("User").trim();
 				String album = obj.getString("Album").trim();
-				String album_art = obj.getString("ALBUMART_INDEX").trim();
-				String link = obj.getString("link").trim();
+				String album_art = obj.getString("Art").trim();
+				String link = obj.getString("Link").trim();
 				convertedPlayList.append(String.format(
 						"%s, %s, %s, %s, %s, %s, %s, %s %s", title, artist,
 						time, date, user, album, album_art, link,
@@ -89,14 +89,14 @@ public class CSVTableModel {
 				}
 
 				while (s.hasNextLine()) {
+					
 					rows.add(new Vector<Object>(Arrays.asList(s.nextLine()
-							.split("(?<!\\\\),", -1))));
+							.split("(?<!\\\\),".replace("\\,",  ","), -1))));
 
 				}
 
 				if (Utils.isNull(headers)) {
 					headers = rows.remove(0);
-
 					model = new DefaultTableModel(rows, headers) {
 
 						/**
