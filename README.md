@@ -1,3 +1,4 @@
+![tip](http://img.shields.io/gratipay/Codeusa.svg "Tips")
 aurrous-app
 ===========
 
