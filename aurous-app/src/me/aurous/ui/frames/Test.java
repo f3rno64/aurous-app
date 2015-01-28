@@ -70,7 +70,8 @@ final public class Test {
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             for (int k = 0; k < BALL_NUM; k++) {
-               g.fillOval(10 + 20 * k, (int) getY(k, timeStep), 12, 12);
+            	g.drawString("Le Gem", 10 + 20 * k, (int) getY(k, timeStep));
+            //   g.fillOval(10 + 20 * k, (int) getY(k, timeStep), 12, 12);
                 g.setColor(new Color(29, 82, 112));
             }
 

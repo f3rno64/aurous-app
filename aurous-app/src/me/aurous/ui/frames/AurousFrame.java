@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 
 import me.aurous.notifiers.SkypeHandler;
 import me.aurous.player.Settings;
-import me.aurous.player.scenes.MediaPlayerScene;
+import me.aurous.player.scenes.RemoteMediaScene;
 import me.aurous.ui.UISession;
 import me.aurous.ui.menus.AurousBar;
 import me.aurous.ui.panels.ControlPanel;
@@ -65,7 +65,7 @@ public class AurousFrame implements WindowListener {
 	private void initFX(final JFXPanel fxPanel) {
 		// This method is invoked on the JavaFX thread
 		try {
-			final MediaPlayerScene mediaPlayerScene = new MediaPlayerScene();
+			final RemoteMediaScene mediaPlayerScene = new RemoteMediaScene();
 			UISession.setMediaPlayerScene(mediaPlayerScene);
 			UISession.setJFXPanel(fxPanel);
 		} catch (final Throwable e) {

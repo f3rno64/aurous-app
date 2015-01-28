@@ -14,7 +14,7 @@ import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Utils;
 import me.aurous.utils.media.MediaUtils;
 
-public class MediaPlayerScene {
+public class RemoteMediaScene {
 	public ChangeListener<Duration> progressChangeListener;
 
 	private Media media;
@@ -27,6 +27,7 @@ public class MediaPlayerScene {
 	 * Create a JFX media player scene.
 	 */
 	public Scene createMediaPlayer(final String sourceURL) throws Throwable {
+	
 		final ControlPanel panel = UISession.getControlPanel();
 		final Group root = new Group();
 		root.autosize();

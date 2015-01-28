@@ -272,7 +272,7 @@ public class PlayListUtils {
 			
 		} else if (sourceURL.contains("aurous")) {
 			String shareID = sourceURL.substring(sourceURL.lastIndexOf("/") + 1);
-			AurousService aurousService = new AurousService(sourceURL, playListName, shareID);
+			AurousService aurousService = new AurousService( playListName, shareID);
 			aurousService.buildPlayList();
 
 		} else if (sourceURL.contains("reddit")) {

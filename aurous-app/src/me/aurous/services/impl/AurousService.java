@@ -30,15 +30,12 @@ import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.util.EntityUtils;
 
 public class AurousService extends PlaylistService {
-	private String contentURL;
 	private String playlistName;
 	private String SHARE_URL;
-	private final String USER_AGENT = "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2";
 	private CloseableHttpClient httpClient;
 	private int NOT_FOUND = 404;
 
-	public AurousService(String contentURL, String playlistName, String playlistID) {
-		this.contentURL = contentURL;
+	public AurousService(String playlistName, String playlistID) {
 		this.playlistName = playlistName;
 		this.SHARE_URL = "https://aurous.me/api/playlist/share/" + playlistID;
 	}

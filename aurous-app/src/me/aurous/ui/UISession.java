@@ -4,7 +4,7 @@ import javafx.embed.swing.JFXPanel;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import me.aurous.player.scenes.MediaPlayerScene;
+import me.aurous.player.scenes.RemoteMediaScene;
 import me.aurous.ui.frames.AurousFrame;
 import me.aurous.ui.frames.VisualizerFrame;
 import me.aurous.ui.panels.ControlPanel;
@@ -47,7 +47,7 @@ public class UISession {
 		return mediaPlayer;
 	}
 
-	public static MediaPlayerScene getMediaPlayerScene() {
+	public static RemoteMediaScene getMediaPlayerScene() {
 		return mediaScene;
 	}
 
@@ -101,7 +101,7 @@ public class UISession {
 		UISession.mediaPlayer = mediaPlayer;
 	}
 
-	public static void setMediaPlayerScene(final MediaPlayerScene scene) {
+	public static void setMediaPlayerScene(final RemoteMediaScene scene) {
 		UISession.mediaScene = scene;
 
 	}
@@ -146,7 +146,7 @@ public class UISession {
 
 	private static Media media;
 
-	private static MediaPlayerScene mediaScene;
+	private static RemoteMediaScene mediaScene;
 	private static VisualizerFrame visualFrame;
 
 	private static JFXPanel jfxPanel;

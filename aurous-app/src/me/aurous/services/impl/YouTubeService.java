@@ -46,7 +46,7 @@ public class YouTubeService extends PlaylistService {
 	private final String SITE_HTML;
 	private final String contentURL;
 	private final String PLAYER_VERSION_REGEX = "\\\\/\\\\/s.ytimg.com\\\\/yts\\\\/jsbin\\\\/html5player-(.+?)\\.js";
-	private final String URL_ENCODE_REGEX = "\"url_encoded_fmt_stream_map\":\\s+\"(.+?)\"";
+	private final String URL_ENCODE_REGEX = "\\\"url_encoded_fmt_stream_map\\\":\\s*\\\"([^\\\"]+)\\\"";
 	private final String URL_STREAMS_REGEX = "(^url=|(\\\\u0026url=|,url=))(.+?)(\\\\u0026|,|$)";
 	private final String STREAM_SIGNATURES_REGEX = "(^s=|(\\\\u0026s=|,s=))(.+?)(\\\\u0026|,|$)";
 
@@ -165,8 +165,9 @@ public void importPlayList(String playListName) {
 		try {
 
 			final List<String> list = extractURLS(this.SITE_HTML);
-
+			
 			for (final String url : list) {
+				
 				if (url.contains("itag=5")) {
 					lowQualityMP4 = url;
 				} else if (url.contains("itag=18")) {
@@ -189,6 +190,7 @@ public void importPlayList(String playListName) {
 			eWidget.setVisible(true);
 		}
 		this.streamURL = highQualityMP4;
+		
 	}
 
 	public String getStreamURL() {
@@ -210,20 +212,25 @@ public void importPlayList(String playListName) {
 			// don't have to
 			// pull it down each
 			// time
+
 			Constants.HTML5_PLAYER_CODE = Internet
 					.text("http://s.ytimg.com/yts/jsbin/" + "html5player-"
 							+ playerVersion.replace("\\", "") + ".js");
+			
+			
 		}
 
 		pattern = Pattern.compile(URL_ENCODE_REGEX);
 
 		matcher = pattern.matcher(html);
+	
 		String unescapedHtml = "";
 		while (matcher.find()) {
-
 			unescapedHtml = matcher.group(1);
-
+		
+			
 		}
+		
 
 		pattern = Pattern.compile(URL_STREAMS_REGEX);
 
@@ -232,8 +239,11 @@ public void importPlayList(String playListName) {
 		while (matcher.find()) {
 
 			streams.add(URLDecoder.decode(matcher.group(3), "UTF-8"));
-
+		
+		
 		}
+		
+	
 
 		pattern = Pattern.compile(STREAM_SIGNATURES_REGEX);
 
@@ -253,7 +263,7 @@ public void importPlayList(String playListName) {
 				final String Sign = signDecipher(signatures.get(i).toString(),
 						Constants.HTML5_PLAYER_CODE);
 				URL += "&signature=" + Sign;
-
+				
 			}
 
 			urls.add(URL.trim());
@@ -266,7 +276,7 @@ public void importPlayList(String playListName) {
 
 	private String signDecipher(final String signature, final String playercode) {
 		try {
-
+		//	System.out.println(signature);
 			final ScriptEngine engine = new ScriptEngineManager()
 			.getEngineByName("nashorn");
 			engine.eval(new FileReader(Constants.LEGACY_DATA_PATH
@@ -275,6 +285,7 @@ public void importPlayList(String playListName) {
 
 			final Object result = invocable.invokeFunction("getWorkingVideo",
 					signature, playercode);
+	//	System.out.println((String) result);
 			return (String) result;
 		} catch (ScriptException | FileNotFoundException
 				| NoSuchMethodException e) {

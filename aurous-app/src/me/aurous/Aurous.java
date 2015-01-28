@@ -5,11 +5,6 @@ import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Insets;
 import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
 
 import javax.swing.JOptionPane;
 
@@ -119,28 +114,12 @@ public class Aurous {
 	 *             aurous.ini on Windows.
 	 */
 	private static void setup() {
-		if (!Utils.containsLine("Aurous.ini", "Virtual Machine Parameters")) {
-			try {
-
-				final List<String> lines = Files.readAllLines(
-						Paths.get("Aurous.ini"), StandardCharsets.UTF_8);
-				lines.add(
-						11,
-						"Virtual Machine Parameters=-XX:MinHeapFreeRatio=40 -XX:MaxHeapFreeRatio=70 -XX:MaxMetaspaceSize=128m -Xms3670k -Xmx256m -Dsun.java2d.noddraw=true -XX:+UseParallelGC");
-				Files.write(Paths.get("Aurous.ini"), lines,
-						StandardCharsets.UTF_8);
-				JOptionPane
-						.showMessageDialog(
-								null,
-								"Aurous has modified some core settings, application will exit. Please restart.",
-								"Don't worry!", JOptionPane.WARNING_MESSAGE);
-				System.exit(0);
-			} catch (final IOException e) {
-				final ExceptionWidget eWidget = new ExceptionWidget(
-						Utils.getStackTraceString(e, ""));
-				eWidget.setVisible(true);
-			}
+		final File oldDataPath = new File(System.getProperty("user.home")
+			+ "/.aurous_data/");
+		if (oldDataPath.exists()) {
+			oldDataPath.renameTo(new File(Constants.DATA_PATH));
 		}
+		
 		final File data_path = new File(Constants.DATA_PATH);
 		if (data_path.exists()) {
 			// empty

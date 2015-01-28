@@ -144,7 +144,8 @@ public class MediaUtils {
 	 *
 	 *         handles a given site and returns a built playlist string
 	 */
-	public static String getBuiltString(final String sourceURL) {
+	public static String getBuiltString(String sourceURL) {
+		sourceURL = sourceURL.trim();
 		if (sourceURL.contains("youtube") || sourceURL.contains("youtu.be")) {
 			YouTubeFetcher youTube = new YouTubeFetcher(sourceURL, Internet.text(sourceURL));
 			return youTube.buildLine();
@@ -158,7 +159,8 @@ public class MediaUtils {
 	 *
 	 *         handles a given site and returns the stream url
 	 */
-	public static String getMediaURL(final String sourceURL) {
+	public static String getMediaURL(String sourceURL) {
+		sourceURL = sourceURL.trim();
 		if (Utils.isNull(sourceURL)) {
 			final YouTubeService youTube = new YouTubeService(
 					"https://www.youtube.com/watch?v=kGubD7KG9FQ"); // default
@@ -170,9 +172,11 @@ public class MediaUtils {
 			return sourceURL;
 		}
 		final String domain = Utils.getBaseDomain(sourceURL);
-
+		
 		switch (domain) {
+		
 		case "youtube.com":
+			
 			final YouTubeService youTubeGrabber = new YouTubeService(sourceURL);
 			youTubeGrabber.grab();
 
