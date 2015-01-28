@@ -20,6 +20,8 @@ import me.aurous.player.Settings;
 import me.aurous.ui.UISession;
 import me.aurous.utils.Utils;
 
+import javax.swing.JComboBox;
+
 /**
  * @author Andrew
  *
@@ -73,7 +75,7 @@ public class SettingsWidget {
 	public JCheckBox savePlayBackCheckBox;
 	private JLabel skypeLabel;
 	private JCheckBox updateSkypeCheckbox;
-
+	private final String[] engines = { "VK", "YouTube" };
 	/**
 	 * Create the application.
 	 */
@@ -198,7 +200,22 @@ public class SettingsWidget {
 		lblHelpsIfYoure.setFont(new Font("Segoe UI", Font.PLAIN, 12));
 		lblHelpsIfYoure.setBounds(10, 322, 209, 28);
 		settingsWidget.getContentPane().add(lblHelpsIfYoure);
-
+		
+		JComboBox<String> searchEngineCombo = new JComboBox<String>();
+		searchEngineCombo.setBackground(Color.YELLOW);
+		searchEngineCombo.setBounds(377, 148, 130, 25);
+		for (final String option : engines) {
+			searchEngineCombo.addItem(option);
+		}
+		searchEngineCombo.setSelectedItem(Settings.getSearchEngine());
+		settingsWidget.getContentPane().add(searchEngineCombo);
+		
+		JLabel engineLabel = new JLabel("Search Engine");
+		engineLabel.setForeground(Color.WHITE);
+		engineLabel.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+		engineLabel.setBounds(377, 122, 140, 24);
+		settingsWidget.getContentPane().add(engineLabel);
+		
 		saveSettingsButton = new JButton("APPLY");
 		saveSettingsButton.addActionListener(e -> {
 			Settings.setUserName(userNameField.getText().trim());
@@ -206,6 +223,7 @@ public class SettingsWidget {
 			Settings.setStreamLowQuality(lowQualityCheckBox.isSelected());
 			Settings.setSavePlayBack(savePlayBackCheckBox.isSelected());
 			Settings.setSkypeUpdate(updateSkypeCheckbox.isSelected());
+			Settings.setSearchEngine(searchEngineCombo.getSelectedItem().toString());
 			Settings.saveSettings(false);
 		});
 		saveSettingsButton.setForeground(Color.BLACK);
@@ -261,6 +279,8 @@ public class SettingsWidget {
 		updateSkypeCheckbox.setBackground(new Color(49, 49, 49));
 		updateSkypeCheckbox.setBounds(242, 241, 98, 23);
 		settingsWidget.getContentPane().add(updateSkypeCheckbox);
+		
+		
 	}
 
 	public boolean isOpen() {

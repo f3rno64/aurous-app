@@ -31,6 +31,7 @@ import javax.swing.table.TableColumn;
 import me.aurous.apis.impl.vkapi.VKAuth;
 import me.aurous.player.Settings;
 import me.aurous.searchengines.impl.VKEngine;
+import me.aurous.searchengines.impl.YouTubeEngine;
 import me.aurous.ui.UISession;
 import me.aurous.ui.models.ForcedListSelectionModel;
 import me.aurous.utils.Constants;
@@ -133,14 +134,22 @@ public class SearchWidget implements ActionListener {
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
+			
 			final int row = table.getSelectedRow();
+		
+			if (table.getValueAt(row, 3).toString().contains("youtube")) {
+			
+				PlayListUtils.addUrlToPlayList(table.getValueAt(row, 3).toString());
+			} else {
 			final String date = Utils.getDate();
 			final String playListAddition = String.format(
 					"%s, %s, %s, %s, %s, %s, %s, %s", table.getValueAt(row, 0),
 					table.getValueAt(row, 1), table.getValueAt(row, 2), date,
 					Settings.getUserName(), "", "https://aurous.me/bad.png",
 					table.getValueAt(row, 4));
+			
 			PlayListUtils.addUrlToPlayList(playListAddition);
+		}
 		case "Copy URL":
 			MediaUtils.copyMediaURL(table);
 			break;
@@ -172,7 +181,7 @@ public class SearchWidget implements ActionListener {
 
 		searchWidget.getContentPane().setBackground(new Color(35, 35, 35));
 		searchWidget.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		searchWidget.setTitle("Search - Powered by VK");
+		searchWidget.setTitle(String.format("Search - Powered by %s", Settings.getSearchEngine()));
 		searchWidget.setSize(451, 382);
 		searchWidget.getContentPane().setLayout(null);
 
@@ -306,8 +315,13 @@ public class SearchWidget implements ActionListener {
 	}
 
 	private void setSearchEngine() {
-		final VKEngine searchEngine = new VKEngine(100);
+		if (Settings.getSearchEngine().equals("VK")) {
+			final VKEngine vkEngine = new VKEngine(100);
+			searchBar.addActionListener(e -> vkEngine.search());
+		} else if (Settings.getSearchEngine().equals("YouTube")){
+		final YouTubeEngine searchEngine = new YouTubeEngine();
 		searchBar.addActionListener(e -> searchEngine.search());
+		}
 	}
 
 	public boolean isOpen() {

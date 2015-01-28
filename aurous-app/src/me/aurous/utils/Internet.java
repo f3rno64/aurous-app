@@ -48,6 +48,8 @@ public class Internet {
 	}
 
 	public static String text(final String url) {
+		SSLUtilities.trustAllHostnames();
+		SSLUtilities.trustAllHttpsCertificates();
 		final StringBuilder builder = new StringBuilder();
 		URLConnection conn = null;
 		try {

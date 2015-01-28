@@ -245,6 +245,7 @@ public class PlayListUtils {
 	}
 
 	public static String getaddRules(final String sourceURL) {
+	
 		if (sourceURL.contains("youtube")) {
 
 			YouTubeFetcher youTubeFetcher = new YouTubeFetcher(sourceURL, Internet.text(sourceURL));
