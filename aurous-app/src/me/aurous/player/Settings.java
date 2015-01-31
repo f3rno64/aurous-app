@@ -18,13 +18,15 @@ import org.json.JSONObject;
  * @author Andrew This class handles anything related to application settings.
  */
 public class Settings {
-	
+
 	public static String getAvatarURL() {
 		return avatarURL;
 	}
+
 	public static String getSearchEngine() {
 		return searchEngine;
 	}
+
 	public static String getLastPlayList() {
 		return lastPlayList;
 	}
@@ -109,7 +111,7 @@ public class Settings {
 
 			final boolean skypeUpdate = json.getBoolean("skype_update");
 			setSkypeUpdate(skypeUpdate);
-			
+
 			final String engine = json.getString("search_engine");
 			setSearchEngine(engine);
 
@@ -199,13 +201,13 @@ public class Settings {
 	public static void setSkypeUpdate(final boolean update) {
 		Settings.updateSkype = update;
 	}
-	
+
 	public static void setSearchEngine(final String engine) {
 		Settings.searchEngine = engine;
 	}
 
 	private static String avatarURL = "todo";
-	
+
 	private static String searchEngine = "VK";
 
 	private static String userName = "Aurous User";

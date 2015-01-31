@@ -66,7 +66,7 @@ public class ControlPanel extends JPanel {
 	public ControlPanel() throws IOException {
 
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-		setBackground(background);
+		setBackground(this.background);
 		setBorder(new EtchedBorder());
 		final InputStream in = this.getClass().getResourceAsStream(
 				"/resources/fontawesome-webfont.ttf");
@@ -79,12 +79,12 @@ public class ControlPanel extends JPanel {
 			eWidget.setVisible(true);
 		}
 
-		fontAwesome = ttfBase.deriveFont(Font.PLAIN, 24);
-		setFont(fontAwesome);
+		this.fontAwesome = ttfBase.deriveFont(Font.PLAIN, 24);
+		setFont(this.fontAwesome);
 
 		final JButton previous = new JButton("");
 		((WebButtonUI) previous.getUI()).setUndecorated(true);
-		previous.setFont(fontAwesome);
+		previous.setFont(this.fontAwesome);
 		previous.addActionListener(e -> PlayerFunctions.seekPrevious());
 		previous.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		previous.setBorderPainted(false);
@@ -100,49 +100,49 @@ public class ControlPanel extends JPanel {
 			public void stateChanged(final ChangeEvent e) {
 				final JButton btn = (JButton) e.getSource();
 				final ButtonModel model = btn.getModel();
-				if (model.isRollover() && !rollover) {
+				if (model.isRollover() && !this.rollover) {
 					btn.setForeground(Color.LIGHT_GRAY);
-					rollover = true;
-				} else if (rollover && !model.isRollover()) {
+					this.rollover = true;
+				} else if (this.rollover && !model.isRollover()) {
 					btn.setForeground(Color.GRAY);
-					rollover = false;
+					this.rollover = false;
 				}
 			}
 		});
 		// previous.setIcon(new ImageIcon(previousButtonIcon));
 		// previous.setRolloverIcon(new ImageIcon(previousRollOver));
 
-		play = new JButton("");
-		play.addActionListener(e -> {
+		this.play = new JButton("");
+		this.play.addActionListener(e -> {
 			final boolean isPaused = PlayerFunctions.isPaused;
 			if (!isPaused) {
-				PlayerFunctions.pause(play);
+				PlayerFunctions.pause(this.play);
 			} else {
-				PlayerFunctions.play(play);
+				PlayerFunctions.play(this.play);
 			}
 		});
-		((WebButtonUI) play.getUI()).setUndecorated(true);
-		play.setFont(fontAwesome);
-		play.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		play.setBorderPainted(false);
-		play.setBorder(null);
-		play.setText("\uf04b");
+		((WebButtonUI) this.play.getUI()).setUndecorated(true);
+		this.play.setFont(this.fontAwesome);
+		this.play.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		this.play.setBorderPainted(false);
+		this.play.setBorder(null);
+		this.play.setText("\uf04b");
 
-		play.setMargin(new Insets(0, 0, 0, 0));
-		play.setContentAreaFilled(false);
-		play.addChangeListener(new ChangeListener() {
+		this.play.setMargin(new Insets(0, 0, 0, 0));
+		this.play.setContentAreaFilled(false);
+		this.play.addChangeListener(new ChangeListener() {
 			private boolean rollover = false;
 
 			@Override
 			public void stateChanged(final ChangeEvent e) {
 				final JButton btn = (JButton) e.getSource();
 				final ButtonModel model = btn.getModel();
-				if (model.isRollover() && !rollover) {
+				if (model.isRollover() && !this.rollover) {
 					btn.setForeground(Color.LIGHT_GRAY);
-					rollover = true;
-				} else if (rollover && !model.isRollover()) {
+					this.rollover = true;
+				} else if (this.rollover && !model.isRollover()) {
 					btn.setForeground(Color.GRAY);
-					rollover = false;
+					this.rollover = false;
 				}
 			}
 		});
@@ -157,7 +157,7 @@ public class ControlPanel extends JPanel {
 		next.setBorderPainted(false);
 
 		next.setBorder(null);
-		next.setFont(fontAwesome);
+		next.setFont(this.fontAwesome);
 		next.setMargin(new Insets(0, 0, 0, 0));
 		next.setContentAreaFilled(false);
 		next.setText("\uF04E");
@@ -171,19 +171,19 @@ public class ControlPanel extends JPanel {
 			public void stateChanged(final ChangeEvent e) {
 				final JButton btn = (JButton) e.getSource();
 				final ButtonModel model = btn.getModel();
-				if (model.isRollover() && !rollover) {
+				if (model.isRollover() && !this.rollover) {
 					btn.setForeground(Color.LIGHT_GRAY);
-					rollover = true;
-				} else if (rollover && !model.isRollover()) {
+					this.rollover = true;
+				} else if (this.rollover && !model.isRollover()) {
 					btn.setForeground(Color.GRAY);
-					rollover = false;
+					this.rollover = false;
 				}
 			}
 		});
 
 		final JButton mute = new JButton("");
 		((WebButtonUI) mute.getUI()).setUndecorated(true);
-		mute.setFont(fontAwesome);
+		mute.setFont(this.fontAwesome);
 		mute.setText("\uF028");
 		mute.addActionListener(e -> MediaUtils.muteToggle());
 		mute.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -199,17 +199,17 @@ public class ControlPanel extends JPanel {
 			public void stateChanged(final ChangeEvent e) {
 				final JButton btn = (JButton) e.getSource();
 				final ButtonModel model = btn.getModel();
-				if (model.isRollover() && !rollover) {
+				if (model.isRollover() && !this.rollover) {
 					btn.setForeground(Color.LIGHT_GRAY);
-					rollover = true;
-				} else if (rollover && !model.isRollover()) {
+					this.rollover = true;
+				} else if (this.rollover && !model.isRollover()) {
 					btn.setForeground(Color.GRAY);
-					rollover = false;
+					this.rollover = false;
 				}
 			}
 		});
 
-		volume = new JSlider() {
+		this.volume = new JSlider() {
 			private static final long serialVersionUID = -4931644654633925931L;
 
 			{
@@ -239,14 +239,14 @@ public class ControlPanel extends JPanel {
 			}
 		};
 
-		volume.addChangeListener(listener -> {
+		this.volume.addChangeListener(listener -> {
 			final double volumeLevel = volume().getValue() / 100D;
 			if (UISession.getMediaPlayer() != null) {
 
 				UISession.getMediaPlayer().setVolume(
-						((double) volume.getValue() / 100));
+						((double) this.volume.getValue() / 100));
 				if (!MediaUtils.muted) {
-					Settings.setVolume(volume.getValue());
+					Settings.setVolume(this.volume.getValue());
 				}
 
 			}
@@ -260,22 +260,22 @@ public class ControlPanel extends JPanel {
 			}
 		});
 
-		volume.setValue(Settings.getVolume());
-		volume.setPreferredSize(new Dimension(100, 25));
-		volume.setMaximumSize(new Dimension(100, 25));
+		this.volume.setValue(Settings.getVolume());
+		this.volume.setPreferredSize(new Dimension(100, 25));
+		this.volume.setMaximumSize(new Dimension(100, 25));
 		mute.setPreferredSize(new Dimension(22, 25));
 		mute.setMaximumSize(new Dimension(22, 25));
 
 		add(Box.createRigidArea(new Dimension(10, 37)));
 		add(previous);
 		add(Box.createRigidArea(new Dimension(25, 0)));
-		add(play);
+		add(this.play);
 		add(Box.createRigidArea(new Dimension(25, 0)));
 		add(next);
 		add(Box.createRigidArea(new Dimension(15, 0)));
 		add(mute);
 		add(Box.createRigidArea(new Dimension(5, 0)));
-		add(volume);
+		add(this.volume);
 		add(Box.createRigidArea(new Dimension(5, 0)));
 
 		final JSeparator separator = new JSeparator(SwingConstants.VERTICAL);
@@ -289,8 +289,8 @@ public class ControlPanel extends JPanel {
 		add(separator);
 		add(Box.createRigidArea(new Dimension(10, 0)));
 
-		durationPanel = new DurationPanel();
-		add(durationPanel);
+		this.durationPanel = new DurationPanel();
+		add(this.durationPanel);
 
 		final JSeparator separator1 = new JSeparator(SwingConstants.VERTICAL);
 		final Dimension size1 = new Dimension(1,
@@ -299,71 +299,71 @@ public class ControlPanel extends JPanel {
 		add(separator1);
 		add(Box.createRigidArea(new Dimension(10, 0)));
 
-		shuffleStatusLabel = new JLabel("\uF074");
-		shuffleStatusLabel.setFont(fontAwesome);
-		shuffleStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		shuffleStatusLabel.addMouseListener(new MouseAdapter() {
+		this.shuffleStatusLabel = new JLabel("\uF074");
+		this.shuffleStatusLabel.setFont(this.fontAwesome);
+		this.shuffleStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		this.shuffleStatusLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(final MouseEvent arg0) {
-				if (shuffleStatusLabel.isEnabled()) {
+				if (ControlPanel.this.shuffleStatusLabel.isEnabled()) {
 					PlayerFunctions.handleSpecialLabels(false);
 				}
 			}
 		});
-		shuffleStatusLabel.setCursor(Cursor
+		this.shuffleStatusLabel.setCursor(Cursor
 				.getPredefinedCursor(Cursor.HAND_CURSOR));
-		shuffleStatusLabel.setForeground(Color.GRAY);
+		this.shuffleStatusLabel.setForeground(Color.GRAY);
 
-		repeatStatusLabel = new JLabel("\uF01E");
-		repeatStatusLabel.setFont(fontAwesome);
-		repeatStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		this.repeatStatusLabel = new JLabel("\uF01E");
+		this.repeatStatusLabel.setFont(this.fontAwesome);
+		this.repeatStatusLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-		repeatStatusLabel.addMouseListener(new MouseAdapter() {
+		this.repeatStatusLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(final MouseEvent arg0) {
-				if (repeatStatusLabel.isEnabled()) {
+				if (ControlPanel.this.repeatStatusLabel.isEnabled()) {
 					PlayerFunctions.handleSpecialLabels(true);
 				}
 
 			}
 		});
-		repeatStatusLabel.setCursor(Cursor
+		this.repeatStatusLabel.setCursor(Cursor
 				.getPredefinedCursor(Cursor.HAND_CURSOR));
-		repeatStatusLabel.setForeground(Color.GRAY);
+		this.repeatStatusLabel.setForeground(Color.GRAY);
 
-		add(shuffleStatusLabel);
+		add(this.shuffleStatusLabel);
 		add(Box.createRigidArea(new Dimension(5, 0)));
-		add(repeatStatusLabel);
+		add(this.repeatStatusLabel);
 		add(Box.createRigidArea(new Dimension(5, 0)));
 
 	}
 
 	public JLabel current() {
-		return durationPanel.current();
+		return this.durationPanel.current();
 	}
 
 	public JButton play() {
-		return play;
+		return this.play;
 	}
 
 	public JLabel repeat() {
-		return repeatStatusLabel;
+		return this.repeatStatusLabel;
 	}
 
 	public JSlider seek() {
-		return durationPanel.seek();
+		return this.durationPanel.seek();
 	}
 
 	public JLabel shuffle() {
-		return shuffleStatusLabel;
+		return this.shuffleStatusLabel;
 	}
 
 	public JLabel total() {
-		return durationPanel.total();
+		return this.durationPanel.total();
 	}
 
 	public JSlider volume() {
-		return volume;
+		return this.volume;
 	}
 
 	@Override

@@ -65,10 +65,9 @@ public class PlayerFunctions {
 
 		if (UISession.getMediaPlayer() != null) {
 			mediaStateButton.setText("\uf04b");
-
-			UISession.getMediaPlayer().pause();
 			isPaused = true;
 			mediaStateButton.setToolTipText("Play");
+			UISession.getMediaPlayer().pause();
 		}
 
 	}
@@ -79,11 +78,11 @@ public class PlayerFunctions {
 	public static void play(final JButton mediaStateButton) {
 
 		if (UISession.getMediaPlayer() != null) {
-
 			mediaStateButton.setText("\uF04C");
 			UISession.getMediaPlayer().play();
 			isPaused = false;
 			mediaStateButton.setToolTipText("Pause");
+			UISession.getMediaPlayer().play();
 
 		} else {
 			mediaStateButton.setText("\uF04C");

@@ -30,12 +30,12 @@ import org.apache.http.impl.client.LaxRedirectStrategy;
 import org.apache.http.util.EntityUtils;
 
 public class AurousService extends PlaylistService {
-	private String playlistName;
-	private String SHARE_URL;
+	private final String playlistName;
+	private final String SHARE_URL;
 	private CloseableHttpClient httpClient;
-	private int NOT_FOUND = 404;
+	private final int NOT_FOUND = 404;
 
-	public AurousService(String playlistName, String playlistID) {
+	public AurousService(final String playlistName, final String playlistID) {
 		this.playlistName = playlistName;
 		this.SHARE_URL = "https://aurous.me/api/playlist/share/" + playlistID;
 	}
@@ -56,20 +56,19 @@ public class AurousService extends PlaylistService {
 
 			final SSLConnectionSocketFactory sslsf = buildSSLConnectionSocketFactory(sslContext);
 
-			httpClient = buildHttpClient(cookieStore, sslsf);
+			this.httpClient = buildHttpClient(cookieStore, sslsf);
 
-			String playList = fetchPlaylist(cookieStore, httpClient).replace("<br />", "").trim();
+			final String playList = fetchPlaylist(cookieStore, this.httpClient)
+					.replace("<br />", "").trim();
 			if (playList.equals("404")) {
-				JOptionPane
-				.showMessageDialog(
-						null,
-						"No playlist could be found.",
-						"Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null,
+						"No playlist could be found.", "Error",
+						JOptionPane.ERROR_MESSAGE);
 				PlayListUtils.resetImporterInterface();
 				return;
 			}
-			final String path = Constants.DATA_PATH
-					+ "playlist/" + this.playlistName + ".plist";
+			final String path = Constants.DATA_PATH + "playlist/"
+					+ this.playlistName + ".plist";
 			Utils.writeFile(playList, path);
 			PlayListUtils.resetImporterInterface();
 		} catch (KeyManagementException | NoSuchAlgorithmException
@@ -77,22 +76,22 @@ public class AurousService extends PlaylistService {
 			final ExceptionWidget eWidget = new ExceptionWidget(
 					Utils.getStackTraceString(e, ""));
 			eWidget.setVisible(true);
-		} catch (ClientProtocolException e) {
+		} catch (final ClientProtocolException e) {
 			final ExceptionWidget eWidget = new ExceptionWidget(
 					Utils.getStackTraceString(e, ""));
 			eWidget.setVisible(true);
-		} catch (URISyntaxException e) {
+		} catch (final URISyntaxException e) {
 			final ExceptionWidget eWidget = new ExceptionWidget(
 					Utils.getStackTraceString(e, ""));
 			eWidget.setVisible(true);
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			final ExceptionWidget eWidget = new ExceptionWidget(
 					Utils.getStackTraceString(e, ""));
 			eWidget.setVisible(true);
 		} finally {
 			try {
-				httpClient.close();
-			} catch (IOException e) {
+				this.httpClient.close();
+			} catch (final IOException e) {
 				final ExceptionWidget eWidget = new ExceptionWidget(
 						Utils.getStackTraceString(e, ""));
 				eWidget.setVisible(true);
@@ -119,7 +118,7 @@ public class AurousService extends PlaylistService {
 	}
 
 	private SSLContext buildSSLContext() throws NoSuchAlgorithmException,
-			KeyManagementException, KeyStoreException {
+	KeyManagementException, KeyStoreException {
 		final SSLContext sslcontext = SSLContexts.custom().useTLS()
 				.loadTrustMaterial(null, (chain, authType) -> true).build();
 		return sslcontext;
@@ -134,15 +133,15 @@ public class AurousService extends PlaylistService {
 
 		final CloseableHttpResponse fetchResponse = httpclient
 				.execute(playlistGET);
-		
+
 		if (fetchResponse.getStatusLine().getStatusCode() == this.NOT_FOUND) {
 			System.out.println(fetchResponse.getStatusLine());
 			return "404";
 		}
-		
+
 		try {
 			final HttpEntity submitResponseEntity = fetchResponse.getEntity();
-		
+
 			final String playlistData = EntityUtils
 					.toString(submitResponseEntity);
 			EntityUtils.consume(submitResponseEntity);

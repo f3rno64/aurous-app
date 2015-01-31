@@ -65,7 +65,7 @@ public class WebPlaylistSubmit {
 	}
 
 	private SSLContext buildSSLContext() throws NoSuchAlgorithmException,
-			KeyManagementException, KeyStoreException {
+	KeyManagementException, KeyStoreException {
 		final SSLContext sslcontext = SSLContexts.custom().useTLS()
 				.loadTrustMaterial(null, (chain, authType) -> true).build();
 		return sslcontext;
@@ -131,14 +131,14 @@ public class WebPlaylistSubmit {
 
 		final SSLConnectionSocketFactory sslsf = buildSSLConnectionSocketFactory(sslContext);
 
-		httpClient = buildHttpClient(cookieStore, sslsf);
+		this.httpClient = buildHttpClient(cookieStore, sslsf);
 
 		try {
 
-			executeShare(cookieStore, httpClient);
+			executeShare(cookieStore, this.httpClient);
 
 		} finally {
-			httpClient.close();
+			this.httpClient.close();
 
 		}
 

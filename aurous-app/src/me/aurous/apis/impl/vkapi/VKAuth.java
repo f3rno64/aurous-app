@@ -41,11 +41,11 @@ public class VKAuth extends Application {
 
 	private void changeState(final String Url) {
 		if (Url.contains(LOGIN_FAILURE_PAGE)) {
-			loginFailure = true;
+			this.loginFailure = true;
 		} else if (Url.contains(LOGIN_SUCCESS_PAGE)) {
-			loginSuccess = true;
+			this.loginSuccess = true;
 			try {
-				formData = URLDecoder.decode(
+				this.formData = URLDecoder.decode(
 						Url.substring(Url.indexOf(LOGIN_SUCCESS_PAGE)
 								+ LOGIN_SUCCESS_PAGE.length()), "UTF-8");
 			} catch (final UnsupportedEncodingException ex) {
@@ -78,28 +78,29 @@ public class VKAuth extends Application {
 		final WebEngine engine = view.getEngine();
 		engine.load(VK_AUTH_URL);
 		engine.getLoadWorker()
-				.stateProperty()
-				.addListener(
-						(ChangeListener<State>) (ov, oldState, newState) -> {
-							if (newState == State.SUCCEEDED) {
-								changeState(engine.getLocation());
-							}
-						});
+		.stateProperty()
+		.addListener(
+				(ChangeListener<State>) (ov, oldState, newState) -> {
+					if (newState == State.SUCCEEDED) {
+						changeState(engine.getLocation());
+					}
+				});
 		primaryStage.setScene(new Scene(view));
 		primaryStage.show();
 
 		new Thread(() -> {
-			while (!loginSuccess && !loginFailure && primaryStage.isShowing()) {
+			while (!this.loginSuccess && !this.loginFailure
+					&& primaryStage.isShowing()) {
 
 			}
-			if (loginFailure || (!primaryStage.isShowing())) {
+			if (this.loginFailure || (!primaryStage.isShowing())) {
 				Platform.exit();
 			} else {
 				try {
 
 					final PrintWriter out = new PrintWriter(Constants.DATA_PATH
 							+ "settings/vkauth.dat");
-					out.println(formData);
+					out.println(this.formData);
 					out.close();
 					Platform.exit();
 

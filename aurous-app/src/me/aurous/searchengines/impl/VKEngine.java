@@ -29,7 +29,7 @@ public class VKEngine extends SearchEngine {
 	public String buildSearchCSV(final String json) {
 
 		final StringBuilder csv = new StringBuilder()
-		.append("Title, Artist, Duration, URL, id");
+				.append("Title, Artist, Duration, URL, id");
 		csv.append(System.getProperty("line.separator"));
 		final JSONObject mainObject = new JSONObject(json);
 		final JSONArray response = mainObject.getJSONArray("response");

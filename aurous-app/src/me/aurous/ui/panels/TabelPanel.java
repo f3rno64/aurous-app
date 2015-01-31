@@ -76,12 +76,12 @@ public class TabelPanel extends JPanel implements ActionListener {
 	}
 
 	public void initPanel() {
-		setBackground(background);
+		setBackground(this.background);
 		setLayout(new BorderLayout());
 
 		table = new JTable();
 
-		table.setBackground(background);
+		table.setBackground(this.background);
 		table.setForeground(Color.GRAY);
 		table.setOpaque(true);
 
@@ -98,7 +98,7 @@ public class TabelPanel extends JPanel implements ActionListener {
 		if (Settings.getLastPlayList().isEmpty()) {
 
 			ModelUtils
-					.loadPlayList(Constants.DATA_PATH + "scripts/blank.plist");
+			.loadPlayList(Constants.DATA_PATH + "scripts/blank.plist");
 		} else {
 			ModelUtils.loadPlayList(Settings.getLastPlayList());
 		}
@@ -146,7 +146,8 @@ public class TabelPanel extends JPanel implements ActionListener {
 						source.changeSelection(row, column, false, false);
 					}
 
-					popup.show(e.getComponent(), e.getX(), e.getY());
+					TabelPanel.this.popup.show(e.getComponent(), e.getX(),
+							e.getY());
 				}
 			}
 
@@ -162,6 +163,31 @@ public class TabelPanel extends JPanel implements ActionListener {
 		hiddenLink.setMaxWidth(0);
 		hiddenLink.setCellRenderer(new ModelUtils.InteractiveRenderer(
 				ModelUtils.LINK_INDEX));
+
+		final TableColumn hiddenDate = table.getColumnModel().getColumn(
+				ModelUtils.DATE_INDEX);
+		hiddenDate.setMinWidth(0);
+		hiddenDate.setPreferredWidth(0);
+		hiddenDate.setMaxWidth(0);
+		hiddenDate.setCellRenderer(new ModelUtils.InteractiveRenderer(
+				ModelUtils.DATE_INDEX));
+
+		final TableColumn hiddenAlbum = table.getColumnModel().getColumn(
+				ModelUtils.ALBUM_INDEX);
+		hiddenAlbum.setMinWidth(0);
+		hiddenAlbum.setPreferredWidth(0);
+		hiddenAlbum.setMaxWidth(0);
+		hiddenAlbum.setCellRenderer(new ModelUtils.InteractiveRenderer(
+				ModelUtils.ALBUM_INDEX));
+
+		final TableColumn hiddenUser = table.getColumnModel().getColumn(
+				ModelUtils.OWNER_INDEX);
+		hiddenUser.setMinWidth(0);
+		hiddenUser.setPreferredWidth(0);
+		hiddenUser.setMaxWidth(0);
+		hiddenUser.setCellRenderer(new ModelUtils.InteractiveRenderer(
+				ModelUtils.OWNER_INDEX));
+
 		final TableColumn hiddenAlbumArt = table.getColumnModel().getColumn(
 				ModelUtils.ART_INDEX);
 		hiddenAlbumArt.setMinWidth(0);
@@ -176,22 +202,22 @@ public class TabelPanel extends JPanel implements ActionListener {
 
 		// this.scroller.setBorder(BorderFactory.createEmptyBorder());
 
-		popup = new JPopupMenu();
+		this.popup = new JPopupMenu();
 
 		final JMenuItem shareItem = new JMenuItem("Share");
 		shareItem.addActionListener(this);
-		popup.add(shareItem);
+		this.popup.add(shareItem);
 		final JMenuItem copyItem = new JMenuItem("Copy URL");
 		copyItem.addActionListener(this);
-		popup.add(copyItem);
+		this.popup.add(copyItem);
 		final JMenuItem deleteItem = new JMenuItem("Delete");
 		deleteItem.addActionListener(this);
-		popup.add(deleteItem);
+		this.popup.add(deleteItem);
 		final JMenuItem playItem = new JMenuItem("Play");
 		playItem.addActionListener(this);
-		popup.add(playItem);
+		this.popup.add(playItem);
 		table.setAutoCreateRowSorter(true);
-		scroller.setBorder(BorderFactory.createEmptyBorder());
+		this.scroller.setBorder(BorderFactory.createEmptyBorder());
 		add(this.scroller, BorderLayout.CENTER);
 		table.setFillsViewportHeight(true);
 		table.setSelectionBackground(table.getBackground());

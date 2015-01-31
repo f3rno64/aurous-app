@@ -21,11 +21,6 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import javax.swing.JOptionPane;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import me.aurous.player.Settings;
 import me.aurous.services.PlaylistService;
 import me.aurous.services.fetchers.impl.YouTubeFetcher;
@@ -36,6 +31,11 @@ import me.aurous.utils.Constants;
 import me.aurous.utils.Internet;
 import me.aurous.utils.Utils;
 import me.aurous.utils.playlist.PlayListUtils;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 /**
  * @author Andrew
@@ -59,26 +59,27 @@ public class YouTubeService extends PlaylistService {
 	public void buildMediaLink() {
 		grab();
 	}
-@Override
-public void importPlayList(String playListName) {
-	
+
+	@Override
+	public void importPlayList(final String playListName) {
+
 		final Thread thread = new Thread() {
 			@Override
 			public void run() {
 
 				try {
-					if (contentURL.contains("playlist?")) {
+					if (YouTubeService.this.contentURL.contains("playlist?")) {
 						// fsyprint("Fetching %s...", url);
 						String last = "";
 						final String out = Constants.DATA_PATH + "playlist/"
 								+ playListName + ".plist";
 						final Document doc = Jsoup
-								.connect(contentURL)
+								.connect(YouTubeService.this.contentURL)
 								.ignoreContentType(true)
 								.userAgent(
 										"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36")
-										.referrer("http://www.google.com")
-										.timeout(12000).followRedirects(true).get();
+								.referrer("http://www.google.com")
+								.timeout(12000).followRedirects(true).get();
 						final Elements links = doc.select("a[href]");
 						final File playListOut = new File(out);
 						final FileOutputStream fos = new FileOutputStream(
@@ -102,7 +103,7 @@ public void importPlayList(String playListName) {
 											.size());
 
 									importWidget.getImportProgressBar()
-									.setValue(percent);
+											.setValue(percent);
 									PlayListUtils.disableImporterInterface();
 								}
 								if (link.attr("abs:href").contains("watch?v=")
@@ -110,10 +111,11 @@ public void importPlayList(String playListName) {
 										&& !link.text().contains("Play all")
 										&& !link.text().contains("views")
 										&& !link.attr("abs:href").equals(last)) {
-									YouTubeFetcher youTubeFetcher = new YouTubeFetcher(link
-													.attr("abs:href"), Internet.text(link
-													.attr("abs:href")));
-									final String mediaLine = youTubeFetcher.buildLine();
+									final YouTubeFetcher youTubeFetcher = new YouTubeFetcher(
+											link.attr("abs:href"),
+											Internet.text(link.attr("abs:href")));
+									final String mediaLine = youTubeFetcher
+											.buildLine();
 									if (!mediaLine.isEmpty()) {
 										bw.write(mediaLine);
 										bw.newLine();
@@ -157,7 +159,8 @@ public void importPlayList(String playListName) {
 			}
 		};
 		thread.start();
-}
+	}
+
 	@Override
 	public void grab() {
 		String lowQualityMP4 = null;
@@ -165,9 +168,9 @@ public void importPlayList(String playListName) {
 		try {
 
 			final List<String> list = extractURLS(this.SITE_HTML);
-			
+
 			for (final String url : list) {
-				
+
 				if (url.contains("itag=5")) {
 					lowQualityMP4 = url;
 				} else if (url.contains("itag=18")) {
@@ -190,7 +193,7 @@ public void importPlayList(String playListName) {
 			eWidget.setVisible(true);
 		}
 		this.streamURL = highQualityMP4;
-		
+
 	}
 
 	public String getStreamURL() {
@@ -203,7 +206,7 @@ public void importPlayList(String playListName) {
 		final List<String> streams = new ArrayList<String>();
 		final List<String> signatures = new ArrayList<String>();
 		String playerVersion = "";
-		Pattern pattern = Pattern.compile(PLAYER_VERSION_REGEX);
+		Pattern pattern = Pattern.compile(this.PLAYER_VERSION_REGEX);
 		Matcher matcher = pattern.matcher(html);
 		while (matcher.find()) {
 			playerVersion = matcher.group(1).toString();
@@ -216,36 +219,30 @@ public void importPlayList(String playListName) {
 			Constants.HTML5_PLAYER_CODE = Internet
 					.text("http://s.ytimg.com/yts/jsbin/" + "html5player-"
 							+ playerVersion.replace("\\", "") + ".js");
-			
-			
+
 		}
 
-		pattern = Pattern.compile(URL_ENCODE_REGEX);
+		pattern = Pattern.compile(this.URL_ENCODE_REGEX);
 
 		matcher = pattern.matcher(html);
-	
+
 		String unescapedHtml = "";
 		while (matcher.find()) {
 			unescapedHtml = matcher.group(1);
-		
-			
-		}
-		
 
-		pattern = Pattern.compile(URL_STREAMS_REGEX);
+		}
+
+		pattern = Pattern.compile(this.URL_STREAMS_REGEX);
 
 		matcher = pattern.matcher(unescapedHtml);
 
 		while (matcher.find()) {
 
 			streams.add(URLDecoder.decode(matcher.group(3), "UTF-8"));
-		
-		
-		}
-		
-	
 
-		pattern = Pattern.compile(STREAM_SIGNATURES_REGEX);
+		}
+
+		pattern = Pattern.compile(this.STREAM_SIGNATURES_REGEX);
 
 		matcher = pattern.matcher(unescapedHtml);
 
@@ -263,7 +260,7 @@ public void importPlayList(String playListName) {
 				final String Sign = signDecipher(signatures.get(i).toString(),
 						Constants.HTML5_PLAYER_CODE);
 				URL += "&signature=" + Sign;
-				
+
 			}
 
 			urls.add(URL.trim());
@@ -276,16 +273,16 @@ public void importPlayList(String playListName) {
 
 	private String signDecipher(final String signature, final String playercode) {
 		try {
-		//	System.out.println(signature);
+			// System.out.println(signature);
 			final ScriptEngine engine = new ScriptEngineManager()
-			.getEngineByName("nashorn");
+					.getEngineByName("nashorn");
 			engine.eval(new FileReader(Constants.LEGACY_DATA_PATH
 					+ "scripts/decrypt.js"));
 			final Invocable invocable = (Invocable) engine;
 
 			final Object result = invocable.invokeFunction("getWorkingVideo",
 					signature, playercode);
-	//	System.out.println((String) result);
+			// System.out.println((String) result);
 			return (String) result;
 		} catch (ScriptException | FileNotFoundException
 				| NoSuchMethodException e) {

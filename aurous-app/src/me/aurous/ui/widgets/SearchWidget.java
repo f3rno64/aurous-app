@@ -134,22 +134,24 @@ public class SearchWidget implements ActionListener {
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			
+
 			final int row = table.getSelectedRow();
-		
+
 			if (table.getValueAt(row, 3).toString().contains("youtube")) {
-			
-				PlayListUtils.addUrlToPlayList(table.getValueAt(row, 3).toString());
+
+				PlayListUtils.addUrlToPlayList(table.getValueAt(row, 3)
+						.toString());
 			} else {
-			final String date = Utils.getDate();
-			final String playListAddition = String.format(
-					"%s, %s, %s, %s, %s, %s, %s, %s", table.getValueAt(row, 0),
-					table.getValueAt(row, 1), table.getValueAt(row, 2), date,
-					Settings.getUserName(), "", "https://aurous.me/bad.png",
-					table.getValueAt(row, 4));
-			
-			PlayListUtils.addUrlToPlayList(playListAddition);
-		}
+				final String date = Utils.getDate();
+				final String playListAddition = String.format(
+						"%s, %s, %s, %s, %s, %s, %s, %s",
+						table.getValueAt(row, 0), table.getValueAt(row, 1),
+						table.getValueAt(row, 2), date, Settings.getUserName(),
+						"", "https://aurous.me/bad.png",
+						table.getValueAt(row, 4));
+
+				PlayListUtils.addUrlToPlayList(playListAddition);
+			}
 		case "Copy URL":
 			MediaUtils.copyMediaURL(table);
 			break;
@@ -158,15 +160,15 @@ public class SearchWidget implements ActionListener {
 	}
 
 	public JComboBox<String> getComboBox() {
-		return comboBox;
+		return this.comboBox;
 	}
 
 	public WebTextField getSearchBar() {
-		return searchBar;
+		return this.searchBar;
 	}
 
 	public JFrame getWidget() {
-		return searchWidget;
+		return this.searchWidget;
 	}
 
 	/**
@@ -175,40 +177,43 @@ public class SearchWidget implements ActionListener {
 	 * @wbp.parser.entryPoint
 	 */
 	private void initialize() {
-		searchWidget = new JFrame();
-		searchWidget.setResizable(false);
-		searchWidget.setType(Type.UTILITY);
+		this.searchWidget = new JFrame();
+		this.searchWidget.setResizable(false);
+		this.searchWidget.setType(Type.UTILITY);
 
-		searchWidget.getContentPane().setBackground(new Color(35, 35, 35));
-		searchWidget.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		searchWidget.setTitle(String.format("Search - Powered by %s", Settings.getSearchEngine()));
-		searchWidget.setSize(451, 382);
-		searchWidget.getContentPane().setLayout(null);
+		this.searchWidget.getContentPane().setBackground(new Color(35, 35, 35));
+		this.searchWidget
+				.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.searchWidget.setTitle(String.format("Search - Powered by %s",
+				Settings.getSearchEngine()));
+		this.searchWidget.setSize(451, 382);
+		this.searchWidget.getContentPane().setLayout(null);
 
-		searchBar = new WebTextField(0);
-		searchBar.setInputPrompt("Lana Del Ray...");
+		this.searchBar = new WebTextField(0);
+		this.searchBar.setInputPrompt("Lana Del Ray...");
 
-		searchBar.setBackground(new Color(35, 35, 35));
-		searchBar.setForeground(Color.GRAY);
-		searchBar.setFont(new Font("Calibri", Font.PLAIN, 16));
-		searchBar.setLocation(0, 0);
-		searchBar.setMargin(0, 0, 0, 2);
+		this.searchBar.setBackground(new Color(35, 35, 35));
+		this.searchBar.setForeground(Color.GRAY);
+		this.searchBar.setFont(new Font("Calibri", Font.PLAIN, 16));
+		this.searchBar.setLocation(0, 0);
+		this.searchBar.setMargin(0, 0, 0, 2);
 		final WebImage webImage = new WebImage(Utils.loadIcon("search.png"));
-		searchBar.setTrailingComponent(webImage);
-		searchBar.setSize(302, 25);
-		searchWidget.getContentPane().add(searchBar);
+		this.searchBar.setTrailingComponent(webImage);
+		this.searchBar.setSize(302, 25);
+		this.searchWidget.getContentPane().add(this.searchBar);
 
-		comboBox = new JComboBox<String>();
+		this.comboBox = new JComboBox<String>();
 
-		comboBox.getEditor().getEditorComponent().setBackground(Color.YELLOW);
-		((JTextField) comboBox.getEditor().getEditorComponent())
+		this.comboBox.getEditor().getEditorComponent()
 				.setBackground(Color.YELLOW);
-		comboBox.setBackground(Color.YELLOW);
-		comboBox.setBounds(303, 1, 130, 25);
-		for (final String option : options) {
-			comboBox.addItem(option);
+		((JTextField) this.comboBox.getEditor().getEditorComponent())
+		.setBackground(Color.YELLOW);
+		this.comboBox.setBackground(Color.YELLOW);
+		this.comboBox.setBounds(303, 1, 130, 25);
+		for (final String option : this.options) {
+			this.comboBox.addItem(option);
 		}
-		searchWidget.getContentPane().add(comboBox);
+		this.searchWidget.getContentPane().add(this.comboBox);
 
 		searchTable = new JTable();
 		searchTable.setName("search");
@@ -267,7 +272,8 @@ public class SearchWidget implements ActionListener {
 						source.changeSelection(row, column, false, false);
 					}
 
-					popup.show(e.getComponent(), e.getX(), e.getY());
+					SearchWidget.this.popup.show(e.getComponent(), e.getX(),
+							e.getY());
 				}
 			}
 
@@ -276,8 +282,8 @@ public class SearchWidget implements ActionListener {
 		searchTable.setSelectionModel(new ForcedListSelectionModel());
 
 		this.scroller = new javax.swing.JScrollPane(searchTable);
-		scroller.setSize(445, 320);
-		scroller.setLocation(0, 33);
+		this.scroller.setSize(445, 320);
+		this.scroller.setLocation(0, 33);
 		ModelUtils.loadSearchResults(Constants.DATA_PATH
 				+ "settings/search.blank");
 
@@ -287,20 +293,20 @@ public class SearchWidget implements ActionListener {
 		hiddenLink.setPreferredWidth(2);
 		hiddenLink.setMaxWidth(2);
 		hiddenLink.setCellRenderer(new ModelUtils.InteractiveRenderer(3));
-		popup = new JPopupMenu();
+		this.popup = new JPopupMenu();
 
 		final JMenuItem addItem = new JMenuItem("Add");
 		addItem.addActionListener(this);
-		popup.add(addItem);
+		this.popup.add(addItem);
 		final JMenuItem copyItem = new JMenuItem("Copy URL");
 		copyItem.addActionListener(this);
-		popup.add(copyItem);
+		this.popup.add(copyItem);
 		final JMenuItem playItem = new JMenuItem("Play");
 		playItem.addActionListener(this);
-		popup.add(playItem);
+		this.popup.add(playItem);
 		searchTable.setAutoCreateRowSorter(true);
-		scroller.setBorder(BorderFactory.createEmptyBorder());
-		searchWidget.getContentPane().add(this.scroller);
+		this.scroller.setBorder(BorderFactory.createEmptyBorder());
+		this.searchWidget.getContentPane().add(this.scroller);
 		searchTable.setFillsViewportHeight(true);
 		searchTable.setSelectionBackground(searchTable.getBackground());
 		searchTable.setSelectionForeground(new Color(213, 163, 0));
@@ -308,7 +314,7 @@ public class SearchWidget implements ActionListener {
 		searchTable.setShowVerticalLines(false);
 		searchTable.setBorder(new EtchedBorder());
 		searchTable.setFont(new Font("Calibri", Font.PLAIN, 14));
-		searchWidget.setLocationRelativeTo(UISession.getPresenter()
+		this.searchWidget.setLocationRelativeTo(UISession.getPresenter()
 				.getAurousFrame());
 		setSearchEngine();
 
@@ -317,19 +323,19 @@ public class SearchWidget implements ActionListener {
 	private void setSearchEngine() {
 		if (Settings.getSearchEngine().equals("VK")) {
 			final VKEngine vkEngine = new VKEngine(100);
-			searchBar.addActionListener(e -> vkEngine.search());
-		} else if (Settings.getSearchEngine().equals("YouTube")){
-		final YouTubeEngine searchEngine = new YouTubeEngine();
-		searchBar.addActionListener(e -> searchEngine.search());
+			this.searchBar.addActionListener(e -> vkEngine.search());
+		} else if (Settings.getSearchEngine().equals("YouTube")) {
+			final YouTubeEngine searchEngine = new YouTubeEngine();
+			this.searchBar.addActionListener(e -> searchEngine.search());
 		}
 	}
 
 	public boolean isOpen() {
-		return searchWidget.isVisible();
+		return this.searchWidget.isVisible();
 	}
 
 	public boolean isValidAuth() {
-		return isValidAuth;
+		return this.isValidAuth;
 	}
 
 	public void setComboBox(final JComboBox<String> comboBox) {

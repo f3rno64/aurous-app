@@ -12,11 +12,13 @@ public class SearchApi {
 			throws IOException {
 		return Internet.text(generateQuery(searchEngine, parameters));
 	}
-	
-	public String generateQuery(final String searchEngine, final String parameter) {
+
+	public String generateQuery(final String searchEngine,
+			final String parameter) {
 		try {
-			return String.format("https://aurous.me/api/search/%s/%s/", searchEngine, URLEncoder.encode(parameter, "UTF-8"));
-		} catch (UnsupportedEncodingException e) {
+			return String.format("https://aurous.me/api/search/%s/%s/",
+					searchEngine, URLEncoder.encode(parameter, "UTF-8"));
+		} catch (final UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 		return parameter;

@@ -42,10 +42,10 @@ public class SkypeHandler {
 		try {
 
 			Skype.getProfile()
-					.setRichMoodMessage(
-							String.format(
-									"<u><b><blink><font size=\"12px\"><font color=\"#232323\">♫ <strong>%s - %s</strong> ♫</font></font></blink></b></u> <strong> https://aurous.me/ - Listen to music instantly, for free! </strong>",
-									this.title, this.artist));
+			.setRichMoodMessage(
+					String.format(
+							"<u><b><blink><font size=\"12px\"><font color=\"#232323\">♫ <strong>%s - %s</strong> ♫</font></font></blink></b></u> <strong> https://aurous.me/ - Listen to music instantly, for free! </strong>",
+							this.title, this.artist));
 		} catch (final Exception e) {
 			final ExceptionWidget eWidget = new ExceptionWidget(
 					Utils.getStackTraceString(e, ""));
@@ -65,7 +65,7 @@ public class SkypeHandler {
 			eWidget.setVisible(true);
 			return false;
 		}
-		
+
 	}
 
 	/**

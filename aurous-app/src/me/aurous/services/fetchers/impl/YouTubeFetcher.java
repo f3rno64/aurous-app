@@ -78,7 +78,7 @@ public class YouTubeFetcher extends ServiceFetcher {
 		BufferedReader rd; // Used to read results from the web page
 		String line; // An individual line of the web page HTML
 		String result = ""; // A long string containing all the HTML
-		final String gData = String.format("%s%s%s", API_URL, videoID,
+		final String gData = String.format("%s%s%s", API_URL, this.videoID,
 				"?alt=json");
 		if (gData.equals("http://gdata.youtube.com/feeds/api/videos/?alt=json")) {
 			return "";
@@ -141,7 +141,7 @@ public class YouTubeFetcher extends ServiceFetcher {
 		while (matcher.find()) {
 			return matcher.group(1).trim();
 		}
-		return title.trim();
+		return this.title.trim();
 	}
 
 	/**
@@ -170,7 +170,6 @@ public class YouTubeFetcher extends ServiceFetcher {
 			return duration;
 		}
 
-		
 	}
 
 	/**
@@ -197,12 +196,12 @@ public class YouTubeFetcher extends ServiceFetcher {
 
 	@Override
 	public String buildLine() {
-		if (!contentURL.startsWith("http")) {
+		if (!this.contentURL.startsWith("http")) {
 			return "";
 		}
-		final String id = getYouTubeID(contentURL);
+		final String id = getYouTubeID(this.contentURL);
 		this.videoID = id;
-		contentURL = formatYouTubeURL(id);
+		this.contentURL = formatYouTubeURL(id);
 
 		this.contentData = getVideoData();
 
@@ -218,7 +217,7 @@ public class YouTubeFetcher extends ServiceFetcher {
 		final String user = Settings.getUserName();
 		final String line = String.format("%s, %s, %s, %s, %s, %s, %s, %s",
 				songTitle, artist, duration, date, user, "", thumbNail,
-				contentURL);
+				this.contentURL);
 		return line;
 	}
 
@@ -266,7 +265,6 @@ public class YouTubeFetcher extends ServiceFetcher {
 			return uploader;
 		}
 
-		
 	}
 
 	@Override

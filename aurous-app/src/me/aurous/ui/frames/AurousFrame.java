@@ -55,11 +55,11 @@ public class AurousFrame implements WindowListener {
 	}
 
 	public JFrame getAurousFrame() {
-		return aurousFrame;
+		return this.aurousFrame;
 	}
 
 	public Scene getScene() {
-		return scene;
+		return this.scene;
 	}
 
 	private void initFX(final JFXPanel fxPanel) {
@@ -107,7 +107,7 @@ public class AurousFrame implements WindowListener {
 		this.aurousFrame.getContentPane().setLayout(new BorderLayout());
 		this.aurousFrame.setFont(new Font("Calibri", Font.PLAIN, 12));
 		// we don't actually have to add the panel
-		jfxPanel = new JFXPanel();
+		this.jfxPanel = new JFXPanel();
 
 		try {
 			final ControlPanel mediaControlsPanel = new ControlPanel();
@@ -132,10 +132,10 @@ public class AurousFrame implements WindowListener {
 
 		// lets make the panel support media
 		Platform.runLater(() -> {
-			initFX(jfxPanel);
+			initFX(this.jfxPanel);
 		});
 
-		Utils.centerFrameOnMainDisplay(aurousFrame);
+		Utils.centerFrameOnMainDisplay(this.aurousFrame);
 
 		this.aurousFrame.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
@@ -155,7 +155,7 @@ public class AurousFrame implements WindowListener {
 
 		// tracking code
 		final JGoogleAnalyticsTracker tracker = new JGoogleAnalyticsTracker(
-				"Aurous App", "2.2.5", "UA-53956512-1");
+				"Aurous App", "2.9", "UA-53956512-1");
 
 		final FocusPoint focusPoint = new FocusPoint("AppStart");
 

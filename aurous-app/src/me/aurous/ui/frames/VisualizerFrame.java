@@ -81,8 +81,8 @@ public class VisualizerFrame extends JFrame {
 
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
-		panel = new JFXPanel();
-		panel.addKeyListener(new KeyAdapter() {
+		this.panel = new JFXPanel();
+		this.panel.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(final KeyEvent e) {
 				final boolean isPaused = PlayerFunctions.isPaused;
@@ -98,7 +98,7 @@ public class VisualizerFrame extends JFrame {
 								.play());
 					} else {
 						PlayerFunctions
-								.play(UISession.getControlPanel().play());
+						.play(UISession.getControlPanel().play());
 					}
 				} else if (c == KeyEvent.VK_SPACE) {
 					if (!isPaused) {
@@ -106,11 +106,11 @@ public class VisualizerFrame extends JFrame {
 								.play());
 					} else {
 						PlayerFunctions
-								.play(UISession.getControlPanel().play());
+						.play(UISession.getControlPanel().play());
 					}
 				} else if (c == KeyEvent.VK_ESCAPE) {
-					panel.setScene(null);
-					scene = null;
+					VisualizerFrame.this.panel.setScene(null);
+					VisualizerFrame.this.scene = null;
 					UISession.setVisualFrame(null);
 					setVisible(false);
 					dispose();
@@ -118,15 +118,15 @@ public class VisualizerFrame extends JFrame {
 				}
 			}
 		});
-		getContentPane().add(panel, BorderLayout.CENTER);
-		Platform.runLater(() -> initFX(panel));
+		getContentPane().add(this.panel, BorderLayout.CENTER);
+		Platform.runLater(() -> initFX(this.panel));
 	}
 
 	private void initFX(final JFXPanel fxPanel) {
 		final VisualizerScene visualScene = new VisualizerScene();
 		// This method is invoked on the JavaFX thread
-		scene = visualScene.createVisualScene();
-		fxPanel.setScene(scene);
+		this.scene = visualScene.createVisualScene();
+		fxPanel.setScene(this.scene);
 	}
 
 	public boolean isOpen() {

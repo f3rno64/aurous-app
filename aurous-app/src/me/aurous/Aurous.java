@@ -12,7 +12,9 @@ import me.aurous.ui.UISession;
 import me.aurous.ui.frames.AurousFrame;
 import me.aurous.ui.widgets.ExceptionWidget;
 import me.aurous.utils.Constants;
+import me.aurous.utils.SSLUtilities;
 import me.aurous.utils.Utils;
+import me.aurous.utils.playlist.PlaylistManager;
 
 import com.alee.global.StyleConstants;
 import com.alee.laf.WebLookAndFeel;
@@ -37,6 +39,7 @@ public class Aurous {
 	 *         Feel.
 	 */
 	private static void configureWebLAF() {
+		PlaylistManager.addToPlaylist();
 		System.setProperty("awt.useSystemAAFontSettings", "on");
 		System.setProperty("swing.aatext", "true"); // enable System aa
 
@@ -114,12 +117,18 @@ public class Aurous {
 	 *             aurous.ini on Windows.
 	 */
 	private static void setup() {
+		SSLUtilities.trustAllHostnames();
+		SSLUtilities.trustAllHttpsCertificates();
+		final File iconFolder = new File(Constants.DATA_PATH + "icons");
+		if (!iconFolder.exists()) {
+			iconFolder.mkdir();
+		}
 		final File oldDataPath = new File(System.getProperty("user.home")
-			+ "/.aurous_data/");
+				+ "/.aurous_data/");
 		if (oldDataPath.exists()) {
 			oldDataPath.renameTo(new File(Constants.DATA_PATH));
 		}
-		
+
 		final File data_path = new File(Constants.DATA_PATH);
 		if (data_path.exists()) {
 			// empty
@@ -127,10 +136,10 @@ public class Aurous {
 			final boolean success = data_path.mkdirs();
 			if (!success) {
 				JOptionPane
-				.showMessageDialog(
-						null,
-						"Unable to create data folder, try running as admin. Program will exit",
-						"Error", JOptionPane.ERROR_MESSAGE);
+						.showMessageDialog(
+								null,
+								"Unable to create data folder, try running as admin. Program will exit",
+								"Error", JOptionPane.ERROR_MESSAGE);
 				System.exit(1);
 			} else {
 				// move files to new data folder

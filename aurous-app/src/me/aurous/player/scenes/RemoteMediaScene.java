@@ -27,14 +27,14 @@ public class RemoteMediaScene {
 	 * Create a JFX media player scene.
 	 */
 	public Scene createMediaPlayer(final String sourceURL) throws Throwable {
-	
+
 		final ControlPanel panel = UISession.getControlPanel();
 		final Group root = new Group();
 		root.autosize();
 		MediaUtils.activeMedia = sourceURL;
 		final String trailer = MediaUtils.getMediaURL(sourceURL);
 		try {
-			media = new Media(trailer.trim());
+			this.media = new Media(trailer.trim());
 
 		} catch (final Exception e) {
 			final ExceptionWidget eWidget = new ExceptionWidget(
@@ -43,12 +43,12 @@ public class RemoteMediaScene {
 			return null;
 		}
 
-		player = new MediaPlayer(media);
+		this.player = new MediaPlayer(this.media);
 
-		view = new MediaView(player);
-		view.setFitWidth(1);
-		view.setFitHeight(1);
-		view.setPreserveRatio(false);
+		this.view = new MediaView(this.player);
+		this.view.setFitWidth(1);
+		this.view.setFitHeight(1);
+		this.view.setPreserveRatio(false);
 
 		// System.out.println("media.width: "+media.getWidth());
 
@@ -56,38 +56,40 @@ public class RemoteMediaScene {
 
 		// player.play();
 
-		player.setOnReady(() -> {
-			player.setAutoPlay(false);
+		this.player.setOnReady(() -> {
+			this.player.setAutoPlay(false);
 			panel.seek().setValue(0);
 			if (sourceURL
 					.contains("https://www.youtube.com/watch?v=kGubD7KG9FQ")) {
-				player.pause();
+				this.player.pause();
 			} else {
-				player.play();
+				this.player.play();
 			}
 
 		});
 
-		progressChangeListener = (observableValue, oldValue, newValue) -> {
+		this.progressChangeListener = (observableValue, oldValue, newValue) -> {
 
 			final long currentTime = (long) newValue.toMillis();
 
-			final long totalDuration = (long) player.getMedia().getDuration()
-					.toMillis();
+			final long totalDuration = (long) this.player.getMedia()
+					.getDuration().toMillis();
 			updateTime(currentTime, totalDuration);
 		};
 
-		player.currentTimeProperty().addListener(progressChangeListener);
+		this.player.currentTimeProperty().addListener(
+				this.progressChangeListener);
 
-		player.setOnEndOfMedia(() -> {
-			player.currentTimeProperty().removeListener(progressChangeListener);
+		this.player.setOnEndOfMedia(() -> {
+			this.player.currentTimeProperty().removeListener(
+					this.progressChangeListener);
 			MediaUtils.handleEndOfStream();
 
 		});
 
-		UISession.setMediaPlayer(player);
-		UISession.setMediaView(view);
-		UISession.setMedia(media);
+		UISession.setMediaPlayer(this.player);
+		UISession.setMediaView(this.view);
+		UISession.setMedia(this.media);
 
 		return (mediaPlayer);
 	}

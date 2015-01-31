@@ -37,6 +37,7 @@ public class Internet {
 	}
 
 	public static Image image(final String url) {
+
 		try {
 			return ImageIO.read(new URL(url));
 		} catch (final IOException e) {
@@ -48,8 +49,7 @@ public class Internet {
 	}
 
 	public static String text(final String url) {
-		SSLUtilities.trustAllHostnames();
-		SSLUtilities.trustAllHttpsCertificates();
+
 		final StringBuilder builder = new StringBuilder();
 		URLConnection conn = null;
 		try {

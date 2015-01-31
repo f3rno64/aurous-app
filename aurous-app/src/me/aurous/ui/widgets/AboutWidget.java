@@ -75,73 +75,75 @@ public class AboutWidget {
 	}
 
 	public JFrame getWidget() {
-		return aboutWidget;
+		return this.aboutWidget;
 	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		aboutWidget = new JFrame();
-		aboutWidget.setIconImage(Toolkit.getDefaultToolkit().getImage(
+		this.aboutWidget = new JFrame();
+		this.aboutWidget.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				AboutWidget.class.getResource("/resources/aurouslogo.png")));
-		aboutWidget.setType(Type.UTILITY);
-		aboutWidget.setTitle("About");
-		aboutWidget.setResizable(false);
-		aboutWidget.setBounds(100, 100, 370, 400);
-		aboutWidget.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-		aboutWidget.getContentPane().setLayout(null);
-		aboutWidget.getContentPane().setBackground(new Color(32, 33, 35));
-		aboutWidget.addWindowListener(new java.awt.event.WindowAdapter() {
+		this.aboutWidget.setType(Type.UTILITY);
+		this.aboutWidget.setTitle("About");
+		this.aboutWidget.setResizable(false);
+		this.aboutWidget.setBounds(100, 100, 370, 400);
+		this.aboutWidget
+				.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.aboutWidget.getContentPane().setLayout(null);
+		this.aboutWidget.getContentPane().setBackground(new Color(32, 33, 35));
+		this.aboutWidget.addWindowListener(new java.awt.event.WindowAdapter() {
 			@Override
 			public void windowClosing(
 					final java.awt.event.WindowEvent windowEvent) {
 
 				UISession.setAboutWidget(null);
-				aboutWidget.dispose();
+				AboutWidget.this.aboutWidget.dispose();
 
 			}
 		});
 
-		titleLabel = new JLabel("Aurous 2.8");
-		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setForeground(Color.WHITE);
-		titleLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
-		titleLabel.setBounds(90, 11, 202, 27);
-		aboutWidget.getContentPane().add(titleLabel);
+		this.titleLabel = new JLabel("Aurous 2.8");
+		this.titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		this.titleLabel.setForeground(Color.WHITE);
+		this.titleLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
+		this.titleLabel.setBounds(90, 11, 202, 27);
+		this.aboutWidget.getContentPane().add(this.titleLabel);
 
-		copyRightLabel = new JLabel("Copyright \u00A9 2014, Codeusa Software");
-		copyRightLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		copyRightLabel.setForeground(Color.WHITE);
-		copyRightLabel.setFont(new Font("Calibri", Font.PLAIN, 11));
-		copyRightLabel.setBounds(58, 49, 247, 14);
-		aboutWidget.getContentPane().add(copyRightLabel);
+		this.copyRightLabel = new JLabel(
+				"Copyright \u00A9 2014, Codeusa Software");
+		this.copyRightLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		this.copyRightLabel.setForeground(Color.WHITE);
+		this.copyRightLabel.setFont(new Font("Calibri", Font.PLAIN, 11));
+		this.copyRightLabel.setBounds(58, 49, 247, 14);
+		this.aboutWidget.getContentPane().add(this.copyRightLabel);
 
-		aboutLabel = new JLabel(
+		this.aboutLabel = new JLabel(
 				"<html><center>Aurous is maintained by one mentally unstable guy with way too much ambition and a habit of premature optimization.<br>If you're interested in helping out check out the links below. </center></html>");
-		aboutLabel.setForeground(Color.WHITE);
-		aboutLabel.setFont(new Font("Calibri", Font.PLAIN, 13));
-		aboutLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		aboutLabel.setBounds(10, 74, 344, 100);
-		aboutWidget.getContentPane().add(aboutLabel);
+		this.aboutLabel.setForeground(Color.WHITE);
+		this.aboutLabel.setFont(new Font("Calibri", Font.PLAIN, 13));
+		this.aboutLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		this.aboutLabel.setBounds(10, 74, 344, 100);
+		this.aboutWidget.getContentPane().add(this.aboutLabel);
 
-		separator = new JSeparator();
-		separator.setBounds(10, 186, 344, 2);
-		aboutWidget.getContentPane().add(separator);
+		this.separator = new JSeparator();
+		this.separator.setBounds(10, 186, 344, 2);
+		this.aboutWidget.getContentPane().add(this.separator);
 
-		socialLabel = new JLabel("Social");
-		socialLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		socialLabel.setForeground(Color.WHITE);
-		socialLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
-		socialLabel.setBounds(90, 245, 177, 27);
-		aboutWidget.getContentPane().add(socialLabel);
+		this.socialLabel = new JLabel("Social");
+		this.socialLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		this.socialLabel.setForeground(Color.WHITE);
+		this.socialLabel.setFont(new Font("Calibri", Font.PLAIN, 20));
+		this.socialLabel.setBounds(90, 245, 177, 27);
+		this.aboutWidget.getContentPane().add(this.socialLabel);
 
-		separator_1 = new JSeparator();
-		separator_1.setBounds(10, 283, 344, 2);
-		aboutWidget.getContentPane().add(separator_1);
+		this.separator_1 = new JSeparator();
+		this.separator_1.setBounds(10, 283, 344, 2);
+		this.aboutWidget.getContentPane().add(this.separator_1);
 
-		blogButton = new JButton();
-		blogButton.addActionListener(e -> {
+		this.blogButton = new JButton();
+		this.blogButton.addActionListener(e -> {
 			try {
 				Utils.openURL(new URL("http://blog.aurous.me/"));
 			} catch (final Exception e1) {
@@ -149,18 +151,19 @@ public class AboutWidget {
 				e1.printStackTrace();
 			}
 		});
-		blogButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		blogButton.setBorderPainted(false);
-		blogButton.setBorder(null);
-		blogButton.setMargin(new Insets(0, 0, 0, 0));
-		blogButton.setContentAreaFilled(false);
-		blogButton.setIcon(new ImageIcon(AboutWidget.class
+		this.blogButton.setCursor(Cursor
+				.getPredefinedCursor(Cursor.HAND_CURSOR));
+		this.blogButton.setBorderPainted(false);
+		this.blogButton.setBorder(null);
+		this.blogButton.setMargin(new Insets(0, 0, 0, 0));
+		this.blogButton.setContentAreaFilled(false);
+		this.blogButton.setIcon(new ImageIcon(AboutWidget.class
 				.getResource("/resources/tumblr.png")));
-		blogButton.setBounds(20, 296, 64, 64);
-		aboutWidget.getContentPane().add(blogButton);
+		this.blogButton.setBounds(20, 296, 64, 64);
+		this.aboutWidget.getContentPane().add(this.blogButton);
 
-		twitterButton = new JButton();
-		twitterButton.addActionListener(e -> {
+		this.twitterButton = new JButton();
+		this.twitterButton.addActionListener(e -> {
 			try {
 				Utils.openURL(new URL("http://twitter.com/codeusasoftware"));
 			} catch (final Exception e1) {
@@ -168,18 +171,19 @@ public class AboutWidget {
 				e1.printStackTrace();
 			}
 		});
-		twitterButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		twitterButton.setIcon(new ImageIcon(AboutWidget.class
+		this.twitterButton.setCursor(Cursor
+				.getPredefinedCursor(Cursor.HAND_CURSOR));
+		this.twitterButton.setIcon(new ImageIcon(AboutWidget.class
 				.getResource("/resources/twitter.png")));
-		twitterButton.setMargin(new Insets(0, 0, 0, 0));
-		twitterButton.setContentAreaFilled(false);
-		twitterButton.setBorderPainted(false);
-		twitterButton.setBorder(null);
-		twitterButton.setBounds(108, 296, 64, 64);
-		aboutWidget.getContentPane().add(twitterButton);
+		this.twitterButton.setMargin(new Insets(0, 0, 0, 0));
+		this.twitterButton.setContentAreaFilled(false);
+		this.twitterButton.setBorderPainted(false);
+		this.twitterButton.setBorder(null);
+		this.twitterButton.setBounds(108, 296, 64, 64);
+		this.aboutWidget.getContentPane().add(this.twitterButton);
 
-		youTubeButton = new JButton();
-		youTubeButton.addActionListener(e -> {
+		this.youTubeButton = new JButton();
+		this.youTubeButton.addActionListener(e -> {
 			try {
 				Utils.openURL(new URL("http://youtube.com/codeusasoftware"));
 			} catch (final Exception e1) {
@@ -187,18 +191,19 @@ public class AboutWidget {
 				e1.printStackTrace();
 			}
 		});
-		youTubeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		youTubeButton.setIcon(new ImageIcon(AboutWidget.class
+		this.youTubeButton.setCursor(Cursor
+				.getPredefinedCursor(Cursor.HAND_CURSOR));
+		this.youTubeButton.setIcon(new ImageIcon(AboutWidget.class
 				.getResource("/resources/youtube.png")));
-		youTubeButton.setMargin(new Insets(0, 0, 0, 0));
-		youTubeButton.setContentAreaFilled(false);
-		youTubeButton.setBorderPainted(false);
-		youTubeButton.setBorder(null);
-		youTubeButton.setBounds(195, 296, 64, 64);
-		aboutWidget.getContentPane().add(youTubeButton);
+		this.youTubeButton.setMargin(new Insets(0, 0, 0, 0));
+		this.youTubeButton.setContentAreaFilled(false);
+		this.youTubeButton.setBorderPainted(false);
+		this.youTubeButton.setBorder(null);
+		this.youTubeButton.setBounds(195, 296, 64, 64);
+		this.aboutWidget.getContentPane().add(this.youTubeButton);
 
-		faceBookButton = new JButton();
-		faceBookButton.addActionListener(e -> {
+		this.faceBookButton = new JButton();
+		this.faceBookButton.addActionListener(e -> {
 			try {
 				Utils.openURL(new URL("http://facebook.com/codeusasoftware"));
 			} catch (final Exception e1) {
@@ -206,19 +211,19 @@ public class AboutWidget {
 				e1.printStackTrace();
 			}
 		});
-		faceBookButton
-				.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		faceBookButton.setIcon(new ImageIcon(AboutWidget.class
+		this.faceBookButton.setCursor(Cursor
+				.getPredefinedCursor(Cursor.HAND_CURSOR));
+		this.faceBookButton.setIcon(new ImageIcon(AboutWidget.class
 				.getResource("/resources/facebook.png")));
-		faceBookButton.setMargin(new Insets(0, 0, 0, 0));
-		faceBookButton.setContentAreaFilled(false);
-		faceBookButton.setBorderPainted(false);
-		faceBookButton.setBorder(null);
-		faceBookButton.setBounds(279, 296, 64, 64);
-		aboutWidget.getContentPane().add(faceBookButton);
+		this.faceBookButton.setMargin(new Insets(0, 0, 0, 0));
+		this.faceBookButton.setContentAreaFilled(false);
+		this.faceBookButton.setBorderPainted(false);
+		this.faceBookButton.setBorder(null);
+		this.faceBookButton.setBounds(279, 296, 64, 64);
+		this.aboutWidget.getContentPane().add(this.faceBookButton);
 
-		donateButton = new JButton();
-		donateButton.addActionListener(e -> {
+		this.donateButton = new JButton();
+		this.donateButton.addActionListener(e -> {
 			try {
 				Utils.openURL(new URL("http://blog.aurous.me/donate"));
 			} catch (final Exception e1) {
@@ -226,50 +231,53 @@ public class AboutWidget {
 				e1.printStackTrace();
 			}
 		});
-		donateButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		donateButton.setIcon(new ImageIcon(AboutWidget.class
+		this.donateButton.setCursor(Cursor
+				.getPredefinedCursor(Cursor.HAND_CURSOR));
+		this.donateButton.setIcon(new ImageIcon(AboutWidget.class
 				.getResource("/resources/paypal.png")));
-		donateButton.setMargin(new Insets(0, 0, 0, 0));
-		donateButton.setContentAreaFilled(false);
-		donateButton.setBorderPainted(false);
-		donateButton.setFocusPainted(false);
-		donateButton.setBorder(BorderFactory.createEmptyBorder());
-		donateButton.setBounds(10, 199, 166, 33);
+		this.donateButton.setMargin(new Insets(0, 0, 0, 0));
+		this.donateButton.setContentAreaFilled(false);
+		this.donateButton.setBorderPainted(false);
+		this.donateButton.setFocusPainted(false);
+		this.donateButton.setBorder(BorderFactory.createEmptyBorder());
+		this.donateButton.setBounds(10, 199, 166, 33);
 
-		aboutWidget.getContentPane().add(donateButton);
+		this.aboutWidget.getContentPane().add(this.donateButton);
 
-		fokMeButton = new JButton();
-		fokMeButton
-				.addActionListener(e -> {
-					try {
-						Utils.openURL(new URL(
-								"https://github.com/Codeusa/aurous-app"));
-					} catch (final Exception e1) {
-						// TODO Auto-generated catch block
+		this.fokMeButton = new JButton();
+		this.fokMeButton
+		.addActionListener(e -> {
+			try {
+				Utils.openURL(new URL(
+						"https://github.com/Codeusa/aurous-app"));
+			} catch (final Exception e1) {
+				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 		});
-		fokMeButton.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		fokMeButton.setIcon(new ImageIcon(AboutWidget.class
+		this.fokMeButton.setCursor(Cursor
+				.getPredefinedCursor(Cursor.HAND_CURSOR));
+		this.fokMeButton.setIcon(new ImageIcon(AboutWidget.class
 				.getResource("/resources/btn_github_lg.png")));
-		fokMeButton.setMargin(new Insets(0, 0, 0, 0));
-		fokMeButton.setContentAreaFilled(false);
-		fokMeButton.setBorderPainted(false);
-		fokMeButton.setBorder(null);
-		fokMeButton.setBounds(195, 199, 159, 33);
-		aboutWidget.getContentPane().add(fokMeButton);
+		this.fokMeButton.setMargin(new Insets(0, 0, 0, 0));
+		this.fokMeButton.setContentAreaFilled(false);
+		this.fokMeButton.setBorderPainted(false);
+		this.fokMeButton.setBorder(null);
+		this.fokMeButton.setBounds(195, 199, 159, 33);
+		this.aboutWidget.getContentPane().add(this.fokMeButton);
 
-		andrewsAvatar = new JLabel("");
-		andrewsAvatar.setIcon(new ImageIcon(AboutWidget.class
+		this.andrewsAvatar = new JLabel("");
+		this.andrewsAvatar.setIcon(new ImageIcon(AboutWidget.class
 				.getResource("/resources/andrew.jpg")));
-		andrewsAvatar.setBounds(0, 0, 80, 63);
-		aboutWidget.getContentPane().add(andrewsAvatar);
-		aboutWidget.setLocationRelativeTo(UISession.getPresenter()
+		this.andrewsAvatar.setBounds(0, 0, 80, 63);
+		this.aboutWidget.getContentPane().add(this.andrewsAvatar);
+		this.aboutWidget.setLocationRelativeTo(UISession.getPresenter()
 				.getAurousFrame());
 	}
 
 	public boolean isOpen() {
-		return Utils.isNull(aboutWidget) ? false : aboutWidget.isVisible();
+		return Utils.isNull(this.aboutWidget) ? false : this.aboutWidget
+				.isVisible();
 	}
 
 	public void setWidget(final JFrame aboutWidget) {

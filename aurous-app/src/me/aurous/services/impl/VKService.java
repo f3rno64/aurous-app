@@ -53,8 +53,8 @@ public class VKService extends PlaylistService {
 	@Override
 	public void grab() {
 		String json = null;
-		final int pos = contentURL.lastIndexOf("/");
-		final String ids = contentURL.substring(pos + "/".length());
+		final int pos = this.contentURL.lastIndexOf("/");
+		final String ids = this.contentURL.substring(pos + "/".length());
 		final String formData = Utils.readFile(Constants.DATA_PATH
 				+ "settings/vkauth.dat", Charset.defaultCharset());
 

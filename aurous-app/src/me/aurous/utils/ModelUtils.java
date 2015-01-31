@@ -15,6 +15,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 import me.aurous.ui.models.CSVTableModel;
+import me.aurous.ui.models.ImageRendererModel;
 import me.aurous.ui.panels.PlayListPanel;
 import me.aurous.ui.panels.TabelPanel;
 import me.aurous.ui.widgets.SearchWidget;
@@ -75,9 +76,8 @@ public class ModelUtils {
 			table = TabelPanel.table;
 			DefaultTableModel tableModel = TabelPanel.tableModel;
 			final String datafile = fileLocation;
-			File playList = new File(datafile);
+			final File playList = new File(datafile);
 			final FileReader fin = new FileReader(datafile);
-			
 
 			tableModel = CSVTableModel.createTableModel(playList, fin, null);
 			if (Utils.isNull(tableModel)) {
@@ -93,24 +93,65 @@ public class ModelUtils {
 				PlayListPanel.canSetLast = true;
 			}
 			table.setModel(tableModel);
-			final TableColumn hiddenLink = table.getColumnModel().getColumn(
-					LINK_INDEX);
-			hiddenLink.setMinWidth(0);
-			hiddenLink.setPreferredWidth(0);
-			hiddenLink.setMaxWidth(0);
-			hiddenLink.setCellRenderer(new InteractiveRenderer(LINK_INDEX));
-			final TableColumn hiddenAlbumArt = table.getColumnModel()
-					.getColumn(ART_INDEX);
-			hiddenAlbumArt.setMinWidth(0);
-			hiddenAlbumArt.setPreferredWidth(0);
-			hiddenAlbumArt.setMaxWidth(0);
-			hiddenAlbumArt.setCellRenderer(new InteractiveRenderer(
-					ART_INDEX));
+			hideIndexs(table);
 
 		} catch (final FileNotFoundException e) {
 			ModelUtils
-					.loadPlayList(Constants.DATA_PATH + "scripts/blank.plist");
+			.loadPlayList(Constants.DATA_PATH + "scripts/blank.plist");
 		}
+	}
+
+	private static void hideIndexs(final JTable table) {
+		// table.setTableHeader(null);
+		// table.getTableHeader().setReorderingAllowed(false);
+		final TableColumn hiddenLink = table.getColumnModel().getColumn(
+				LINK_INDEX);
+		hiddenLink.setMinWidth(0);
+		hiddenLink.setPreferredWidth(0);
+		hiddenLink.setMaxWidth(0);
+		hiddenLink.setCellRenderer(new InteractiveRenderer(LINK_INDEX));
+
+		final TableColumn hiddenAlbumArt = table.getColumnModel().getColumn(
+				ART_INDEX);
+		hiddenAlbumArt.setMinWidth(0);
+		hiddenAlbumArt.setPreferredWidth(0);
+		hiddenAlbumArt.setMaxWidth(0);
+		hiddenAlbumArt.setCellRenderer(new InteractiveRenderer(ART_INDEX));
+
+		final TableColumn hiddenDate = table.getColumnModel().getColumn(
+				ModelUtils.DATE_INDEX);
+		hiddenDate.setMinWidth(0);
+		hiddenDate.setPreferredWidth(0);
+		hiddenDate.setMaxWidth(0);
+		hiddenDate.setCellRenderer(new ModelUtils.InteractiveRenderer(
+				ModelUtils.DATE_INDEX));
+
+		final TableColumn hiddenAlbum = table.getColumnModel().getColumn(
+				ModelUtils.ALBUM_INDEX);
+		hiddenAlbum.setMinWidth(0);
+		hiddenAlbum.setPreferredWidth(0);
+		hiddenAlbum.setMaxWidth(0);
+		hiddenAlbum.setCellRenderer(new ModelUtils.InteractiveRenderer(
+				ModelUtils.ALBUM_INDEX));
+
+		final TableColumn hiddenUser = table.getColumnModel().getColumn(
+				ModelUtils.OWNER_INDEX);
+		hiddenUser.setMinWidth(0);
+		hiddenUser.setPreferredWidth(0);
+		hiddenUser.setMaxWidth(0);
+		hiddenUser.setCellRenderer(new ModelUtils.InteractiveRenderer(
+				ModelUtils.OWNER_INDEX));
+
+		for (int row = 0; row < table.getRowCount(); row++) {
+			// table.setValueAt(null, row, table.get);
+			table.setRowHeight(row, 41);
+
+		}
+		table.getColumnModel().getColumn(0).setPreferredWidth(263);
+		table.getColumnModel().getColumn(0).setWidth(263);
+		table.getColumnModel().getColumn(0)
+				.setCellRenderer(new ImageRendererModel());
+		table.getTableHeader().setReorderingAllowed(false);
 	}
 
 	public static void loadSearchResults(final String searchResults) {
@@ -119,8 +160,8 @@ public class ModelUtils {
 			final JTable table = SearchWidget.getSearchTable();
 			DefaultTableModel tableModel = SearchWidget.getTableModel();
 			final String datafile = searchResults;
-			File playList = new File(datafile);
-			
+			final File playList = new File(datafile);
+
 			final FileReader fin = new FileReader(playList);
 
 			tableModel = CSVTableModel.createTableModel(playList, fin, null);
@@ -146,7 +187,7 @@ public class ModelUtils {
 			hiddenIDS.setPreferredWidth(0);
 			hiddenIDS.setMaxWidth(0);
 			hiddenIDS.setCellRenderer(new InteractiveRenderer(4));
-
+			table.getTableHeader().setReorderingAllowed(false);
 		} catch (final FileNotFoundException e) {
 			ModelUtils.loadSearchResults(Constants.DATA_PATH
 					+ "search/search.blank");

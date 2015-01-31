@@ -32,17 +32,17 @@ public class AurousBar extends JMenuBar {
 		this.fileMenu = new JMenu("File");
 
 		this.exitMenuItem = new JMenuItem("Exit");
-		exitMenuItem.addActionListener(e -> {
+		this.exitMenuItem.addActionListener(e -> {
 			Settings.saveSettings(false);
 			System.exit(0);
 		});
 
 		final JMenuItem settingsItem = new JMenuItem("Settings");
-		fileMenu.add(settingsItem);
+		this.fileMenu.add(settingsItem);
 		settingsItem.addActionListener(arg0 -> SettingsWidget.openSettings());
 
 		final JMenuItem visualItem = new JMenuItem("Visual");
-		fileMenu.add(visualItem);
+		this.fileMenu.add(visualItem);
 		visualItem.addActionListener(arg0 -> VisualizerFrame.visualize());
 		this.fileMenu.add(this.exitMenuItem);
 		// add menus to menubar

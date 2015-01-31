@@ -21,8 +21,8 @@ public class VKApi {
 			throw new RuntimeException(
 					"Unexpected form data. Something goes wrong?!");
 		}
-		accessToken = accessTokenMatcher.group(1);
-		userId = Integer.parseInt(formData.substring(formData
+		this.accessToken = accessTokenMatcher.group(1);
+		this.userId = Integer.parseInt(formData.substring(formData
 				.indexOf("user_id=") + "user_id=".length()));
 	}
 
@@ -34,7 +34,7 @@ public class VKApi {
 
 	public String generateQuery(final String methodName, final String parameters) {
 		return VK_API_PREFIX + methodName + "?" + parameters + "&access_token="
-				+ accessToken;
+				+ this.accessToken;
 	}
 
 	public String submitQuery(final String methodName, final String parameters)
@@ -44,7 +44,7 @@ public class VKApi {
 
 	@Override
 	public String toString() {
-		return "applicationId: " + applicationId + "; userId: " + userId
-				+ "; accessToken: " + accessToken;
+		return "applicationId: " + this.applicationId + "; userId: "
+				+ this.userId + "; accessToken: " + this.accessToken;
 	}
 }

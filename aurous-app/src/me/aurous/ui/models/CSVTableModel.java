@@ -35,45 +35,47 @@ public class CSVTableModel {
 	 *
 	 * @return A DefaultTableModel containing the CSV values as type String
 	 */
-	public static DefaultTableModel createTableModel(File playList, Reader in,
-			Vector<Object> headers) {
+	public static DefaultTableModel createTableModel(final File playList,
+			final Reader in, Vector<Object> headers) {
 		Scanner s = null;
 		StringBuilder convertedPlayList = null;
 		final String jsonList = Utils.readFile(playList.getAbsolutePath(),
 				Charset.defaultCharset());
 		if (Utils.isJSONValid(jsonList)) { // if in new format, build to CSV for
-											// now. Need to create a new table model structure
-			convertedPlayList = new StringBuilder(
-					String.format(
-							"Title,Artist,Time,Date Added,User,Album,Art,Link%s",
-							System.lineSeparator()));
+			// now. Need to create a new table
+			// model structure
+			convertedPlayList = new StringBuilder(String.format(
+					"Title,Artist,Time,Date Added,User,Album,Art,Link%s",
+					System.lineSeparator()));
 
-			JSONArray json = new JSONArray(jsonList);
+			final JSONArray json = new JSONArray(jsonList);
 			for (int i = 0; i < json.length(); i++) {
-				JSONObject obj = json.getJSONObject(i);
+				final JSONObject obj = json.getJSONObject(i);
 
-				String title = StringEscapeUtils.unescapeJava(obj.getString("Title").trim());
-				String artist = StringEscapeUtils.unescapeJava(obj.getString("Artist").trim());
-				String time = obj.getString("Time").trim();
-				String date = obj.getString("Date Added").trim();
-				String user = obj.getString("User").trim();
-				String album = obj.getString("Album").trim();
-				String album_art = obj.getString("Art").trim();
-				String link = obj.getString("Link").trim();
+				final String title = StringEscapeUtils.unescapeJava(obj
+						.getString("Title").trim());
+				final String artist = StringEscapeUtils.unescapeJava(obj
+						.getString("Artist").trim());
+				final String time = obj.getString("Time").trim();
+				final String date = obj.getString("Date Added").trim();
+				final String user = obj.getString("User").trim();
+				final String album = obj.getString("Album").trim();
+				final String album_art = obj.getString("Art").trim();
+				final String link = obj.getString("Link").trim();
 				convertedPlayList.append(String.format(
 						"%s, %s, %s, %s, %s, %s, %s, %s %s", title, artist,
 						time, date, user, album, album_art, link,
 						System.lineSeparator()));
-				
+
 			}
-			Utils.writeFile(convertedPlayList.toString(), playList.getAbsolutePath());
-			
-			
+			Utils.writeFile(convertedPlayList.toString(),
+					playList.getAbsolutePath());
+
 			s = new Scanner(new StringReader(convertedPlayList.toString()
 					.trim()));
 			try {
 				in.close();
-			} catch (IOException e) {
+			} catch (final IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -93,9 +95,9 @@ public class CSVTableModel {
 				}
 
 				while (s.hasNextLine()) {
-					
+
 					rows.add(new Vector<Object>(Arrays.asList(s.nextLine()
-							.split("(?<!\\\\),".replace("\\,",  ","), -1))));
+							.split("(?<!\\\\),".replace("\\,", ","), -1))));
 
 				}
 

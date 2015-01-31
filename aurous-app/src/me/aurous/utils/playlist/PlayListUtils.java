@@ -21,6 +21,8 @@ import java.nio.file.Paths;
 import java.nio.file.WatchEvent;
 import java.nio.file.WatchKey;
 import java.nio.file.WatchService;
+import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -105,8 +107,7 @@ public class PlayListUtils {
 		} else {
 			try {
 				final String playListLocation = Settings.getLastPlayList();
-				
-				
+
 				final FileWriter fw = new FileWriter(playListLocation, true); // the
 				String data = "";
 				// true
@@ -119,11 +120,14 @@ public class PlayListUtils {
 				fw.write("\n" + data);// appends
 
 				fw.close();
-				String playList = Utils.readFile(playListLocation, Charset.defaultCharset()); //load altered new playlist
-				Utils.writeFile(playList.replaceAll("(?m)^\\s", ""), playListLocation); //remove any white space and rewrite it
-				
+				final String playList = Utils.readFile(playListLocation,
+						Charset.defaultCharset()); // load altered new playlist
+				Utils.writeFile(playList.replaceAll("(?m)^\\s", ""),
+						playListLocation); // remove any white space and rewrite
+				// it
+
 				ModelUtils.loadPlayList(playListLocation);
-				
+
 			} catch (final IOException ioe) {
 				final ExceptionWidget eWidget = new ExceptionWidget(
 						Utils.getStackTraceString(ioe, ""));
@@ -245,11 +249,12 @@ public class PlayListUtils {
 	}
 
 	public static String getaddRules(final String sourceURL) {
-	
+
 		if (sourceURL.contains("youtube")) {
 
-			YouTubeFetcher youTubeFetcher = new YouTubeFetcher(sourceURL, Internet.text(sourceURL));
-			
+			final YouTubeFetcher youTubeFetcher = new YouTubeFetcher(sourceURL,
+					Internet.text(sourceURL));
+
 			final String tubeLine = youTubeFetcher.buildLine();
 			return tubeLine;
 
@@ -266,14 +271,16 @@ public class PlayListUtils {
 	public static void getImportRules(final String sourceURL,
 			final String playListName) {
 		if (sourceURL.contains("youtube")) {
-			YouTubeService youTube = new YouTubeService(sourceURL);
+			final YouTubeService youTube = new YouTubeService(sourceURL);
 			youTube.importPlayList(playListName);
 
 		} else if (sourceURL.contains("soundcloud")) {
-			
+
 		} else if (sourceURL.contains("aurous")) {
-			String shareID = sourceURL.substring(sourceURL.lastIndexOf("/") + 1);
-			AurousService aurousService = new AurousService( playListName, shareID);
+			final String shareID = sourceURL.substring(sourceURL
+					.lastIndexOf("/") + 1);
+			final AurousService aurousService = new AurousService(playListName,
+					shareID);
 			aurousService.buildPlayList();
 
 		} else if (sourceURL.contains("reddit")) {
@@ -419,6 +426,51 @@ public class PlayListUtils {
 			widget.getImportPlayListButton().setEnabled(true);
 		}
 
+	}
+
+	public static String getStats(final String playlist) {
+		final String csv = Utils.readFile(playlist, Charset.defaultCharset());
+		final Scanner scanner = new Scanner(csv);
+		int i = -1;
+		long milliseconds = 0;
+		while (scanner.hasNextLine()) {
+			i++;
+
+			final String line = scanner.nextLine();
+			if (i == 0) {
+				continue;
+			} else {
+				final String[] data = line.split("(?<!\\\\),");
+				final String[] timeToken = data[2].trim().split(":");
+				if (timeToken.length > 2) {
+					final int hours = Integer.parseInt(timeToken[0]);
+					milliseconds += TimeUnit.MILLISECONDS.convert(hours,
+							TimeUnit.HOURS);
+					final int minutes = Integer.parseInt(timeToken[1]);
+					milliseconds += TimeUnit.MILLISECONDS.convert(minutes,
+							TimeUnit.MINUTES);
+					final int seconds = Integer.parseInt(timeToken[2]);
+					milliseconds += TimeUnit.MILLISECONDS.convert(seconds,
+							TimeUnit.SECONDS);
+
+				} else {
+
+					final int minutes = Integer.parseInt(timeToken[0]);
+
+					milliseconds += TimeUnit.MINUTES.toMillis(minutes);
+					final int seconds = Integer.parseInt(timeToken[1]);
+					milliseconds += TimeUnit.SECONDS.toMillis(seconds);
+
+				}
+			}
+
+		}
+
+		scanner.close();
+
+		return String.format("%s songs %s", String.valueOf(i), String
+				.valueOf(MediaUtils
+						.calculateTime((int) (milliseconds / 1000.0))));
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })

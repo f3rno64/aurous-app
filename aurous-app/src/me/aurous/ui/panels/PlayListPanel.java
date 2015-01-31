@@ -30,9 +30,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.EtchedBorder;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import me.aurous.apis.impl.webapi.WebPlaylistSubmit;
 import me.aurous.player.Settings;
 import me.aurous.player.functions.PlayerFunctions;
@@ -44,6 +41,9 @@ import me.aurous.utils.ModelUtils;
 import me.aurous.utils.Utils;
 import me.aurous.utils.media.MediaUtils;
 import me.aurous.utils.playlist.PlayListUtils;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 /**
  * @author Andrew
@@ -100,6 +100,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 
 	public static void setSongInformation(final String title,
 			final String artist) {
+
 		final String information = String.format(
 				"<html><strong>%s</strong><br>%s</html>", title, artist);
 		MediaUtils.activeInfo = title + "\n" + artist;
@@ -133,18 +134,18 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setPreferredSize(new Dimension(200, getHeight()));
 
-		setBackground(background);
+		setBackground(this.background);
 
 		final JList<?> displayList = new JList<Object>(new File(
 				Constants.DATA_PATH + "playlist/").listFiles());
 
-		displayList.setBackground(background);
+		displayList.setBackground(this.background);
 		displayList.setForeground(Color.WHITE);
 
 		displayList.setFont(new Font("Calibri", Font.PLAIN, 14));
 
 		displayList
-				.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+		.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 		displayList.setCellRenderer(new MyCellRenderer());
 		displayList.setLayoutOrientation(javax.swing.JList.HORIZONTAL_WRAP);
 		displayList.setName("displayList");
@@ -180,8 +181,17 @@ public class PlayListPanel extends JPanel implements ActionListener {
 					final Object o = displayList.getModel().getElementAt(index);
 					// PlayListFrame.this.plFunctions.loadPlayList(o
 					// .toString());
+					// String html1 = "<html><body style='width: ";
+					// String html2 = "px'>";
 					final String playlist = o.toString();
 					ModelUtils.loadPlayList(playlist);
+					// playlistTitle.setVisible(true);
+					// playlistTitle.setText(html1+"150"+html2+playlist.substring(playlist.lastIndexOf("\\")
+					// + 1).replace(".plist", ""));
+					// ownerName.setText(Settings.getUserName());
+					// stats.setText(PlayListUtils.getStats(playlist));
+					// stats.setVisible(true);
+					// ownerName.setVisible(true);
 					if (canSetLast == true) {
 						canSetLast = false;
 						Settings.setLastPlayList(playlist);
@@ -199,16 +209,17 @@ public class PlayListPanel extends JPanel implements ActionListener {
 					final JList<?> list = (JList<?>) e.getSource();
 					list.setSelectedIndex(list.locationToIndex(e.getPoint()));
 
-					popup.show(e.getComponent(), e.getX(), e.getY());
+					PlayListPanel.this.popup.show(e.getComponent(), e.getX(),
+							e.getY());
 				}
 			}
 		};
 
 		final JScrollPane scrollPane = new JScrollPane(displayList);
 		scrollPane
-		.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPane
-		.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		scrollPane.setPreferredSize(new Dimension(200, getHeight()));
 
 		scrollPane.setBorder(new EtchedBorder());
@@ -220,15 +231,41 @@ public class PlayListPanel extends JPanel implements ActionListener {
 
 		setAlbumArt(new ImageIcon(
 				SettingsWidget.class
-						.getResource("/resources/album-placeholder.png"))
-				.getImage());
+				.getResource("/resources/album-placeholder.png"))
+		.getImage());
 
 		songInformation = new JLabel();
 		songInformation.setHorizontalAlignment(SwingConstants.LEFT);
 		songInformation.setForeground(Color.LIGHT_GRAY);
 
 		add(scrollPane);
-
+		/*
+		 * playlistTitle = new JLabel("The Playlist"); playlistTitle.setFont(new
+		 * Font("Calibri", Font.PLAIN, 20));
+		 * playlistTitle.setForeground(Color.GRAY); add(playlistTitle);
+		 *
+		 * ownerName = new JLabel("Andrew Sampson");
+		 *
+		 *
+		 *
+		 * ownerName.setIcon(new
+		 * ImageIcon(Utils.makeRoundedCorner(Utils.toBufferedImage(new
+		 * ImageIcon(
+		 * PlayListPanel.class.getResource("/resources/avatar.jpg")).getImage
+		 * ()), 20))); ownerName.setFont(new Font("Calibri", Font.PLAIN, 18));
+		 * ownerName.setForeground(Color.GRAY); add(ownerName);
+		 *
+		 * add(Box.createRigidArea(new Dimension(15,15)));
+		 *
+		 *
+		 *
+		 * stats = new JLabel("20 Songs - 33 minutes"); stats.setFont(new
+		 * Font("Calibri", Font.PLAIN, 13)); stats.setForeground(Color.GRAY);
+		 * add(stats); add(Box.createRigidArea(new Dimension(15,15)));
+		 *
+		 * ownerName.setVisible(false); playlistTitle.setVisible(false);
+		 * stats.setVisible(false);
+		 */
 		add(albumArtLabel);
 
 		add(songInformation);
@@ -236,19 +273,19 @@ public class PlayListPanel extends JPanel implements ActionListener {
 		albumArtLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 		songInformation.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-		popup = new JPopupMenu();
+		this.popup = new JPopupMenu();
 		final JMenuItem playItem = new JMenuItem("Play");
 		playItem.addActionListener(this);
-		popup.add(playItem);
+		this.popup.add(playItem);
 		final JMenuItem loadItem = new JMenuItem("Load");
 		loadItem.addActionListener(this);
-		popup.add(loadItem);
+		this.popup.add(loadItem);
 		final JMenuItem deleteItem = new JMenuItem("Delete");
 		deleteItem.addActionListener(this);
-		popup.add(deleteItem);
+		this.popup.add(deleteItem);
 		final JMenuItem shareItem = new JMenuItem("Share");
 		shareItem.addActionListener(this);
-		popup.add(shareItem);
+		this.popup.add(shareItem);
 
 		displayList.addMouseListener(mouseListener);
 		final Thread thread = new Thread(
@@ -290,25 +327,26 @@ public class PlayListPanel extends JPanel implements ActionListener {
 						playlist).getName());
 				String content = new String(Files.readAllBytes(Paths
 						.get(playlist)));
-				content = content.replace("ALBUMART_INDEX", "Art").replace("link", "Link"); //for old playlist
-				
+				content = content.replace("ALBUMART_INDEX", "Art").replace(
+						"link", "Link"); // for old playlist
+
 				if (Utils.isJSONValid(content)) {
-					StringBuilder convertedPlayList = new StringBuilder(
+					final StringBuilder convertedPlayList = new StringBuilder(
 							String.format(
 									"Title,Artist,Time,Date Added,User,Album,Art,Link%s",
 									System.lineSeparator()));
-					JSONArray json = new JSONArray(content);
+					final JSONArray json = new JSONArray(content);
 					for (int i = 0; i < json.length(); i++) {
-						JSONObject obj = json.getJSONObject(i);
+						final JSONObject obj = json.getJSONObject(i);
 
-						String title = obj.getString("Title").trim();
-						String artist = obj.getString("Artist").trim();
-						String time = obj.getString("Time").trim();
-						String date = obj.getString("Date Added").trim();
-						String user = obj.getString("User").trim();
-						String album = obj.getString("Album").trim();
-						String album_art = obj.getString("Art").trim();
-						String link = obj.getString("Link").trim();
+						final String title = obj.getString("Title").trim();
+						final String artist = obj.getString("Artist").trim();
+						final String time = obj.getString("Time").trim();
+						final String date = obj.getString("Date Added").trim();
+						final String user = obj.getString("User").trim();
+						final String album = obj.getString("Album").trim();
+						final String album_art = obj.getString("Art").trim();
+						final String link = obj.getString("Link").trim();
 						convertedPlayList.append(String.format(
 								"%s,%s,%s,%s,%s,%s,%s,%s%s", title, artist,
 								time, date, user, album, album_art, link,
@@ -316,7 +354,7 @@ public class PlayListPanel extends JPanel implements ActionListener {
 					}
 					content = convertedPlayList.toString();
 				}
-				
+
 				final WebPlaylistSubmit sharePlaylist = new WebPlaylistSubmit(
 						content, playListName);
 				sharePlaylist.submitPlaylist();

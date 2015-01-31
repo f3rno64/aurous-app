@@ -1,9 +1,17 @@
 package me.aurous.utils;
 
+import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.Graphics2D;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
+import java.awt.Image;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
+import java.awt.Transparency;
+import java.awt.geom.RoundRectangle2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,8 +19,11 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -20,6 +31,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -48,6 +60,167 @@ public class Utils {
 
 	public static boolean isNull(final Object obj) {
 		return obj == null;
+	}
+
+	private static String hashString(final String s) {
+		byte[] hash = null;
+		try {
+			final MessageDigest md = MessageDigest.getInstance("SHA-256");
+			hash = md.digest(s.getBytes());
+
+		} catch (final NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		final StringBuilder sb = new StringBuilder();
+		for (final byte element : hash) {
+			final String hex = Integer.toHexString(element);
+			if (hex.length() == 1) {
+				sb.append(0);
+				sb.append(hex.charAt(hex.length() - 1));
+			} else {
+				sb.append(hex.substring(hex.length() - 2));
+			}
+		}
+		return sb.toString();
+	}
+
+	public static ImageIcon getSongIcon(final String url) {
+		// Constants.DATA_PATH + "icons"
+		final String urlHash = hashString(url);
+		final Path path = Paths.get(Constants.DATA_PATH + "icons/" + urlHash);
+		if (Files.exists(path)) {
+			ImageIcon imageIcon = new ImageIcon(path.toAbsolutePath()
+					.toString());
+			final Image image = imageIcon.getImage();
+			final Image newimg = image.getScaledInstance(40, 40,
+					java.awt.Image.SCALE_SMOOTH);
+			imageIcon = new ImageIcon(newimg);
+			return imageIcon;
+		} else {
+			try {
+				BufferedImage bi = ImageIO.read(new URL(url));
+				bi = getScaledInstance(bi, 40, 40,
+						RenderingHints.VALUE_INTERPOLATION_BILINEAR, true);
+				final File outputfile = new File(path.toAbsolutePath()
+						.toString());
+				ImageIO.write(bi, "png", outputfile);
+
+				ImageIcon imageIcon = new ImageIcon(path.toAbsolutePath()
+						.toString());
+				final Image image = imageIcon.getImage(); // transform it
+				final Image newimg = image.getScaledInstance(40, 40,
+						java.awt.Image.SCALE_SMOOTH);
+				imageIcon = new ImageIcon(newimg);
+				return imageIcon;
+			} catch (final IOException e) {
+				return null;
+
+			}
+		}
+
+	}
+
+	/**
+	 * Converts a given Image into a BufferedImage
+	 *
+	 * @param img
+	 *            The Image to be converted
+	 * @return The converted BufferedImage
+	 */
+	public static BufferedImage toBufferedImage(final Image img) {
+		if (img instanceof BufferedImage) {
+			return (BufferedImage) img;
+		}
+
+		// Create a buffered image with transparency
+		final BufferedImage bimage = new BufferedImage(img.getWidth(null),
+				img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+		// Draw the image on to the buffered image
+		final Graphics2D bGr = bimage.createGraphics();
+		bGr.drawImage(img, 0, 0, null);
+		bGr.dispose();
+
+		// Return the buffered image
+		return bimage;
+	}
+
+	public static BufferedImage makeRoundedCorner(final BufferedImage image,
+			final int cornerRadius) {
+		final int w = image.getWidth();
+		final int h = image.getHeight();
+		final BufferedImage output = new BufferedImage(w, h,
+				BufferedImage.TYPE_INT_ARGB);
+
+		final Graphics2D g2 = output.createGraphics();
+
+		// This is what we want, but it only does hard-clipping, i.e. aliasing
+		// g2.setClip(new RoundRectangle2D ...)
+
+		// so instead fake soft-clipping by first drawing the desired clip shape
+		// in fully opaque white with antialiasing enabled...
+		g2.setComposite(AlphaComposite.Src);
+		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+		g2.setColor(Color.WHITE);
+		g2.fill(new RoundRectangle2D.Float(0, 0, w, h, cornerRadius,
+				cornerRadius));
+
+		// ... then compositing the image on top,
+		// using the white shape from above as alpha source
+		g2.setComposite(AlphaComposite.SrcAtop);
+		g2.drawImage(image, 0, 0, null);
+
+		g2.dispose();
+
+		return output;
+	}
+
+	public static BufferedImage getScaledInstance(final BufferedImage img,
+			final int targetWidth, final int targetHeight, final Object hint,
+			final boolean higherQuality) {
+		final int type = (img.getTransparency() == Transparency.OPAQUE) ? BufferedImage.TYPE_INT_RGB
+				: BufferedImage.TYPE_INT_ARGB;
+		BufferedImage ret = img;
+		int w, h;
+		if (higherQuality) {
+			// Use multi-step technique: start with original size, then
+			// scale down in multiple passes with drawImage()
+			// until the target size is reached
+			w = img.getWidth();
+			h = img.getHeight();
+		} else {
+			// Use one-step technique: scale directly from original
+			// size to target size with a single drawImage() call
+			w = targetWidth;
+			h = targetHeight;
+		}
+
+		do {
+			if (higherQuality && (w > targetWidth)) {
+				w /= 2;
+				if (w < targetWidth) {
+					w = targetWidth;
+				}
+			}
+
+			if (higherQuality && (h > targetHeight)) {
+				h /= 2;
+				if (h < targetHeight) {
+					h = targetHeight;
+				}
+			}
+
+			final BufferedImage tmp = new BufferedImage(w, h, type);
+			final Graphics2D g2 = tmp.createGraphics();
+			g2.setRenderingHint(RenderingHints.KEY_INTERPOLATION, hint);
+			g2.drawImage(ret, 0, 0, w, h, null);
+			g2.dispose();
+
+			ret = tmp;
+		} while ((w != targetWidth) || (h != targetHeight));
+
+		return ret;
 	}
 
 	/**
@@ -443,18 +616,20 @@ public class Utils {
 			e.printStackTrace();
 		}
 	}
-	public static boolean isJSONValid(String test) {
+
+	public static boolean isJSONValid(final String test) {
 		try {
 			new JSONObject(test);
-		} catch (JSONException ex) {
+		} catch (final JSONException ex) {
 			try {
 				new JSONArray(test);
-			} catch (JSONException ex1) {
+			} catch (final JSONException ex1) {
 				return false;
 			}
 		}
 		return true;
 	}
+
 	/**
 	 * icons cache.
 	 */

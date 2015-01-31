@@ -41,15 +41,15 @@ public class ExceptionWidget extends JFrame {
 		warningIcon.setBounds(10, 11, 64, 78);
 		getContentPane().add(warningIcon);
 
-		exceptionText = new JTextArea();
-		exceptionText.setForeground(Color.WHITE);
-		exceptionText.setBackground(Color.DARK_GRAY);
-		exceptionText.setText(exception);
-		exceptionText.setEditable(false);
-		exceptionText.setFont(new Font("Open Sans", Font.PLAIN, 11));
-		exceptionText.setBounds(10, 90, 407, 276);
-		getContentPane().add(exceptionText);
-		exceptionText.setColumns(50);
+		this.exceptionText = new JTextArea();
+		this.exceptionText.setForeground(Color.WHITE);
+		this.exceptionText.setBackground(Color.DARK_GRAY);
+		this.exceptionText.setText(exception);
+		this.exceptionText.setEditable(false);
+		this.exceptionText.setFont(new Font("Open Sans", Font.PLAIN, 11));
+		this.exceptionText.setBounds(10, 90, 407, 276);
+		getContentPane().add(this.exceptionText);
+		this.exceptionText.setColumns(50);
 
 		final JButton githubButton = new JButton("Report");
 		githubButton.addActionListener(arg0 -> {
@@ -67,7 +67,7 @@ public class ExceptionWidget extends JFrame {
 		copyButton.addActionListener(e -> {
 
 			final StringSelection stringSelection = new StringSelection(
-					exceptionText.getText());
+					this.exceptionText.getText());
 			final Clipboard clpbrd = Toolkit.getDefaultToolkit()
 					.getSystemClipboard();
 			clpbrd.setContents(stringSelection, null);

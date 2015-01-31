@@ -37,8 +37,8 @@ public class RedditService extends PlaylistService {
 
 	@Override
 	public void buildPlayList() {
-		if (contentURL.contains("comments")) {
-			contentURL = addQueryToURL(contentURL);
+		if (this.contentURL.contains("comments")) {
+			this.contentURL = addQueryToURL(this.contentURL);
 		}
 
 		grab();
@@ -51,19 +51,20 @@ public class RedditService extends PlaylistService {
 				() -> {
 
 					try {
-						if (contentURL.contains("reddit")) {
+						if (this.contentURL.contains("reddit")) {
 							// print("Fetching %s...", url);
 							String last = "";
 							final String out = Constants.DATA_PATH
-									+ "playlist/" + playListName + ".plist";
+									+ "playlist/" + this.playListName
+									+ ".plist";
 							final Document doc = Jsoup
-									.connect(contentURL)
+									.connect(this.contentURL)
 									.ignoreContentType(true)
 									.userAgent(
 											"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36")
-									.referrer("http://www.google.com")
-									.timeout(12000).followRedirects(true).get();
-							final Elements links = doc.select(TAG_TYPE);
+											.referrer("http://www.google.com")
+											.timeout(12000).followRedirects(true).get();
+							final Elements links = doc.select(this.TAG_TYPE);
 							final File playListOut = new File(out);
 							final FileOutputStream fos = new FileOutputStream(
 									playListOut);
@@ -83,20 +84,21 @@ public class RedditService extends PlaylistService {
 										final int percent = (int) ((iterations * 100.0f) / links
 												.size());
 										UISession.getImporterWidget()
-										.getImportProgressBar()
-										.setValue(percent);
+												.getImportProgressBar()
+												.setValue(percent);
 										PlayListUtils
-										.disableImporterInterface();
+												.disableImporterInterface();
 									}
-									if (!link.attr(ATTRIBUTE_TYPE).equals(last)) {
+									if (!link.attr(this.ATTRIBUTE_TYPE).equals(
+											last)) {
 
-										final String mediaLine = MediaUtils
-												.getBuiltString(link
-														.attr(ATTRIBUTE_TYPE));
+										final String mediaLine = MediaUtils.getBuiltString(link
+												.attr(this.ATTRIBUTE_TYPE));
 										if (!mediaLine.isEmpty()) {
 											bw.write(mediaLine);
 											bw.newLine();
-											last = link.attr(ATTRIBUTE_TYPE);
+											last = link
+													.attr(this.ATTRIBUTE_TYPE);
 										}
 
 									}
@@ -141,7 +143,8 @@ public class RedditService extends PlaylistService {
 	}
 
 	private String addQueryToURL(final String url) {
-		final String commentQueryURL = String.format(url + "%s", COMMENT_QUERY);
+		final String commentQueryURL = String.format(url + "%s",
+				this.COMMENT_QUERY);
 		return commentQueryURL;
 	}
 }

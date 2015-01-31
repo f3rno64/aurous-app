@@ -77,60 +77,63 @@ public class BuilderWidget {
 	 */
 	public BuilderWidget() {
 
-		builderWidget = new JFrame();
-		builderWidget.getContentPane().setBackground(new Color(32, 33, 35));
-		builderWidget.setIconImage(Toolkit.getDefaultToolkit().getImage(
+		this.builderWidget = new JFrame();
+		this.builderWidget.getContentPane()
+				.setBackground(new Color(32, 33, 35));
+		this.builderWidget.setIconImage(Toolkit.getDefaultToolkit().getImage(
 				BuilderWidget.class.getResource("/resources/aurouslogo.png")));
-		builderWidget.setType(Type.UTILITY);
+		this.builderWidget.setType(Type.UTILITY);
 
-		builderWidget.setResizable(false);
-		builderWidget.setTitle("Playlist Builder");
-		builderWidget.getContentPane().setLayout(null);
-		builderWidget.setPreferredSize(new Dimension(400, 545));
-		builderWidget
-		.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		this.builderWidget.setResizable(false);
+		this.builderWidget.setTitle("Playlist Builder");
+		this.builderWidget.getContentPane().setLayout(null);
+		this.builderWidget.setPreferredSize(new Dimension(400, 545));
+		this.builderWidget
+				.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-		loadingIcon = new JLabel("");
-		loadingIcon.setForeground(Color.CYAN);
+		this.loadingIcon = new JLabel("");
+		this.loadingIcon.setForeground(Color.CYAN);
 
-		loadingIcon.setBackground(Color.DARK_GRAY);
-		loadingIcon.setHorizontalAlignment(SwingConstants.CENTER);
-		loadingIcon.setIcon(new ImageIcon(BuilderWidget.class
+		this.loadingIcon.setBackground(Color.DARK_GRAY);
+		this.loadingIcon.setHorizontalAlignment(SwingConstants.CENTER);
+		this.loadingIcon.setIcon(new ImageIcon(BuilderWidget.class
 				.getResource("/resources/loading1.gif")));
-		loadingIcon.setBounds(0, 0, 394, 516);
-		loadingIcon.setVisible(false);
+		this.loadingIcon.setBounds(0, 0, 394, 516);
+		this.loadingIcon.setVisible(false);
 
-		builderWidget.getContentPane().add(loadingIcon);
+		this.builderWidget.getContentPane().add(this.loadingIcon);
 		final JScrollPane builderScrollPane = new JScrollPane();
 		builderScrollPane.setPreferredSize(new Dimension(400, 530));
 		builderScrollPane.setBounds(0, 84, 394, 339);
-		builderWidget.addWindowListener(new java.awt.event.WindowAdapter() {
-			@Override
-			public void windowClosing(
-					final java.awt.event.WindowEvent windowEvent) {
-				final int confirm = JOptionPane.showOptionDialog(builderWidget,
-						"Are You Sure You Want to Close this Builder?",
-						"Exit Confirmation", JOptionPane.YES_NO_OPTION,
-						JOptionPane.QUESTION_MESSAGE, null, null, null);
-				if (confirm == 0) {
-					UISession.setBuilderWidget(null);
-					builderWidget.dispose();
-				}
+		this.builderWidget
+				.addWindowListener(new java.awt.event.WindowAdapter() {
+					@Override
+					public void windowClosing(
+							final java.awt.event.WindowEvent windowEvent) {
+						final int confirm = JOptionPane.showOptionDialog(
+								BuilderWidget.this.builderWidget,
+								"Are You Sure You Want to Close this Builder?",
+								"Exit Confirmation", JOptionPane.YES_NO_OPTION,
+								JOptionPane.QUESTION_MESSAGE, null, null, null);
+						if (confirm == 0) {
+							UISession.setBuilderWidget(null);
+							BuilderWidget.this.builderWidget.dispose();
+						}
 
-			}
-		});
-		playListTextArea = new JTextArea();
-		playListTextArea.setBackground(Color.DARK_GRAY);
-		playListTextArea.setForeground(Color.WHITE);
-		playListTextArea.setFont(new Font("Consolas", Font.PLAIN, 13));
-		playListTextArea.addMouseListener(new ContextMenuMouseListener());
-		playListTextArea.addMouseListener(new MouseAdapter() {
+					}
+				});
+		this.playListTextArea = new JTextArea();
+		this.playListTextArea.setBackground(Color.DARK_GRAY);
+		this.playListTextArea.setForeground(Color.WHITE);
+		this.playListTextArea.setFont(new Font("Consolas", Font.PLAIN, 13));
+		this.playListTextArea.addMouseListener(new ContextMenuMouseListener());
+		this.playListTextArea.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(final MouseEvent e) {
 
 			}
 		});
-		playListTextArea.addKeyListener(new KeyAdapter() {
+		this.playListTextArea.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(final KeyEvent e) {
 				final int c = e.getKeyCode();
@@ -139,24 +142,24 @@ public class BuilderWidget {
 				}
 			}
 		});
-		lines = new JTextArea("1");
-		lines.setForeground(Color.WHITE);
+		this.lines = new JTextArea("1");
+		this.lines.setForeground(Color.WHITE);
 
-		lines.setBackground(Color.LIGHT_GRAY);
-		lines.setEditable(false);
+		this.lines.setBackground(Color.LIGHT_GRAY);
+		this.lines.setEditable(false);
 
-		playListTextArea.getDocument().addDocumentListener(
+		this.playListTextArea.getDocument().addDocumentListener(
 				new DocumentListener() {
 					@Override
 					public void changedUpdate(final DocumentEvent de) {
-						lines.setText(getText());
+						BuilderWidget.this.lines.setText(getText());
 					}
 
 					public String getText() {
-						final int caretPosition = playListTextArea
+						final int caretPosition = BuilderWidget.this.playListTextArea
 								.getDocument().getLength();
-						final Element root = playListTextArea.getDocument()
-								.getDefaultRootElement();
+						final Element root = BuilderWidget.this.playListTextArea
+								.getDocument().getDefaultRootElement();
 						String text = "1"
 								+ System.getProperty("line.separator");
 						for (int i = 2; i < (root
@@ -169,32 +172,34 @@ public class BuilderWidget {
 					@Override
 					public void insertUpdate(final DocumentEvent de) {
 						UISession.getBuilderWidget().newLining = false;
-						SwingUtilities.invokeLater(() -> {
-							if (UISession.getBuilderWidget().newLining == false) {
-								playListTextArea.append(System
-										.getProperty("line.separator"));
-								lines.setText(getText());
-								UISession.getBuilderWidget().newLining = true;
-							}
-						});
+						SwingUtilities
+								.invokeLater(() -> {
+									if (UISession.getBuilderWidget().newLining == false) {
+										BuilderWidget.this.playListTextArea.append(System
+												.getProperty("line.separator"));
+										BuilderWidget.this.lines
+												.setText(getText());
+										UISession.getBuilderWidget().newLining = true;
+									}
+								});
 
 					}
 
 					@Override
 					public void removeUpdate(final DocumentEvent de) {
-						lines.setText(getText());
+						BuilderWidget.this.lines.setText(getText());
 
 					}
 
 				});
-		builderWidget.getContentPane().setLayout(null);
+		this.builderWidget.getContentPane().setLayout(null);
 
-		builderScrollPane.setViewportView(playListTextArea);
-		builderScrollPane.setRowHeaderView(lines);
+		builderScrollPane.setViewportView(this.playListTextArea);
+		builderScrollPane.setRowHeaderView(this.lines);
 		builderScrollPane
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
-		builderWidget.getContentPane().add(builderScrollPane);
+		this.builderWidget.getContentPane().add(builderScrollPane);
 
 		final JLabel instructionsLabel = new JLabel(
 				"<html><body>Paste the links of the songs you want to import<br>Make sure each one is on a new line like so: <br>https://www.youtube.com/watch?v=lqY4jkWCmKY<br>https://www.youtube.com/watch?v=hH9Y9SPZYTI</br></body></html>");
@@ -202,84 +207,86 @@ public class BuilderWidget {
 		instructionsLabel.setFont(new Font("Segoe UI", Font.BOLD, 11));
 		instructionsLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		instructionsLabel.setBounds(57, 0, 285, 82);
-		builderWidget.getContentPane().add(instructionsLabel);
+		this.builderWidget.getContentPane().add(instructionsLabel);
 
 		final JLabel enterPlayListNameLabel = new JLabel("Enter Playlist Name:");
 		enterPlayListNameLabel.setFont(new Font("Segoe UI", Font.PLAIN, 20));
 		enterPlayListNameLabel.setForeground(Color.WHITE);
 		enterPlayListNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		enterPlayListNameLabel.setBounds(24, 423, 343, 23);
-		builderWidget.getContentPane().add(enterPlayListNameLabel);
+		this.builderWidget.getContentPane().add(enterPlayListNameLabel);
 
-		playListNameTextField = new JTextField();
-		playListNameTextField.setHorizontalAlignment(SwingConstants.CENTER);
-		playListNameTextField.setFont(new Font("Segoe UI", Font.PLAIN, 20));
-		playListNameTextField.setColumns(10);
-		playListNameTextField.setBounds(0, 449, 394, 33);
-		builderWidget.getContentPane().add(playListNameTextField);
+		this.playListNameTextField = new JTextField();
+		this.playListNameTextField
+				.setHorizontalAlignment(SwingConstants.CENTER);
+		this.playListNameTextField
+				.setFont(new Font("Segoe UI", Font.PLAIN, 20));
+		this.playListNameTextField.setColumns(10);
+		this.playListNameTextField.setBounds(0, 449, 394, 33);
+		this.builderWidget.getContentPane().add(this.playListNameTextField);
 
-		buildListButton = new JButton("build");
-		buildListButton.setForeground(Color.WHITE);
-		buildListButton.setBackground(Color.DARK_GRAY);
-		buildListButton
-				.addActionListener(e -> {
-					if (playListTextArea.getText().trim().isEmpty()) {
-						JOptionPane.showMessageDialog(builderWidget,
-								"You must add links to build a playlist",
-								"Error", JOptionPane.ERROR_MESSAGE);
-						return;
-					} else if (playListNameTextField.getText().trim().isEmpty()) {
-						JOptionPane.showMessageDialog(builderWidget,
-								"Please enter a name for your playlist",
-								"Error", JOptionPane.ERROR_MESSAGE);
-						return;
-					}
-					loadingIcon.setVisible(true);
-					playListTextArea.setEditable(false);
-					buildListButton.setEnabled(false);
-					playListNameTextField.setEditable(false);
-					final String items = playListTextArea.getText();
+		this.buildListButton = new JButton("build");
+		this.buildListButton.setForeground(Color.WHITE);
+		this.buildListButton.setBackground(Color.DARK_GRAY);
+		this.buildListButton.addActionListener(e -> {
+			if (this.playListTextArea.getText().trim().isEmpty()) {
+				JOptionPane.showMessageDialog(this.builderWidget,
+						"You must add links to build a playlist", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			} else if (this.playListNameTextField.getText().trim().isEmpty()) {
+				JOptionPane.showMessageDialog(this.builderWidget,
+						"Please enter a name for your playlist", "Error",
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			this.loadingIcon.setVisible(true);
+			this.playListTextArea.setEditable(false);
+			this.buildListButton.setEnabled(false);
+			this.playListNameTextField.setEditable(false);
+			final String items = this.playListTextArea.getText();
 
-					PlayListUtils.buildPlayList(items,
-							playListNameTextField.getText());
+			PlayListUtils.buildPlayList(items,
+					this.playListNameTextField.getText());
 
-				});
-		buildListButton.setBounds(147, 493, 89, 23);
+		});
+		this.buildListButton.setBounds(147, 493, 89, 23);
 
-		builderWidget.getContentPane().add(buildListButton);
+		this.builderWidget.getContentPane().add(this.buildListButton);
 
-		builderWidget.pack();
+		this.builderWidget.pack();
 
-		builderWidget.setVisible(true);
+		this.builderWidget.setVisible(true);
 		final GhostText ghostText = new GhostText("FMA OST",
-				playListNameTextField);
+				this.playListNameTextField);
 		ghostText.setHorizontalAlignment(SwingConstants.CENTER);
 		ghostText.setHorizontalTextPosition(SwingConstants.CENTER);
-		builderWidget.setLocationRelativeTo(UISession.getPresenter()
+		this.builderWidget.setLocationRelativeTo(UISession.getPresenter()
 				.getAurousFrame());
 	}
 
 	public JButton getBuildListButton() {
-		return buildListButton;
+		return this.buildListButton;
 	}
 
 	public JLabel getLoadingIcon() {
-		return loadingIcon;
+		return this.loadingIcon;
 	}
 
 	public JTextField getPlayListNameTextField() {
-		return playListNameTextField;
+		return this.playListNameTextField;
 	}
 
 	public JTextArea getPlayListTextArea() {
-		return playListTextArea;
+		return this.playListTextArea;
 	}
 
 	public JFrame getWidget() {
-		return builderWidget;
+		return this.builderWidget;
 	}
 
 	public boolean isOpen() {
-		return Utils.isNull(builderWidget) ? false : builderWidget.isVisible();
+		return Utils.isNull(this.builderWidget) ? false : this.builderWidget
+				.isVisible();
 	}
 }
