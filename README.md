@@ -1,4 +1,5 @@
-![tip](http://img.shields.io/gratipay/Codeusa.svg "Tips")
+Project on hold as we move the code base to an HTML5 based interface.
+
 aurrous-app
 ===========
 
