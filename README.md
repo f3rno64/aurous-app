@@ -1,4 +1,4 @@
-Project on hold as we move the code base to an HTML5 based interface.
+Project on hold as we move the code base to an HTML5 based interface, we hope to expand the app into a full fledged media client. 
 
 aurrous-app
 ===========
