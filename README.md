@@ -1,4 +1,4 @@
-Project on hold as we move the code base to an HTML5 based interface, we hope to expand the app into a full fledged media client. 
+THIS BUILD IS NO LONGER UPDATED AND IS OBSOLETE. SEE OUR ORGINZATION https://github.com/AurousGroup/Aurous-SDK
 
 aurrous-app
 ===========
